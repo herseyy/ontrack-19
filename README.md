@@ -20,4 +20,6 @@ poetry run uvicorn app.server:app --reload
 This command will run the application. Check http://127.0.0.1:8000 to see your web sever.
 
 Sample api:
-http://127.0.0.1:8000/symptoms - will give you the list of symptoms
+- http://127.0.0.1:8000/symptoms will give you the list of symptoms
+
+You can add the html files in the pages folder.
