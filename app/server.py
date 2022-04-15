@@ -2,6 +2,7 @@
 Main file
 """
 from fastapi import FastAPI, Request, Response, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 # from fastapi.templating import Jinja2Templates
 
@@ -14,6 +15,26 @@ from pydantic import BaseModel
 models.Base.metadata.create_all(bind=engine)
 # Main app object
 app = FastAPI()
+
+
+origins = [
+    "http://localhost.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://127.0.0.1:8000",
+    "*"
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 # Wag mo muna tong pansinin, malilito ka lang
