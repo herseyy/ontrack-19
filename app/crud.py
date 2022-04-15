@@ -32,11 +32,17 @@ def get_symptoms(db: Session):
 # Dagdagan mo na lang yung mga symptoms
 def populate_symptoms(db: Session):
     symptoms = [
-        "Headache",
-        "Fever above 38 degrees",
-        "Body pain",
-        "Sneezing",
-        "Sore throat"
+        "Ubo (Cough)",
+        "Sipon (Colds)",
+        "Pagkawala ng Panlasa (Loss of Taste)",
+        "Pagkawala ng Pang-amoy (Loss of Smell)",
+        "Pagtatae (Diarrhea)",
+        "Masakit na lalamunan (Sore Throat)",
+        "Panghihina ng Katawan (Body Malaise)",
+        "Masakit ang Ulo (Headache)",
+        "Lagnat 37.5 C Pataas (Fever)",
+        "Hirap sa Paghinga (Difficulty of Breathing)",
+        "Madaling Mapagod (Easy Fatigability)"
     ]
 
     # Delete everythin first

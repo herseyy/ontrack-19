@@ -3,9 +3,12 @@ Main file
 """
 from fastapi import FastAPI, Request, Response, Depends, HTTPException
 from sqlalchemy.orm import Session
+# from fastapi.templating import Jinja2Templates
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+
+from pydantic import BaseModel
 
 # Matic nagccreate na ng table
 models.Base.metadata.create_all(bind=engine)
@@ -64,8 +67,10 @@ def get_covid_form():
     Step 1:
     Send the data from HTML using async call
     https://www.youtube.com/watch?v=IISLcjk9HPc&ab_channel=CodingDiksha
+    """
 
 
+    """
     Step 2:
     Validate the form from the website. Use json instead of form.
     https://fastapi.tiangolo.com/tutorial/body/

@@ -49,3 +49,7 @@ class Symptoms(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+# class PatientSymptoms(BaseModel):
+	
