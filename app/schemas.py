@@ -51,5 +51,15 @@ class Symptoms(BaseModel):
         orm_mode = True
 
 
-# class PatientSymptoms(BaseModel):
+class Patient(BaseModel):
+	id: int
+	name: str
+	birthday: datetime.date
+	date_positive: datetime.date
+	barangay: str
+	contact_number: str
+	status: str
+	asymptomatic: bool
+	created_at: datetime.datetime
+	updated_at: datetime.datetime
 	

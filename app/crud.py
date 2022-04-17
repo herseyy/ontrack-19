@@ -42,7 +42,7 @@ def populate_symptoms(db: Session):
         "Masakit ang Ulo (Headache)",
         "Lagnat 37.5 C Pataas (Fever)",
         "Hirap sa Paghinga (Difficulty of Breathing)",
-        "Madaling Mapagod (Easy Fatigability)"
+        "Madaling Mapagod (Easy Fatigability)",
     ]
 
     # Delete everythin first

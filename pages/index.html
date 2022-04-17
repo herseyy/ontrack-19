@@ -10,8 +10,8 @@
 
 
 </head>
-
 <!-- <body>PUT YOUR HTML FILE HERE</body> -->
+<script src="../js/symptoms.js"></script>
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -36,24 +36,6 @@
 	<div class="container">
 		<h2 class="text-center mt-5 mb-5">Hakdog</h2>
 		<span id="message"></span>
-
-		<script>
-			// const symptom_url = 'http://127.0.0.1:8000/symptoms'
-
-			// async function getSymptoms() {
-			// 	const response = await fetch(symptom_url);
-			// 	const data = await response.json();
-			// 	console.log(data)
-			// }
-
-			// getSymptoms()
-
-			fetch('http://127.0.0.1:8000/symptoms').then(res => console.log(res))
-
-		</script>
-
-
-
 		<form id="sample_form">
 			<div class="card">
 				<div class="card-header">
@@ -118,55 +100,55 @@
 						<div class="col text-center py-1">Symptoms</div>
 					</div>
 					<div class="form-row border mx-3">
-						<div class="form-group col border-right my-3 ml-2">
-							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_1" class="form-check-input form_data checkbox" value="Ubo (Cough)">
-								<label for="symptom_1" class="form-check-label">Ubo (Cough)</label>
+						<div class="form-group col border-right my-3 ml-2" id="property">
+							<!-- <div class="form-check my-1">
+								<input type="checkbox" name="symptoms" id="symptom_1" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_1" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_2" class="form-check-input form_data checkbox"value="Sipon (Colds)">
-								<label for="symptom_2" class="form-check-label">Sipon (Colds)</label>
+								<input type="checkbox" name="symptoms" id="symptom_2" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_2" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_3" class="form-check-input form_data checkbox"value="Pagkawala ng Panlasa (Loss of Taste)">
-								<label for="symptom_3" class="form-check-label">Pagkawala ng Panlasa (Loss of Taste)</label>
+								<input type="checkbox" name="symptoms" id="symptom_3" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_3" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_4" class="form-check-input form_data checkbox"value="Pagkawala ng Pang-amoy (Loss of Smell)">
-								<label for="symptom_4" class="form-check-label">Pagkawala ng Pang-amoy (Loss of Smell)</label>
-							</div>
+								<input type="checkbox" name="symptoms" id="symptom_4" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_4" class="form-check-label"></label>
+							</div> -->
 						</div>
-						<div class="form-group col border-right my-3 ml-2">
-							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_5" class="form-check-input form_data checkbox"value="Pagtatae (Diarrhea)">
-								<label for="symptom_5" class="form-check-label">Pagtatae (Diarrhea)</label>
+						<div class="form-group col border-right my-3 ml-2" id="property1">
+							<!-- <div class="form-check my-1">
+								<input type="checkbox" name="symptoms" id="symptom_5" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_5" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_6" class="form-check-input form_data checkbox"value="Masakit na lalamunan (Sore Throat)">
-								<label for="symptom_6" class="form-check-label">Masakit na lalamunan (Sore Throat)</label>
+								<input type="checkbox" name="symptoms" id="symptom_6" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_6" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_7" class="form-check-input form_data checkbox"value="Panghihina ng Katawan (Body Malaise)">
-								<label for="symptom_7" class="form-check-label">Panghihina ng Katawan (Body Malaise)</label>
+								<input type="checkbox" name="symptoms" id="symptom_7" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_7" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_8" class="form-check-input form_data checkbox"value="Masakit ang Ulo (Headache)">
-								<label for="symptom_8" class="form-check-label">Masakit ang Ulo (Headache)</label>
-							</div>
+								<input type="checkbox" name="symptoms" id="symptom_8" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_8" class="form-check-label"></label>
+							</div> -->
 						</div>
-						<div class="form-group col my-3 ml-2">
-							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_9" class="form-check-input form_data checkbox"value="Lagnat 37.5 C Pataas (Fever)">
-								<label for="symptom_9" class="form-check-label">Lagnat 37.5 C Pataas (Fever)</label>
+						<div class="form-group col my-3 ml-2" id="property2">
+							<!-- <div class="form-check my-1">
+								<input type="checkbox" name="symptoms" id="symptom_9" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_9" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_10" class="form-check-input form_data checkbox" value="Hirap sa Paghinga (Difficulty of Breathing)">
-								<label for="symptom_10" class="form-check-label">Hirap sa Paghinga (Difficulty of Breathing)</label>
+								<input type="checkbox" name="symptoms" id="symptom_10" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_10" class="form-check-label"></label>
 							</div>
 							<div class="form-check my-1">
-								<input type="checkbox" name="symptoms" id="symptom_11" class="form-check-input form_data checkbox" value="Madaling Mapagod (Easy Fatigability)">
-								<label for="symptom_11" class="form-check-label">Madaling Mapagod (Easy Fatigability)</label>
-							</div>
+								<input type="checkbox" name="symptoms" id="symptom_11" class="form-check-input form_data checkbox">
+								<label id="symptom" for="symptom_11" class="form-check-label"></label>
+							</div> -->
 						</div>
 					</div>
 					<div class="form-group m-3">

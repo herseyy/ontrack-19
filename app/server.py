@@ -83,18 +83,17 @@ def get_symptoms(db: Session = Depends(get_db)):
     return symptoms
 
 @app.post("/submit_form")
-def get_covid_form():
+def get_covid_form(patient: schemas.Patient):
     """
     Step 1:
     Send the data from HTML using async call
     https://www.youtube.com/watch?v=IISLcjk9HPc&ab_channel=CodingDiksha
     """
 
-
     """
     Step 2:
     Validate the form from the website. Use json instead of form.
     https://fastapi.tiangolo.com/tutorial/body/
     """
-
-    return {}
+    # print(patient)
+    return patient 
