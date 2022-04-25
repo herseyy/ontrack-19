@@ -52,7 +52,7 @@ class Symptoms(BaseModel):
 
 
 class Patient(BaseModel):
-	id: int
+	patient_id: int
 	name: str
 	birthday: datetime.date
 	date_positive: datetime.date

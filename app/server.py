@@ -1,10 +1,10 @@
 """
 Main file
 """
-from fastapi import FastAPI, Request, Response, Depends, HTTPException
+from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-# from fastapi.templating import Jinja2Templates
+from fastapi.templating import Jinja2Templates
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
@@ -35,6 +35,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+templates = Jinja2Templates(directory="pages")
 
 
 # Wag mo muna tong pansinin, malilito ka lang
@@ -97,3 +99,14 @@ def get_covid_form(patient: schemas.Patient):
     """
     # print(patient)
     return patient 
+
+
+
+# @app.get("/records")
+# def get_records(request: Request):
+#     return templates.TemplateResponse("index.html", {"request":request})
+
+# @app.post("/recordss")
+# def get_records(patient_id: int = Form(...), patient_sex: str = Form(...)):
+
+#     return {"message": patient_id, "asdasd": patient_sex}

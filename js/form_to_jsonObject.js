@@ -1,19 +1,16 @@
 
-let symptoms_list = [];
 
-var checkboxes = document.querySelectorAll(".checkbox");
-console.log(checkboxes)
-for(var checkbox of checkboxes) {
-	checkbox.addEventListener("click", function(){
-		if(this.checked == true) {
-			symptoms_list.push(this.value);
-			symptoms_list.sort();
-		} else {
-			console.log('you unchecked the checkbox')
+function on_submit() {
+	let checked_symptoms = [];
+	var checkboxes = document.getElementsByName("symptoms");
+	for (var checkbox of checkboxes) {
+		if (checkbox.checked) {
+			checked_symptoms.push(checkbox.value);
 		}
-	})
+	}
+	// console.log(checked_symptoms)
+	return checked_symptoms
 }
-
 
 var statuss = document.querySelectorAll(".status");
 var patient_status = ""
@@ -28,9 +25,13 @@ for(var i of statuss) {
 	})
 }
 
+
 let infos = [];
 // example {id:1592304983049, title: 'Deadpool', year: 2015}
 const addInfo = (ev)=>{
+
+	var patient_symptoms = on_submit()
+
 	ev.preventDefault();  //to stop the form submitting
 	let info = {
 		patient_id: document.getElementById('patient_id').value,
@@ -40,7 +41,7 @@ const addInfo = (ev)=>{
 		patient_brgy: document.getElementById('patient_brgy').value,
 		patient_contact_number: document.getElementById('patient_contact_number').value,
 		patient_asymptomatic: document.getElementById('patient_asymptomatic').value,
-		patient_symptoms: symptoms_list,
+		patient_symptoms: patient_symptoms,
 		patient_status: patient_status
 	}
 	infos.push(info);
@@ -50,7 +51,7 @@ const addInfo = (ev)=>{
 	symptoms_list = []; // to clear the list
 
 	//for display purposes only
-	console.warn('added' , {infos} );
+	// console.warn('added' , {infos} );
 	let pre = document.querySelector('#msg pre');
 	pre.textContent = '\n' + JSON.stringify(infos, '\t', 2);
 
@@ -58,5 +59,9 @@ const addInfo = (ev)=>{
 	// localStorage.setItem('MyMovieList', JSON.stringify(infos) );
 }
 document.addEventListener('DOMContentLoaded', ()=>{
+	document.getElementById('btn').addEventListener('click', on_submit);
 	document.getElementById('btn').addEventListener('click', addInfo);
 });
+
+// var name = Student.name;
+// console.log(name)
