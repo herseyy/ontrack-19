@@ -51,6 +51,4 @@ function getSymptoms() {
 getSymptoms()
 
 
-
-
 // on_submit()

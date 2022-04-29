@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-
+  
 from .models import Symptoms
-# from . import models, schemas
+from . import models, schemas
 
 
 def get_symptoms(db: Session):
@@ -52,3 +52,31 @@ def populate_symptoms(db: Session):
         db.add(Symptoms(id = i + 1, description=symptom))
 
     db.commit()
+
+
+# read
+def get_patient_by_id(db: Session, id: int):
+    return db.query(models.Patient).filter(models.Patient.id == id).first()
+
+# def get_user_by_email(db: Session, email: str):
+#     return db.query(models.User).filter(models.User.email == email).first()
+
+
+# create
+def create_patients(db: Session, patient: schemas.PatientRequest):
+    db_patient = models.Patient(
+        date_positive = patient.date_positive,
+        birthday = patient.birthday,
+        # sex = patient.sex,
+        barangay = patient.barangay,
+        contact_number = patient.contact_number,
+        asymptomatic = patient.asymptomatic,
+        status = patient.status
+        # created_at = patient.created_at,
+        # updated_at = patient.updated_at
+        )
+
+    db.add(db_patient)
+    db.commit()
+    db.refresh(db_patient)
+    return db_patient

@@ -44,8 +44,8 @@ from pydantic import BaseModel
 class Symptoms(BaseModel):
     id: int
     description: str
-    updated_at: datetime.datetime
-    created_at: datetime.datetime
+    # updated_at: datetime.datetime
+    # created_at: datetime.datetime
 
     class Config:
         orm_mode = True
@@ -53,13 +53,33 @@ class Symptoms(BaseModel):
 
 class Patient(BaseModel):
 	patient_id: int
-	name: str
-	birthday: datetime.date
 	date_positive: datetime.date
+	birthday: datetime.date
+	sex: str
 	barangay: str
 	contact_number: str
-	status: str
 	asymptomatic: bool
-	created_at: datetime.datetime
-	updated_at: datetime.datetime
+	# symptoms: list[int]
+	status: str
+
+# userCreate
+class PatientRequest(BaseModel): 
+	# patient_id: int
+	date_positive: datetime.date
+	birthday: datetime.date
+	# sex: str
+	barangay: str
+	contact_number: str
+	asymptomatic: bool
+	symptoms: list[int]
+	status: str
+	# created_at: datetime.datetime
+	# updated_at: datetime.datetime
+
+
+class PatientSymptoms(BaseModel):
+	symptom_id: int
+	patient_id: int
+
 	
+

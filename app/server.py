@@ -84,21 +84,35 @@ def get_symptoms(db: Session = Depends(get_db)):
     symptoms = crud.get_symptoms(db)
     return symptoms
 
-@app.post("/submit_form")
-def get_covid_form(patient: schemas.Patient):
-    """
-    Step 1:
-    Send the data from HTML using async call
-    https://www.youtube.com/watch?v=IISLcjk9HPc&ab_channel=CodingDiksha
-    """
 
-    """
-    Step 2:
-    Validate the form from the website. Use json instead of form.
-    https://fastapi.tiangolo.com/tutorial/body/
-    """
+
+# @app.post("/submit_form")
+# def get_covid_form(patient: schemas.PatientRequest):
+#     patient_dict = patient.dict()
+#     # print(patient_dict['barangay'])
+#     print(patient_dict)
+#     return ""
+#     # return {"results": {infos}}
+
+@app.get("/patients")
+def read(db:Session = Depends(get_db)):
+    return db.query(models.Patient).all()
+
+
+
+@app.delete("/{id}}")
+def read(id: int, db:Session = Depends(get_db)):
+
+    db.query(models.Patient).filter(models.Patient.id == id).delete()
+    db.commit()
+
+
+@app.post("/submit_form")
+def get_covid_form(patient: schemas.PatientRequest, db: Session = Depends(get_db)):
+    
+    created_patient = crud.create_patients(db=db, patient=patient)
     # print(patient)
-    return patient 
+    return create_patients
 
 
 

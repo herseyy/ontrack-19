@@ -1,6 +1,4 @@
-
-
-function on_submit() {
+function checkbox() {
 	let checked_symptoms = [];
 	var checkboxes = document.getElementsByName("symptoms");
 	for (var checkbox of checkboxes) {
@@ -30,12 +28,12 @@ let infos = [];
 // example {id:1592304983049, title: 'Deadpool', year: 2015}
 const addInfo = (ev)=>{
 
-	var patient_symptoms = on_submit()
+	var patient_symptoms = checkbox()
 
 	ev.preventDefault();  //to stop the form submitting
 	let info = {
 		patient_id: document.getElementById('patient_id').value,
-		patient_date: document.getElementById('patient_date').value,
+		date_positive: document.getElementById('date_positive').value,
 		patient_birthday: document.getElementById('patient_birthday').value,
 		patient_sex: document.getElementById('patient_sex').value,
 		patient_brgy: document.getElementById('patient_brgy').value,
@@ -48,20 +46,21 @@ const addInfo = (ev)=>{
 	document.forms[0].reset(); // to clear the form for the next entries
 	//document.querySelector('form').reset();
 
-	symptoms_list = []; // to clear the list
+	// symptoms_list = []; // to clear the list
 
 	//for display purposes only
 	// console.warn('added' , {infos} );
-	let pre = document.querySelector('#msg pre');
-	pre.textContent = '\n' + JSON.stringify(infos, '\t', 2);
+
+	// let pre = document.querySelector('#msg pre');
+	// pre.textContent = '\n' + JSON.stringify(infos, '\t', 2);
 
 	// //saving to localStorage
 	// localStorage.setItem('MyMovieList', JSON.stringify(infos) );
+	return infos
 }
+
 document.addEventListener('DOMContentLoaded', ()=>{
-	document.getElementById('btn').addEventListener('click', on_submit);
+	document.getElementById('btn').addEventListener('click', checkbox);
 	document.getElementById('btn').addEventListener('click', addInfo);
 });
 
-// var name = Student.name;
-// console.log(name)

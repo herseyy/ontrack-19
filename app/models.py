@@ -22,13 +22,14 @@ class Patient(Base):
     __tablename__ = "patient"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True)
-    birthday = Column(Date, nullable=False)
+    # name = Column(String, unique=True, index=True)
     date_positive = Column(Date, nullable=False)
+    birthday = Column(Date, nullable=False)
+    # sex = Column(String, unique=False, index=True, nullable=False)
     barangay = Column(String, unique=False, index=True, nullable=False)
     contact_number = Column(String, unique=True, index=True, nullable=False)
-    status = Column(Enum(Status), index=True, default=Status.infected)
     asymptomatic = Column(Boolean, default=True)
+    status = Column(Enum(Status), index=True, default=Status.infected)
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
