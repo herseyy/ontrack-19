@@ -36,7 +36,8 @@ def populate_symptoms(db: Session):
         "Fever above 38 degrees",
         "Body pain",
         "Sneezing",
-        "Sore throat"
+        "Sore throat",
+        "Cold"
     ]
 
     # Delete everythin first
