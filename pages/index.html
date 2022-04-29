@@ -1,13 +1,145 @@
 <html>
-<head></head>
+<head>
+	<title>TRIAL 1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="js/symptoms.js"></script>
+	<!-- <script src="../js/form_to_jsonObject.js"></script> -->
+
+
+</head>
+<!-- <body>PUT YOUR HTML FILE HERE</body> -->
+<!-- <script src="../js/symptoms.js"></script> -->
+
 <body>
-	NAPAKADALI LANG
-	<div id="checkbox_div">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	    <button
+			class="navbar-toggler"
+			type="button"
+			data-toggle="collapse"
+			data-target="#navbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
+		<div class="collapse navbar-collapse" id="navbar">
+			<div class="navbar-nav">
+				<a class="nav-item nav-link" id="home" href="#">Home</a>
+				<a class="nav-item nav-link" id="logout" href="#">Logout</a>
+				<a class="nav-item nav-link" id="login" href="#">Login</a>
+				<a class="nav-item nav-link" id="signUp" href="#">Sign Up</a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h2 class="text-center mt-5 mb-5">Hakdog</h2>
+		<span id="message"></span>
+		<form id="sample_form" method="post" action="/recordss">
+			<div class="card">
+				<div class="card-header">
+					Covid Form
+				</div>
+				<div class="card-body">
+					<div class="form-text"><span class="text-danger">* Required</span></div><br>
+					<div class="form-row">
+						<div class="form-group col">
+							<label class="ml-2" for="patient_id">Patient's ID <span class="text-danger">*</span></label>
+							<input type="number" name="patient_id" id="patient_id" class="form-control form_data">
+							<span id="patient_id_error" class="text-danger"></span>
+						</div>
+						<div class="form-group col">
+							<label class="ml-2" for="date_positive">Date Positive <span class="text-danger">*</span></label>
+							<input type="date" name="date_positive" id="date_positive" class="form-control form_data">
+							<span id="date_positive_error" class="text-danger"></span>
+						</div>
+						<div class="form-group col">
+							<label class="ml-2" for="patient_birthday">Birthday<span class="text-danger">*</span></label>
+							<input type="date" name="patient_birthday" id="patient_birthday" class="form-control form_data">
+							<span id="patient_age_error" class="text-danger"></span>
+						</div>
+						<div class="form-group col">
+							<label class="ml-2" for="patient_sex">Sex <span class="text-danger">*</span></label>
+							<select name="patient_sex" id="patient_sex" class="form-control form_data">
+								<option value="">Choose your pokemon</option>
+							    <option value="male">Male</option>
+							    <option value="female">Female</option>
+							</select>
+							<span id="patient_sex_error" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col">
+							<label class="ml-2" for="patient_brgy">Barangay <span class="text-danger">*</span></label>
+							<select name="patient_brgy" id="patient_brgy" class="form-control form_data">
+								<option value="">Choose your pokemon</option>
+							    <option value="mateuna">Mateuna</option>
+							    <option value="ipilan">Ipilan</option>
+							    <option value="wakas">Wakas</option>
+							    <option value="lalo">Lalo</option>
+							</select>
+							<span id="patient_brgy_error" class="text-danger"></span>
+						</div>
+						<div class="form-group col">
+							<label class="ml-2" for="patient_contact_number">Contact Number <span class="text-danger">*</span></label>
+							<input type="text" name="patient_contact_number" id="patient_contact_number" class="form-control form_data">
+							<span id="patient_contact_number_error" class="text-danger"></span>
+						</div>
+						<div class="form-group col">
+							<label class="ml-2" for="patient_asymptomatic">Are you asymptomatic or not? <span class="text-danger">*</span></label>
+							<select name="patient_asymptomatic" id="patient_asymptomatic" class="form-control form_data">
+								<option value="">Choose your pokemon</option>
+							    <option value="symptomatic">Symptomatic</option>
+							    <option value="asymptomatic">Asymptomatic</option>
+							</select>
+							<span id="patient_condition_error" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-row bg-light border border-bottom-0 mx-3">
+						<div class="col text-center py-1">Symptoms</div>
+					</div>
+					<div class="form-row border mx-3">
+						<div class="form-group col border-right my-3 ml-2" id="parent_div">
+							
+						</div>
+					</div>
+					<div class="form-group m-3">
+						<div class="">Health Status <span class="text-danger">*</span></div>
+						<div class="form-check ml-3 mt-2">
+							<input type="radio" name="patient_status" id="patient_positive" class="form-check-input form_data status" value="positive">
+							<label for="patient_positive" class="form-check-label ">I am Positive</label>
+						</div>
+						<div class="form-check ml-3 mt-2">
+							<input type="radio" name="patient_status" id="patient_negative" class="form-check-input form_data status" value="negative">
+							<label for="patient_negative" class="form-check-label">I am Negative</label>
+						</div>
+						<div class="form-check ml-3 mt-2">
+							<input type="radio" name="patient_status" id="patient_deceased" class="form-check-input form_data status" value="deceased">
+							<label for="patient_deceased" class="form-check-label">Deceased</label>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<div class="form-group">
+						<div class="form-check mx-3">
+							<!-- <input class="form-check-input" type="checkbox" id="info_check">
+							<label class="form-check-label" for="info_check">
+								All info above is correct <span class="text-danger">*</span>
+							</label> -->
+							<span id="info_check_error" class="text-danger"></span>
+						</div>
+					</div>
+					<button type="submit" id="btn" class="btn btn-success px-4 py-2">Save</button>
+					<div id="msg">
+						<pre></pre>
+					</div>
+				</div>
+			</div>
+		</form>
+		<script src="js/form_to_jsonObject.js"></script>
 	</div>
-
-	<button onclick="on_submit();">Submit</button>
-	<div id="temp"></div>
 </body>
-<script type="text/javascript" src="script.js"></script>
 </html>

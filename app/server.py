@@ -1,12 +1,15 @@
 """
 Main file
 """
-from fastapi import FastAPI, Request, Response, Depends, HTTPException
+from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from fastapi.templating import Jinja2Templates
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+
+from pydantic import BaseModel
 
 # Matic nagccreate na ng table
 models.Base.metadata.create_all(bind=engine)
@@ -32,6 +35,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+templates = Jinja2Templates(directory="pages")
 
 
 # Wag mo muna tong pansinin, malilito ka lang
@@ -79,17 +84,32 @@ def get_symptoms(db: Session = Depends(get_db)):
     symptoms = crud.get_symptoms(db)
     return symptoms
 
-@app.post("/submit_form")
-def get_covid_form():
-    """
-    Step 1:
-    Send the data from HTML using async call
-    https://www.youtube.com/watch?v=IISLcjk9HPc&ab_channel=CodingDiksha
 
 
-    Step 2:
-    Validate the form from the website. Use json instead of form.
-    https://fastapi.tiangolo.com/tutorial/body/
-    """
+@app.get("/patients/{patient_id}", response_model=schemas.PatientResponse, response_model_exclude={"name"})
+def get_patients_by_id(patient_id:int  ,db:Session = Depends(get_db)):
+    db_patient = crud.get_patient_by_id(db=db, id=patient_id)
+    
+    if db_patient is None:
+        raise HTTPException(404, detail="User not found!")
 
-    return {}
+    return crud.format_patient(db_patient)
+
+
+@app.get("/patients", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
+def read(db:Session = Depends(get_db)):
+    patients = crud.get_patients(db)
+
+    return [crud.format_patient(p) for p in patients]
+
+
+@app.delete("/{id}}")
+def read(id: int, db:Session = Depends(get_db)):
+    db.query(models.Patient).filter(models.Patient.id == id).delete()
+    db.commit()
+
+
+@app.post("/submit_form", response_model=schemas.PatientResponse, response_model_exclude={"name"})
+def get_covid_form(patient: schemas.PatientRequest, db: Session = Depends(get_db)):
+    created_patient = crud.create_patients(db=db, patient=patient)
+    return crud.format_patient(created_patient)
