@@ -33,7 +33,7 @@ class Patient(Base):
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    symptoms = relationship(xxxx, back_populates="patient")
+    symptoms = relationship("PatientSymptoms", back_populates="patient")
 
 
 class Symptoms(Base):
@@ -55,7 +55,7 @@ class PatientSymptoms(Base):
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    patient = relationship(xxxx, back_populates="symptoms")
-    description = relationship(xxxx, backref=backref("info", lazy="joined"))
+    patient = relationship("Patient", back_populates="symptoms")
+    description = relationship("Symptoms", backref=backref("info", lazy="joined"))
 
 

@@ -18,6 +18,7 @@ def get_patients(db: Session):
 # Dagdagan mo na lang yung mga symptoms
 def populate_symptoms(db: Session):
     symptoms = [
+        "None",
         "Ubo (Cough)",
         "Sipon (Colds)",
         "Pagkawala ng Panlasa (Loss of Taste)",
@@ -50,8 +51,8 @@ def create_patients(db: Session, patient: PatientRequest):
     
     try:
         db_patient = Patient(
-            date_positive = patient.date_positive,
             name = patient.name,
+            date_positive = patient.date_positive,
             birthday = patient.birthday,
             sex = patient.sex,
             barangay = patient.barangay,
@@ -62,8 +63,9 @@ def create_patients(db: Session, patient: PatientRequest):
 
         db.add(db_patient)
         db.flush()
+        # print(patient.symptoms)
 
-        for i in xxxx:
+        for i in patient.symptoms:
             db_symptoms = PatientSymptoms(
                 symptom_id = i,
                 patient_id = db_patient.id
@@ -72,19 +74,24 @@ def create_patients(db: Session, patient: PatientRequest):
 
         db.flush()
         db.commit()
+
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=401, detail="Some fields have constraints!")
-
     return db_patient
 
 
 def format_patient(db_patient: Patient):
     _symptoms = []
 
-    for xxxx in xxxx:
-        if xxxx is not None:
-            _symptoms.append(xxxx)
+    symptoms = db_patient.symptoms
+    # print(symptoms)
+
+    for i in symptoms:
+        if symptoms is not None:
+            _symptoms.append(i.description)
+    # print(_symptoms) 
+
 
     return PatientResponse(
         id=db_patient.id,
@@ -98,3 +105,4 @@ def format_patient(db_patient: Patient):
         status=db_patient.status.value,
         symptoms=_symptoms
         )
+

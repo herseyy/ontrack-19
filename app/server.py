@@ -4,10 +4,16 @@ Main file
 from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+
+# from .schemas import PatientRequest, PatientResponse
+# from .models import Symptoms, Patient, PatientSymptoms
+
 
 from pydantic import BaseModel
 
@@ -37,6 +43,7 @@ app.add_middleware(
 
 
 templates = Jinja2Templates(directory="pages")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Wag mo muna tong pansinin, malilito ka lang
@@ -71,9 +78,9 @@ populate_table()
 # 2 - Load list of symptoms sa html page
 # 3 - Edit get_covid_form function
 # =======================================================================================
-@app.get("/")
-def index():
-    return {"Hello": "World"}
+@app.get("/", response_class=HTMLResponse)
+def index(request: Request):
+    return templates.TemplateResponse("results.html", {"request": request})
 
 
 # Ang ginagawa lang neto, sinasabe na yung response format ay galing sa schema na Symptoms
@@ -85,9 +92,8 @@ def get_symptoms(db: Session = Depends(get_db)):
     return symptoms
 
 
-
 @app.get("/patients/{patient_id}", response_model=schemas.PatientResponse, response_model_exclude={"name"})
-def get_patients_by_id(patient_id:int  ,db:Session = Depends(get_db)):
+def get_patients_by_id(patient_id:int, db:Session = Depends(get_db)):
     db_patient = crud.get_patient_by_id(db=db, id=patient_id)
     
     if db_patient is None:
@@ -95,21 +101,48 @@ def get_patients_by_id(patient_id:int  ,db:Session = Depends(get_db)):
 
     return crud.format_patient(db_patient)
 
-
 @app.get("/patients", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
 def read(db:Session = Depends(get_db)):
     patients = crud.get_patients(db)
-
     return [crud.format_patient(p) for p in patients]
 
+@app.delete("/patients/{patient_id}", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
+def delete(patient_id: int, db:Session = Depends(get_db)):
+    db_patient = crud.get_patient_by_id(db=db, id=patient_id)
 
-@app.delete("/{id}}")
-def read(id: int, db:Session = Depends(get_db)):
-    db.query(models.Patient).filter(models.Patient.id == id).delete()
+    if db_patient is None:
+        raise HTTPException(404, detail="User not found!")
+
+    patients = models.Patient
+    db.query(patients).filter(patients.id == patient_id).delete()
+    symptoms = models.PatientSymptoms
+    db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
+
     db.commit()
 
+    remaining_patients = crud.get_patients(db)
+    return [crud.format_patient(p) for p in remaining_patients]
 
 @app.post("/submit_form", response_model=schemas.PatientResponse, response_model_exclude={"name"})
 def get_covid_form(patient: schemas.PatientRequest, db: Session = Depends(get_db)):
     created_patient = crud.create_patients(db=db, patient=patient)
     return crud.format_patient(created_patient)
+
+
+# @app.patch("/patients/{patient_id}")
+# def update(patient_id: int, patient: schemas.PatientRequest, db: Session = Depends(get_db)):
+
+@app.get("/form", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+
+@app.get("/results", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("results.html", {"request": request})
+
+
+# @app.get("/items/{id}", response_class=HTMLResponse)
+# async def read_item(request: Request, id: str):
+#     return templates.TemplateResponse("item.html", {"request": request, "id": id})

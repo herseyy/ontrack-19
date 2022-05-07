@@ -20,9 +20,9 @@ class Symptoms(BaseModel):
 
 class PatientResponse(BaseModel):
     id: int
+    name: str
     date_positive: datetime.date
     birthday: datetime.date
-    name: str
     sex: str
     barangay: str = None
     contact_number: str = None
@@ -36,9 +36,9 @@ class PatientResponse(BaseModel):
 
 # userCreate
 class PatientRequest(BaseModel): 
+    name: str
     date_positive: datetime.date
     birthday: datetime.date
-    name: str
     sex: str
     barangay: str = None
     contact_number: str = None
@@ -46,6 +46,3 @@ class PatientRequest(BaseModel):
     symptoms: list[int]
     status: str = "infected"
 	
-
-	
-

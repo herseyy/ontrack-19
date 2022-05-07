@@ -1,12 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>TRIAL 1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<title></title>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700,300,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<script src="../static/js/fetch.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/results.css" />
 </head>
 <body>
+	<nav class="navbar navbar-default sticky-top navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">ONTRAC-19</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="nav navbar-nav ml-auto">
+<!-- 					<li class="hidden active">
+						<a href="#page-top"></a>
+					</li> -->
+					<li class="">
+						<a class="page-scroll nav-item nav-link" href="#about">Home</a>
+					</li>
+					<li class="">
+						<a class="page-scroll nav-item nav-link" href="#cases">About</a>
+					</li>
+					<li class="">
+						<a class="page-scroll nav-item nav-link" href="#about">Cases</a>
+					</li>
+					<li class="active">
+						<a class="page-scroll nav-item nav-link" href="#about">Form</a>
+					</li>
+				</ul>
+            </div>
+        </div>
+    </nav>
 
+    <div id="trial"></div>
 
+	<div class="container-fluid result_container">
+		<!-- <h2 class="text-center mt-5 mb-5">Hakdog</h2> -->
+		<div class="row-fluid">
+			<div class="col-12">
+				<div class="row row1">
+					<!-- <h2 class="text-center mt-5 mb-5">Hakdog</h2> -->
+					<div class="col-12 col-lg-4 col-md-6 top_l">
+						<div class="inside_col1">
+							<h3>Total Cases</h3>
+							<p class="active_patient">Active: {active}</p>
+							<p class="recovered_patient">Recovered: {recovered}</p>
+							<p class="deceased_patient">Deceased: {deceased}</p>
+						</div>
+					</div>
+					<div class="col-12 col-lg-8 col-md-6 top_r">
+						<div class="inside_col1">
+							<h3>Advanced Search</h3>
+							<form class="form_1" autocomplete="off">
+								<div class="form-group mb-3">
+									<label for="brgy">Barangay</label>
+									<input aria-label="Country" class="form-control autocomplete" id="myInput" name="myCountry" placeholder="Barangay" type="text"></input>
+								</div>
+							</form>
+							<form class="form_2">
+								<div class="form-group mb-3">
+									<label for="floatingInput">Date Positive</label>
+									<input type="date" class="form-control" id="floatingInput" placeholder="Date Positive">
+								</div>
+								<div class="form-group mb-3">
+									<label for="floatingAge">Select Age range</label>
+									<select class="form-select" id="floatingAge" aria-label="Floating label select example">
+										<option selected value="">All</option>
+										<option value="1">1-15</option>
+										<option value="2">15-30</option>
+										<option value="3">31-45</option>
+										<option value="4">46-60</option>
+										<option value="5">61-75</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row card row2 text-center justify-content-center">
+					<div class="card-header my-2">
+						<h4>Filter Control</h4>	
+					</div>
+					<div class="card-body">
+						<div class="row col-12 col-lg-9 row_filter mx-auto justify-content-center">
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Male</div>
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Female</div>
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Symptomatic</div>
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Asymptomatic</div>
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Active</div>
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Recovered</div>
+							<div class="btn btn-outline-primary active btn_col" data-mdb-ripple-color="dark" id="videoChip">Deceased</div>
+						</div>
+					</div>
+					<div class="card-footer text-left">
+						<span class="ml-3">Total Patients: {total patients}</span>
+					</div>
+				</div>
+				<div class="row row3" id="patient">
+					<!-- patientssss -- index.js -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../static/js/fetch_patients.js"></script>
+	<script src="../static/js/barangaySearch.js"></script>
 
 </body>
 </html>
