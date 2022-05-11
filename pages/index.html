@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>TRIAL 1</title>
+	<title> Form </title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -9,18 +9,23 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<script src="{{ url_for('static', path='/js/fetch.js') }}"></script>
-	<script src="{{ url_for('static', path='/js/index.js') }}"></script>
-	<link href="{{ url_for('static', path='/css/index.css') }}" rel="stylesheet">
-	<!-- <script src="../static/js/fetch.js"></script> -->
-	<!-- <script src="../static/js/index.js"></script> -->
-	<!-- <link href="../static/css/index.css"></head> -->
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+
+
+	<script src="../static/js/fetch.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/index.css">
 
 
 </head>
 <!-- <body>PUT YOUR HTML FILE HERE</body> -->
-<!-- <script src="../js/symptoms.js"></script> -->
 
 <body>
 	<nav class="navbar navbar-default sticky-top navbar-expand-lg navbar-dark">
@@ -37,138 +42,101 @@
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="#about">Home</a>
 					</li>
+					<li class="active">
+						<a class="page-scroll nav-item nav-link" href="#about">Form</a>
+					</li>
+					<li class="">
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/results">Cases</a>
+					</li>
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="#cases">About</a>
 					</li>
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="#about">Cases</a>
-					</li>
-					<li class="active">
-						<a class="page-scroll nav-item nav-link" href="#about">Form</a>
+						<a class="page-scroll nav-item nav-link" href="#about">More</a>
 					</li>
 				</ul>
             </div>
         </div>
     </nav>
 
-	<div class="container">
-		<h2 class="text-center mt-5 mb-5">Hakdog</h2>
-		<span id="message"></span>
-		<form id="sample_form" method="post" action="results.html">
-			<div class="card">
-				<div class="card-header">
-					Covid Form
+<!-- <div class="popup">
+	<h2>This is my popup</h2>
+	<p>Lorem ipsum dolor sit amet consectetur, adipiscing elit lacinia mus, sapien nibh imperdiet tempus. Vitae massa semper mi sagittis a cum cursus fusce per, gravida tellus metus purus litora nam ultricies donec, nibh dis ligula ad facilisi penatibus condimentum aenean.</p>
+
+	<p>Aliquet odio id vulputate ad sodales blandit tempor, neque facilisi turpis dis curabitur ac velit potenti, montes bibendum pretium lacinia lobortis aenean. Orci integer eu tincidunt  scelerisque iaculis, porta elementum sagittis proin penatibus magna tempor.</p>
+	<button name="close">Close</button>
+</div> -->
+    
+	<div class="wrapper" id="app">
+		<div class="card-form form" method="POST">
+			<div class="card-form__inner">
+				<div class="card-form-header text-center">
+					<h3>COVID-19 Form</h3>
 				</div>
-				<div class="card-body">
-					<div class="form-text"><span class="text-danger">* Required</span></div><br>
-					<div class="form-row">
-						<div class="form-group col-12">
-							<label class="ml-2" for="patient_name">Patient's Name <span class="text-danger">*</span></label>
-							<input type="text" name="patient_name" id="patient_name" class="form-control form_data" placeholder="Patient's Name">
-							<span id="patient_name_error" class="text-danger"></span>
-						</div>
-						<div class="form-group col-12 col-sm-6">
-							<label class="ml-2" for="date_positive">Date Positive <span class="text-danger">*</span></label>
-							<input type="date" name="date_positive" id="date_positive" class="form-control form_data">
-							<span id="date_positive_error" class="text-danger"></span>
-						</div>
-						<div class="form-group col-12 col-sm-6">
-							<label class="ml-2" for="patient_birthday">Birthday<span class="text-danger">*</span></label>
-							<input type="date" name="patient_birthday" id="patient_birthday" class="form-control form_data">
-							<span id = "message" style="color:red"> </span>   
-							<span id="patient_age_error" class="text-danger"></span>
-						</div>
-						<div class="form-group col-12 col-sm-6">
-							<label class="ml-2" for="patient_sex">Sex <span class="text-danger">*</span></label>
-							<select name="patient_sex" id="patient_sex" class="form-control form_data">
-								<option value="">Choose your pokemon</option>
-							    <option value="male">Male</option>
-							    <option value="female">Female</option>
-							</select>
-							<span id="patient_sex_error" class="text-danger"></span>
-						</div>
-
-						<form class="form_1" autocomplete="off">
-							<div class="form-group mb-3 col-12 col-sm-6">
-								<label for="brgy">Barangay</label>
-								<input aria-label="Country" class="form-control autocomplete" id="myInput" name="myCountry" placeholder="Barangay" type="text"></input>
-							</div>
-						</form>				
-
-						<!-- <div class="form-group col-12 col-sm-6">
-							<label class="ml-2" for="patient_brgy">Barangay <span class="text-danger">*</span></label>
-							<select name="patient_brgy" id="patient_brgy" class="form-control form_data">
-								<option value="">Choose your pokemon</option>
-							    <option value="mateuna">Mateuna</option>
-							    <option value="ipilan">Ipilan</option>
-							    <option value="wakas">Wakas</option>
-							    <option value="lalo">Lalo</option>
-							</select>
-							<span id="patient_brgy_error" class="text-danger"></span>
-						</div> -->
-						<div class="form-group col-12 col-sm-6">
-							<label class="ml-2" for="patient_contact_number">Contact Number <span class="text-danger">*</span></label>
-							<input type="number" name="patient_contact_number" id="patient_contact_number" class="form-control form_data" placeholder="Contact Number">
-							<span id="patient_contact_number_error" class="text-danger"></span>
-						</div>
-						<div class="form-group col-12 col-sm-6">
-							<label class="ml-2" for="patient_asymptomatic">Are you asymptomatic or not? <span class="text-danger">*</span></label>
-							<select name="patient_asymptomatic" id="patient_asymptomatic" class="form-control form_data" onchange="showDiv('hidden_div', this)">
-								<option value="">Choose your pokemon</option>
-							    <option value="symptomatic">Symptomatic</option>
-							    <option value="asymptomatic">Asymptomatic</option>
-							</select>
-							<span id="patient_condition_error" class="text-danger"></span>
-						</div>
+				<div class="card-input">
+					<label for="patient_name" class="card-input__label">Name</label>
+					<input type="text" id="patient_name" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+				</div>
+				<div class="card-input">
+					<label for="date_positive" class="card-input__label">Date Positive</label>
+					<input type="date" id="date_positive" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+				</div>
+				<div class="card-input">
+					<label for="patient_birthday" class="card-input__label">Birthday</label>
+					<input type="date" id="patient_birthday" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+				</div>
+				<div class="card-input">
+					<label for="patient_sex" class="card-input__label">Sex</label>
+					<select name="patient_sex" id="patient_sex" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+						<option value=""></option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select>
+				</div>
+				<div class="card-input">
+					<label for="myInput" class="card-input__label">Barangay</label>
+					<input type="text" id="myInput" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+				</div>
+				<div class="card-input">
+					<label for="patient_contact_number" class="card-input__label">Contact Number</label>
+					<input type="number" id="patient_contact_number" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName">
+				</div>
+				<div class="card-input">
+					<label for="patient_asymptomatic" class="card-input__label">Are you symptomatic?</label>
+					<select name="patient_asymptomatic" id="patient_asymptomatic" class="card-input__input" onchange="showDiv('hidden_div', this)" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+						<option value=""></option>
+						<option value="symptomatic">Symptomatic</option>
+						<option value="asymptomatic">Asymptomatic</option>
+					</select>
+				</div>
+				<div id="hidden_div">
+					<div class="form-row bg-light border border-bottom-0 mx-3">
+						<div class="col text-center py-1">Symptoms</div>
 					</div>
-
-					<div id="hidden_div">
-						<div class="form-row bg-light border border-bottom-0 mx-3">
-							<div class="col text-center py-1">Symptoms</div>
-						</div>
-						<div class="form-row border mx-3">
-							<div class="form-group col border-right my-3 ml-2" id="parent_div">
-								
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group m-3">
-						<div class="">Health Status <span class="text-danger">*</span></div>
-						<div class="form-check ml-3 mt-2">
-							<input type="radio" name="patient_status" id="patient_positive" class="form-check-input form_data status" value="positive">
-							<label for="patient_positive" class="form-check-label ">I am Positive</label>
-						</div>
-						<div class="form-check ml-3 mt-2">
-							<input type="radio" name="patient_status" id="patient_negative" class="form-check-input form_data status" value="negative">
-							<label for="patient_negative" class="form-check-label">I am Negative</label>
-						</div>
-						<div class="form-check ml-3 mt-2">
-							<input type="radio" name="patient_status" id="patient_deceased" class="form-check-input form_data status" value="deceased">
-							<label for="patient_deceased" class="form-check-label">Deceased</label>
-						</div>
+					<div class="form-row border mx-3">
+						<div class="form-group col border-right my-3 ml-2" id="parent_div"></div>
 					</div>
 				</div>
-				<div class="card-footer">
-					<div class="form-group">
-						<div class="form-check mx-3">
-							<input class="form-check-input" type="checkbox" id="check_all">
-							<label class="form-check-label" for="info_check">
-								All info above is correct <span class="text-danger">*</span>
-							</label>
-							<span id="info_check_error" class="text-danger"></span>
-						</div>
-					</div>
-					<input type="submit" id="btn" class="btn btn-success px-4 py-2"></input>
-					<div id="msg">
-						<pre></pre>
-					</div>
+				<div class="card-input">
+					<label for="patient_status" class="card-input__label">Health Status</label>
+					<select name="patient_status" id="patient_status" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+						<option value="infected">Positive</option>
+						<option value="recovered">Recovered</option>
+						<option value="died">Deceased</option>
+					</select>
 				</div>
+				<button id="btn" class="btn btn-primary">
+				Submit
+				</button>
 			</div>
-		</form>
-		<!-- <script src="../static/js/form_to_jsonObject.js"></script> -->
-		<script src="{{ url_for('static', path='/js/form_to_jsonObject.js') }}"></script>
-		<script src="../static/js/barangaySearch.js"></script>
+		</div>
 	</div>
+	<script src="../static/js/barangaySearch.js"></script>	
+	<script src="../static/js/index.js"></script>
+	<script src="../static/js/form_to_jsonObject.js"></script>
 </body>
 </html>
+
+
+
+

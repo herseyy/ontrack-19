@@ -6,60 +6,40 @@ function getPatients() {
     	if (!response.ok) {
       		throw Error("ERROR");
     	}
-    	return response .json()
+    	return response.json()
   	}).then(data => {
-    	results = document.getElementById("patient");
+    	results = document.getElementById("patients");
 
     	data.map(patient => {
 			// console.log(patient.id)
 
-			let dv1 = document.createElement("div");
-			let dv2 = document.createElement("div");
-
-			let dv3 = document.createElement("div");
-			let h5 = document.createElement("h5");
-			let dv4 = document.createElement("div");
-			let p1 = document.createElement("p");
-			let p2 = document.createElement("p");
-			let p3 = document.createElement("p");
-			let p4 = document.createElement("p");
-			let p5 = document.createElement("p");
-			let p6 = document.createElement("p");
+			let tr = document.createElement('tr')
+			let th_id = document.createElement('th')
+			let th_date = document.createElement('th')
+			let th_brgy = document.createElement('th')
+			let th_sex = document.createElement('th')
+			let th_age = document.createElement('th')
+			let th_symptomatic = document.createElement('th')
+			let th_status = document.createElement('th')
 
 
+			th_id.innerHTML = patient.id;
+			th_date.innerHTML = patient.date_positive;
+			th_brgy.innerHTML = patient.barangay
+			th_sex.innerHTML = patient.sex;
+			th_age.innerHTML = patient.birthday;
+			th_symptomatic.innerHTML = patient.asymptomatic
+			th_status.innerHTML = patient.status;
 
-			dv1.className = "col-12 col-lg-4 patient-container";
-			dv2.className = "patient py-4";
-			dv3.className = "result-user";
-			h5.className = "patient_id text-center";
-			h5.innerHTML = "Patient " + patient.id;
-			dv4.className = "result-text";
-			p1.innerHTML = "Date Positive: " + patient.date_positive;
-			p2.innerHTML = "Age: " + patient.birthday;
-			p3.innerHTML = "Sex: " + patient.sex;
-			p4.innerHTML = "Barangay: " + patient.barangay
-			p5.innerHTML = patient.asymptomatic;
-			p6.innerHTML = "Health Status: " + patient.status;
+			tr.append(th_id);
+			tr.append(th_date);
+			tr.append(th_brgy);
+			tr.append(th_sex);
+			tr.append(th_age);
+			tr.append(th_symptomatic);
+			tr.append(th_status);
 
-
-			dv4.append(p1);
-			dv4.append(p2);
-			dv4.append(p3);
-			dv4.append(p4);
-			dv4.append(p5);
-			dv4.append(p6);
-
-			dv3.append(h5);
-
-			dv2.append(dv3);
-			dv2.append(dv4);
-
-			dv1.append(dv2);
-
-			results.append(dv1);
-			// results.append(dv2);
-
-			console.log(results);
+			results.append(tr)
 		});
 	}).catch((error) => {
 		throw Error("ERROR")

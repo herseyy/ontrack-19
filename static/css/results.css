@@ -1,5 +1,24 @@
+html {
+    height: 100%;
+}
+
+
 body {
- background-color: #f2f3f8;
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #2781f0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat:no-repeat;
+    background: -webkit-linear-gradient(180deg,#303395,#2781f0);
+    background: -moz-linear-gradient(180deg,#303395,#2781f0);
+    background: -ms-linear-gradient(180deg,#303395,#2781f0);
+    background: -o-linear-gradient(180deg,#303395,#2781f0);
+    background: linear-gradient(180deg,#303395,#2781f0);
 }
 
 
@@ -49,13 +68,13 @@ body {
 }
 
 .navbar-default .navbar-nav {
-	padding: 2px 0 2px 0;
+    padding: 2px 0 2px 0;
 }
 
 .navbar-default .navbar-nav .nav-link{
-	/*border: red solid 1px;*/
-	padding: 8px 10px 8px 10px;
-	color: #fff;
+    /*border: red solid 1px;*/
+    padding: 8px 10px 8px 10px;
+    color: #fff;
 }
 
 .navbar-default .navbar-nav .nav-link:hover
@@ -64,13 +83,13 @@ body {
     color: #1ee2e7;
 }
 .navbar-default .navbar-nav .active .nav-link:hover {
-	color: #fff;
+    color: #fff;
 }
 
 .navbar-default .navbar-nav .active{
     border-radius: 5px;
     color: #fff;
-    background-color: #1ee2e7;
+    background: linear-gradient(180deg,#303395,#2781f0);
     /*border: red solid 1px;*/
 }
 
@@ -85,101 +104,60 @@ body {
     margin-right: 10px;
 }
 
-.result_container {
-    border: green solid 1px;
-    padding: 20px;
+
+main {
+    /*border: 1px solid yellow;*/
 }
 
-/*.row {
-    border: blue solid 1px;
-}
-*/
-.row-fluid {
-    border: red solid 1px;
-/*    background-color: white;
-    border-radius: 10px;*/
-/*    padding: 25px 15px 15px 15px;
-    margin: 10px;*/
-}
-
-.row1 {
-    border: black solid 1px;
-    background-color: white;
-    border-radius: 10px;
-    padding: 25px 15px 15px 15px;
-    margin: 10px;
-}
-
-.inside_col1 {
-    /*border: black solid 1px;*/
-    /*padding: 20px;*/
-    /*margin-right: 10px;*/
-}
-
-.inside_col1 h3 {
-    border-bottom: black solid 1px;
-}
-
-.inside_col1 p {
-    font-size: 20px;
-    margin-top: 30px;
-    /*border: black solid 1px;*/
-}
-
-.row2 {
-    border: black solid 1px;
-    /*background-color: white;*/
-    /*border-radius: 10px;*/
-    /*padding: 25px 15px 15px 15px;*/
-    margin: 10px;
+/*   search box   */
+.searchBox {
+    background: #f1f1f1;
+    padding: 2rem;
+    border: solid 1px #c3c9d8;
+    border-radius: 7px;
+    display: block;
+    margin: 50px 0 38px 0;
+    /*width: 100%;*/
+    border: 1px solid green;  
 }
 
 
-.row_filter {
-    border: red solid 1px;
+ .searchBox .filtersContainer {
+   position: relative;
+   background: #ddd;
+   color: #333;
+   padding: 0.80rem;
+   margin-top: 15px;
+   /*display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-gap: 15px;*/
+   align-items: center;
+   border-radius: 15px;
 }
 
-.row_col {
-    border: green solid 1px;
-    padding:0px;
-}
 
-.btn_col {
-    border: red solid 1px;
-    width: 125px;
-    margin: 8px;
-    /*padding: 10px 15px;*/
-}
-
-@media(max-width:768px) {
-    .btn_col {
-        font-size: 12px;
-        border: red solid 1px;
-        width: 100px;
-        margin: 10px;
-        /*margin: 10px;*/
-        /*padding: 10px 15px;*/
-    }
-}
-
-.row3 {
-    border: blue solid 1px;
-    background-color: white;
-    /*border-radius: 10px;*/
-    padding: 25px 0px 15px 0px;
-    margin: 10px;
-}
-
-.patient-container {
-    border: green solid 1px;
-    margin-top: 10px;
-}
-
-.patient {
-    border: orange solid 1px;
-    border-radius: 10px;
-}
-
-.result-text {
-    padding-left: 40px;
-}
+/* .searchBox .filtersContainer::before {
+   content: '';
+   position: absolute;
+   border-width: 15px;
+   border-style: solid;
+   border-color: transparent;
+   top: 0;
+   right: 90px;
+   {{ border-right-color: #dddddd;}}
+   border-bottom-color: #ddd;
+   -webkit-transform: translateY(-100%);
+   transform: translateY(-100%);
+}*/
+/* .resultsContainer {
+   background: #fff;
+   padding: 2rem;
+   border-radius: 15px;
+   border: solid 1px #c3c9d8;
+   display: block;
+   margin: 20px auto;
+   width: 90%;
+}*/
+/* .form-control {
+   border-radius: 15px;
+}*/

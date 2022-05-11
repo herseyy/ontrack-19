@@ -21,7 +21,7 @@ from pydantic import BaseModel
 models.Base.metadata.create_all(bind=engine)
 # Main app object
 app = FastAPI()
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 origins = [
     "http://localhost.com",
@@ -43,7 +43,6 @@ app.add_middleware(
 
 
 templates = Jinja2Templates(directory="pages")
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Wag mo muna tong pansinin, malilito ka lang
@@ -78,9 +77,9 @@ populate_table()
 # 2 - Load list of symptoms sa html page
 # 3 - Edit get_covid_form function
 # =======================================================================================
-@app.get("/", response_class=HTMLResponse)
-def index(request: Request):
-    return templates.TemplateResponse("results.html", {"request": request})
+@app.get("/")
+def index():
+    return {"hello": "world"}
 
 
 # Ang ginagawa lang neto, sinasabe na yung response format ay galing sa schema na Symptoms
@@ -114,9 +113,11 @@ def delete(patient_id: int, db:Session = Depends(get_db)):
         raise HTTPException(404, detail="User not found!")
 
     patients = models.Patient
-    db.query(patients).filter(patients.id == patient_id).delete()
+    # db.query(patients).filter(patients.id == patient_id).delete()
+    db.query(patients).delete()
     symptoms = models.PatientSymptoms
-    db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
+    # db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
+    db.query(symptoms).delete()
 
     db.commit()
 
@@ -142,7 +143,3 @@ async def submit(request: Request):
 async def submit(request: Request):
     return templates.TemplateResponse("results.html", {"request": request})
 
-
-# @app.get("/items/{id}", response_class=HTMLResponse)
-# async def read_item(request: Request, id: str):
-#     return templates.TemplateResponse("item.html", {"request": request, "id": id})
