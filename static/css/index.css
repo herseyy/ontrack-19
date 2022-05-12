@@ -1,75 +1,64 @@
-/*
-.pop-up {
-    position: fixed;
-    margin: 5% auto;
-    left: 0;
-    right: 0;
-    z-index: 2;
+#inner_div h2 {
+   font-family: 'Srisakdi', cursive;
+   font-weight: 400;
+   font-size: 45px;
+   text-align: center;
+   color: #666;
+   margin: 0 0 30px 0;
+}
+.popup button {
+   font-family: 'Montserrat', sans-serif;
 }
 
-.box {
-    background-color: whitesmoke;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-    position: relative;
-    -webkit-box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
-    -moz-box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
-    box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
+
+#inner_div p {
+   color: #666;
 }
 
-.button {
-    margin 0 auto;
-  background-color: #FF8566;
-    margin-bottom: 33px;
+.popup button {
+   background: #9ad3de;
+   border: 0;
+   border-radius: 4px;
+   padding: 18px 30px;
+   font-size: 18px;
+   color: #fff;
+   cursor: pointer;
 }
 
-.button:hover {
-    background-color: #7CCF29;
-    -webkit-box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
-    -moz-box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
-    box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
+.popup button:focus {
+   outline: none;
 }
 
-.close-button {
-    transition: all 0.5s ease;
-    position: absolute;
-    background-color: #FF9980;
-    padding: 1.5px 7px;
-    left: 0;
-    margin-left: -10px;
-    margin-top: -9px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    color: white;
-    -webkit-box-shadow: -4px -2px 6px 0px rgba(0,0,0,0.1);
-    -moz-box-shadow: -4px -2px 6px 0px rgba(0,0,0,0.1);
-    box-shadow: -3px 1px 6px 0px rgba(0,0,0,0.1);
+.popup button:hover {
+   background: #c0e4eb;
 }
 
-.close-button:hover {
-    background-color: tomato;
-    color: #fff;
+
+.popup {
+  background: rgba(100, 100, 100, 0.5);
+  position: fixed;
+  display: none;
+/*  z-index: 5000;*/
+  height: auto;
+  /*width: 100%;*/
+  left: 0;
+  top: 0;
+  max-width: 600px;
+  width: 70%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  padding: 30px;
+  z-index: 5001;
+  text-align: center;
+  border: 5px solid #9ad3de;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
 }
 
-h3 {
-    text-align: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    color: #fff;
-    background-color: #FF704D;
-}
 
-p {
-    padding: 20px 65px 10px 65px;
-    color: dimgray;
-}
-
-h1 {
-    color: dimgray;
-    font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
-}*/
 
 
 #hidden_div {
@@ -167,6 +156,13 @@ h1 {
 }
 
 
+.blur   {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+}
 
 
 .card-form-header {

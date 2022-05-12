@@ -52,6 +52,7 @@ function getSymptoms() {
 	}).catch((error) => {
 		throw Error("ERROR")
 	});
+
 }
 
 getSymptoms()

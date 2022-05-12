@@ -100,10 +100,19 @@ def get_patients_by_id(patient_id:int, db:Session = Depends(get_db)):
 
     return crud.format_patient(db_patient)
 
+
+# query parameterrrrr
+
 @app.get("/patients", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
 def read(db:Session = Depends(get_db)):
     patients = crud.get_patients(db)
     return [crud.format_patient(p) for p in patients]
+
+
+
+
+
+
 
 @app.delete("/patients/{patient_id}", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
 def delete(patient_id: int, db:Session = Depends(get_db)):

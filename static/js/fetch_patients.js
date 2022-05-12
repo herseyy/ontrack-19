@@ -8,7 +8,7 @@ function getPatients() {
     	}
     	return response.json()
   	}).then(data => {
-    	results = document.getElementById("patients");
+    	let results = document.getElementById("patients");
 
     	data.map(patient => {
 			// console.log(patient.id)
