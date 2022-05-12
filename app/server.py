@@ -7,6 +7,10 @@ from sqlalchemy.orm import Session
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from datetime import date
+
+
+
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
@@ -67,6 +71,11 @@ def populate_table():
     crud.populate_symptoms(db)
     db.close()
 
+ 
+def age(birthdate):
+    today = date.today()
+    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    return age
 
 populate_table()
 
@@ -109,8 +118,77 @@ def read(db:Session = Depends(get_db)):
     return [crud.format_patient(p) for p in patients]
 
 
+@app.get("/filter")
+def filter(filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
+    patients = crud.get_patients(db)
+
+    filtered_patients = []
+
+    for p in patients:
+
+        age_ = age(p.birthday)
+        if filter.asymptomatic == "asymptomatic":
+            asymptomatic = True
+        if filter.asymptomatic == "symptomatic":
+            asymptomatic = False
+        else:
+            asymptomatic = ''
 
 
+        if filter.barangay == p.barangay:
+            if p not in filtered_patients:
+                filtered_patients.append(p)
+
+        if filter.date_positive == p.date_positive:
+            if p not in filtered_patients:
+                filtered_patients.append(p)
+
+        if filter.sex == p.sex:
+            if p not in filtered_patients:
+                filtered_patients.append(p)
+
+        if filter.age_range == 1:
+            if age_ <= 15 and age_ >= 1:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+        if filter.age_range == 16:
+            if age_ <= 30 and age_ >= 16:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+        if filter.age_range == 31:
+            if age_ <= 45 and age_ >= 31:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+        if filter.age_range == 46:
+            if age_ <= 60 and age_ >= 46:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+        if filter.age_range == 61:
+            if age_ <= 75 and age_ >= 61:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+        if filter.age_range == 76:
+            if age_ <= 90 and age_ >= 76:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+        if filter.age_range == 91:
+            if age_ <= 105 and age_ >= 91:
+                if p not in filtered_patients:
+                    filtered_patients.append(p)
+
+        if asymptomatic == p.asymptomatic:
+            if p not in filtered_patients:
+                filtered_patients.append(p)
+
+        if filter.status == p.status:
+            if p not in filtered_patients:
+                filtered_patients.append(p)
+
+    print(len(filtered_patients))
+    return filtered_patients
+    # print(filter.barangay)
+    # return{"sad": "sds"}
+    # return [crud.format_patient(p) for p in patients]
 
 
 

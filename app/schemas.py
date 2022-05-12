@@ -8,6 +8,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+
 class Symptoms(BaseModel):
     id: int
     description: str
@@ -46,3 +47,10 @@ class PatientRequest(BaseModel):
     symptoms: list[int]
     status: str = "infected"
 	
+class PatientFilter(BaseModel):
+    barangay: str = "all"
+    date_positive: Optional[datetime.date]
+    sex: str = "all"
+    age_range: Optional[int]
+    asymptomatic: str = "all"
+    status: str = "all"

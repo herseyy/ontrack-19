@@ -35,6 +35,7 @@ function fetch_post() {
 		var bool_asymptomatic = false
 		// console.log(false)
 	}
+	
 	var inp_obj = {
 		"name" : name,
 		"date_positive" : input_date_positive,
