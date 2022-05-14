@@ -4,15 +4,41 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
 from .models import Symptoms, Patient, PatientSymptoms
-from .schemas import PatientRequest, PatientResponse
-
+from .schemas import PatientRequest, PatientResponse, PatientFilter
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 def get_symptoms(db: Session):
     return db.query(Symptoms).all()
 
 
-def get_patients(db: Session):
-    return db.query(Patient).all()
+
+
+
+def get_patients(db: Session, p_filter: PatientFilter = None):
+    query = db.query(Patient)
+
+    if p_filter == None:
+        return query.all()
+
+    if p_filter.barangay is not None:
+        query = query.filter(Patient.barangay == p_filter.barangay)
+    # print(type(p_filter.date_positive))
+    if p_filter.date_positive is not None:
+        query = query.filter(Patient.date_positive == p_filter.date_positive)
+    if p_filter.sex is not None:
+        query = query.filter(Patient.sex == p_filter.sex)
+    if p_filter.lowerAge is not None:
+
+    if p_filter.upperAge is not None:
+        
+    if p_filter.asymptomatic is not None:
+        query = query.filter(Patient.asymptomatic == p_filter.asymptomatic)    
+    if p_filter.status is not None:
+        query = query.filter(Patient.status == p_filter.status)
+
+
+    return query.all()
 
 
 # Dagdagan mo na lang yung mga symptoms

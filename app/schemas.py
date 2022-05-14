@@ -48,9 +48,10 @@ class PatientRequest(BaseModel):
     status: str = "infected"
 	
 class PatientFilter(BaseModel):
-    barangay: str = "all"
-    date_positive: Optional[datetime.date]
-    sex: str = "all"
-    age_range: Optional[int]
-    asymptomatic: str = "all"
-    status: str = "all"
+    barangay: str = None
+    date_positive: Optional[datetime.date] = None
+    sex: str = None
+    upperAge: Optional[int] = None 
+    lowerAge: Optional[int] = None
+    asymptomatic: int = None
+    status: str = None
