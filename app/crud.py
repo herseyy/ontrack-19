@@ -1,5 +1,7 @@
+from dateutil.relativedelta import relativedelta
 from fastapi import HTTPException
 
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
@@ -23,15 +25,17 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
 
     if p_filter.barangay is not None:
         query = query.filter(Patient.barangay == p_filter.barangay)
-    # print(type(p_filter.date_positive))
     if p_filter.date_positive is not None:
         query = query.filter(Patient.date_positive == p_filter.date_positive)
     if p_filter.sex is not None:
         query = query.filter(Patient.sex == p_filter.sex)
-    if p_filter.lowerAge is not None:
-
-    if p_filter.upperAge is not None:
+    if p_filter.lowerAge is not None and p_filter.upperAge is not None:
+        lower_date = datetime.now() - relativedelta(years=p_filter.upperAge)
+        upper_date = datetime.now() - relativedelta(years=p_filter.lowerAge)
         
+        query = query.filter(
+            and_((Patient.birthday >= lower_date), 
+            (Patient.birthday <= upper_date)))
     if p_filter.asymptomatic is not None:
         query = query.filter(Patient.asymptomatic == p_filter.asymptomatic)    
     if p_filter.status is not None:
