@@ -22,7 +22,7 @@
 
 
 	<script src="../static/js/fetch.js"></script>
-	<link rel="stylesheet" type="text/css" href="../static/css/index.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/update.css">
 
 
 </head>
@@ -73,7 +73,7 @@
 				<div class="card-form-header text-center">
 					<h3>COVID-19 Form</h3>
 				</div>
-				<div class="card-input">
+				<!-- <div class="card-input">
 					<label for="patient_name" class="card-input__label">Name</label>
 					<input type="text" id="patient_name" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
 				</div>
@@ -100,16 +100,26 @@
 				<div class="card-input">
 					<label for="patient_contact_number" class="card-input__label">Contact Number</label>
 					<input type="number" id="patient_contact_number" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName">
-				</div>
+				</div> -->
 				<div class="card-input">
+					<label for="patient_status" class="card-input__label">Health Status</label>
+					<select name="patient_status" id="patient_status" class="card-input__input" onchange="showDiv1('hidden_div1', this)"
+					v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+						<option value=""></option>
+						<option value="infected">Positive</option>
+						<option value="recovered">Recovered</option>
+						<option value="died">Deceased</option>
+					</select>
+				</div>
+				<div class="card-input" id="hidden_div1">
 					<label for="patient_asymptomatic" class="card-input__label">Are you symptomatic?</label>
-					<select name="patient_asymptomatic" id="patient_asymptomatic" class="card-input__input" onchange="showDiv('hidden_div', this)" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+					<select name="patient_asymptomatic" id="patient_asymptomatic" class="card-input__input" onchange="showDiv2('hidden_div2', this)" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
 						<option value=""></option>
 						<option value="symptomatic">Symptomatic</option>
 						<option value="asymptomatic">Asymptomatic</option>
 					</select>
 				</div>
-				<div id="hidden_div">
+				<div id="hidden_div2">
 					<div class="form-row bg-light border border-bottom-0 mx-3">
 						<div class="col text-center py-1">Symptoms</div>
 					</div>
@@ -117,21 +127,13 @@
 						<div class="form-group col border-right my-3 ml-2" id="parent_div"></div>
 					</div>
 				</div>
-				<div class="card-input">
-					<label for="patient_status" class="card-input__label">Health Status</label>
-					<select name="patient_status" id="patient_status" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
-						<option value="infected">Positive</option>
-						<option value="recovered">Recovered</option>
-						<option value="died">Deceased</option>
-					</select>
-				</div>
 				<button data-js="open" id="btn-check" class="btn btn-primary">
 				Submit
 				</button>
 			</div>
 		</div>
 	</div>
-	<script src="../static/js/barangaySearch.js"></script>
+	<script src="../static/js/update.js"></script>
 	<!-- <script src="../static/js/index.js"></script> -->
 	<!-- <script src="../static/js/form_to_jsonObject.js"></script> -->
 </body>

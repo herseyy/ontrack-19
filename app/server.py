@@ -101,10 +101,21 @@ def get_patients_by_id(patient_id:int, db:Session = Depends(get_db)):
     if db_patient is None:
         raise HTTPException(404, detail="User not found!")
 
+
     return crud.format_patient(db_patient)
 
 
-# query parameterrrrr
+# update
+@app.patch("/update/{patient_id}", response_model=schemas.PatientResponse, response_model_exclude={"name"})
+def update(info: schemas.PatientUpdate, patient_id:int, db:Session = Depends(get_db)):
+    db_patient = crud.update_patient(db=db, id=patient_id, info=info)
+    
+    if db_patient is None:
+        raise HTTPException(404, detail="User not found!")
+
+    # return crud.format_patient(db_patient)
+    return crud.format_patient(db_patient)
+
 
 @app.get("/patients", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
 def read(db:Session = Depends(get_db)):
@@ -112,7 +123,8 @@ def read(db:Session = Depends(get_db)):
     return [crud.format_patient(p) for p in patients]
 
 
-@app.get("/filter")
+# query parameterrrrr
+@app.get("/filter", response_model=list[schemas.PatientResponse], response_model_exclude={"name", "contact_number", "symptoms"})
 def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
     patients = crud.get_patients(db, p_filter)
     return [crud.format_patient(p) for p in patients]
@@ -143,13 +155,10 @@ def get_covid_form(patient: schemas.PatientRequest, db: Session = Depends(get_db
     return crud.format_patient(created_patient)
 
 
-# @app.patch("/patients/{patient_id}")
-# def update(patient_id: int, patient: schemas.PatientRequest, db: Session = Depends(get_db)):
 
 @app.get("/form", response_class=HTMLResponse)
 async def submit(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
 
 
 @app.get("/results", response_class=HTMLResponse)

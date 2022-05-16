@@ -55,3 +55,7 @@ class PatientFilter(BaseModel):
     lowerAge: Optional[int] = None
     asymptomatic: int = None
     status: str = None
+
+
+class PatientUpdate(BaseModel):
+    status: str = None

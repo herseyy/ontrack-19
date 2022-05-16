@@ -58,17 +58,22 @@
 						Barangay: 
 					</label>
 					<div class="input-group">
-						<input placeholder="All" type="text" id="myInput" class="form-control col-12 col-lg-9">
-						<div class="input-group-append mx-1 mb-1">
-							<div class="input-group-btn">
-								<button class="btn btn-dark" onclick="getResults()">
+						<div class='col-12 col-lg-9'>
+							<div class="row px-3">
+								<input placeholder="" type="text" id="myInput" class="form-control col-9 col-lg-11">
+								<button class="btn btn-dark col-3 col-lg-1" onclick="fetch_filter()">
 									<i class="far fa-search fa-md"></i>
 								</button>
 							</div>
+							<div id="brgylist"></div>
 						</div>
-						<button class="btn btn-info col-12 col-lg-3" onclick="toggleFilters()">Advanced search
-						</button>
+						<div class='col-12 col-lg-3 dsa'>
+							<button class="btn btn-info col-12" onclick="toggleFilters()">Advanced search
+							</button>
+						</div>
 					</div>
+
+
 				</div>
 			</div>
 
@@ -88,8 +93,8 @@
 							<i class="fas fa-file"></i>
 							Sex: 
 						</label>
-						<select id="Sex" class="form-control">
-							<option value="all">All</option>
+						<select id="sex" class="form-control">
+							<option value="">All</option>
 							<option value="male">Male</option>
 							<option value="female">Female</option>
 						</select>
@@ -101,14 +106,14 @@
 							Age Range: 
 						</label>
 						<select id="age" class="form-control">
-							<option value="all">All</option>
-							<option value="1"> 1-15 </option>
-							<option value="16"> 16-30 </option>
-							<option value="31"> 31-45 </option>
-							<option value="46"> 46-60 </option>
-							<option value="61"> 61-75 </option>
-							<option value="76"> 76-90 </option>
-							<option value="91"> 91-105 </option>
+							<option value="">All</option>
+							<option value="0,15"> 0-15 </option>
+							<option value="16,30"> 16-30 </option>
+							<option value="31,45"> 31-45 </option>
+							<option value="46,60"> 46-60 </option>
+							<option value="61,75"> 61-75 </option>
+							<option value="76,90"> 76-90 </option>
+							<option value="91,105"> 91-105 </option>
 						</select>
 					</div>
 
@@ -118,9 +123,9 @@
 							Filter: 
 						</label>
 						<select id="asymptomatic" class="form-control">
-							<option value="all">All</option>
-							<option value="symptomatic"> Symptomatic </option>
-							<option value="asymptomatic"> Asymptomatic </option>
+							<option value="">All</option>
+							<option value="0"> Symptomatic </option>
+							<option value="1"> Asymptomatic </option>
 						</select>
 					</div>
 
@@ -130,7 +135,7 @@
 							Status: 
 						</label>
 						<select id="status" class="form-control">
-							<option value="all">All</option>
+							<option value="">All</option>
 							<option value="recovered"> Recovered </option>
 							<option value="infected"> Active </option>
 							<option value="died"> Deceased </option>
@@ -139,19 +144,19 @@
 				</div>
 			</div>
 
-
 			<div class="resultsContainer mx-2 mt-5">
+				<div class="asd" id="total_results"></div>
 				<div class="table-responsive-xl">
 					<table class="table table-hover">
 						<thead class="thead-dark text-center">
 							<tr>
-								<th> Patient ID </th>
-								<th> Date Positive </th>
-								<th> Barangay </th>
-								<th> Sex </th>
-								<th> Age </th>
-								<th> Symptomatic </th>
-								<th> Health Status </th>
+								<th data-column="id" data-order="desc"> Patient ID </th>
+								<th data-column="date_positive" data-order="desc"> Date Positive </th>
+								<th data-column="brgy" data-order="desc"> Barangay </th>
+								<th data-column="sex" data-order="desc"> Sex </th>
+								<th data-column="age" data-order="desc"> Age </th>
+								<th data-column="symptomatic" data-order="desc"> Symptomatic </th>
+								<th data-column="status" data-order="desc"> Health Status </th>
 							</tr>
 						</thead>
 						<tbody class="text-center" id="patients">
@@ -165,7 +170,8 @@
 
 	<!-- <script src="../static/js/fetch_patients.js"></script> -->
 	<script src="../static/js/show_results.js"></script>
-	<script src="../static/js/barangaySearch.js"></script>
+	<script src="../static/js/autocomplete.js"></script>
+	<!-- <script src="../static/js/barangaySearch.js"></script> -->
 
 </body>
 </html>

@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
 from .models import Symptoms, Patient, PatientSymptoms
-from .schemas import PatientRequest, PatientResponse, PatientFilter
+from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -20,6 +20,8 @@ def get_symptoms(db: Session):
 def get_patients(db: Session, p_filter: PatientFilter = None):
     query = db.query(Patient)
 
+    # print(query.all())
+    
     if p_filter == None:
         return query.all()
 
@@ -48,7 +50,6 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
 # Dagdagan mo na lang yung mga symptoms
 def populate_symptoms(db: Session):
     symptoms = [
-        "None",
         "Ubo (Cough)",
         "Sipon (Colds)",
         "Pagkawala ng Panlasa (Loss of Taste)",
@@ -74,6 +75,21 @@ def populate_symptoms(db: Session):
 # read
 def get_patient_by_id(db: Session, id: int):
     return db.query(Patient).filter(Patient.id == id).first()
+
+
+# update
+def update_patient(db: Session, id: int, info: PatientUpdate):
+
+    patient = db.query(Patient).filter(Patient.id == id).first()
+    # print(patient.status)
+
+    if info.status != None:
+        patient.status = info.status
+
+    db.commit()
+    # print(patient.status)
+
+    return patient
 
 
 # create
