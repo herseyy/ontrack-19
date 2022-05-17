@@ -81,10 +81,15 @@ def get_patient_by_id(db: Session, id: int):
 def update_patient(db: Session, id: int, info: PatientUpdate):
 
     patient = db.query(Patient).filter(Patient.id == id).first()
-    # print(patient.status)
+
 
     if info.status != None:
         patient.status = info.status
+    if info.asymptomatic != None:
+        patient.asymptomatic = info.asymptomatic
+    # if info.symptoms != None:
+    #     patient.symptoms = info.symptoms
+
 
     db.commit()
     # print(patient.status)

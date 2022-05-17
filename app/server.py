@@ -9,7 +9,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 
-
+# EMAIL
+from fastapi import BackgroundTasks
+from send_email import send_email_background, send_email_async
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
@@ -106,8 +108,8 @@ def get_patients_by_id(patient_id:int, db:Session = Depends(get_db)):
 
 
 # update
-@app.patch("/update/{patient_id}", response_model=schemas.PatientResponse, response_model_exclude={"name"})
-def update(info: schemas.PatientUpdate, patient_id:int, db:Session = Depends(get_db)):
+@app.patch("/update/{patient_id}")
+def update(patient_id:int, info: schemas.PatientUpdate, db:Session = Depends(get_db)):
     db_patient = crud.update_patient(db=db, id=patient_id, info=info)
     
     if db_patient is None:

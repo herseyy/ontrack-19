@@ -1,3 +1,21 @@
+// BIRTHDAY TO AGE
+function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+// CAPITALIZE FIRST LETTER
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
 "use strict";
 
 
@@ -278,14 +296,24 @@ function fetch_post() {
     .then(res => res.json())
     .then(data => {
       console.log('Success:', data);
-      // console.log(data.id)
+      let patient_symptoms = [];
+      for (var i of data.symptoms) {
+        console.log(i.description)
+        patient_symptoms.push(" " + i.description)
+      };
 
-      // if()
+
+      if (data.asymptomatic == true) {
+        // console.log(true)
+        var bool_asymptomatic = "Asymptomatic"
+      } else {
+        var bool_asymptomatic = "Symptomatic"
+        // console.log(false)
+      }
 
       let patient_info = document.getElementById("inner_div");
 
       let popup_id = document.createElement("h2");
-      // let popup_name = document.createElement("p");
       let popup_date = document.createElement("p");
       let popup_birthday = document.createElement("p");
       let popup_sex = document.createElement("p");
@@ -296,15 +324,14 @@ function fetch_post() {
       let popup_status = document.createElement("p");
 
       popup_id.innerHTML = "Patient's ID: " + data.id;
-      // popup_name.innerHTML = "Patient Name: " + data.name;
       popup_date.innerHTML = "Date Positive: " + data.date_positive;
-      popup_birthday.innerHTML = "Birthday: " + data.birthday;
-      popup_sex.innerHTML = "Sex: " + data.sex;
+      popup_birthday.innerHTML = "Birthday: " + data.birthday + " (Age: " + getAge(data.birthday) + ")";
+      popup_sex.innerHTML = "Sex: " + capitalizeFirstLetter(data.sex);
       popup_brgy.innerHTML = "Barangay: " + data.barangay;
       popup_contact.innerHTML = "Contact Number: " + data.contact_number;
-      popup_asymptomatic.innerHTML = "Patient is " + data.asymptomatic;
-      popup_id.symptoms = "Symptoms: " + data.symptoms;
-      popup_id.status = "Status: " + data.status;
+      popup_asymptomatic.innerHTML = "Patient is " + bool_asymptomatic;
+      popup_symptoms.innerHTML = "Symptoms: " + patient_symptoms;
+      popup_status.innerHTML = "Status: " + capitalizeFirstLetter(data.status);
 
       patient_info.append(popup_id);
       patient_info.append(popup_date);
@@ -313,8 +340,8 @@ function fetch_post() {
       patient_info.append(popup_brgy);
       patient_info.append(popup_contact);
       patient_info.append(popup_asymptomatic);
-      patient_info.append(popup_id.symptoms);
-      patient_info.append(popup_id.status);
+      patient_info.append(popup_symptoms);
+      patient_info.append(popup_status);
 
     }).catch((error) => {
       console.error('Error:', error);

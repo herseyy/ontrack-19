@@ -59,3 +59,26 @@ class PatientFilter(BaseModel):
 
 class PatientUpdate(BaseModel):
     status: str = None
+    asymptomatic: Optional[bool] = None
+    symptoms: Optional[list[int]] = None
+
+
+class PatientResponseUpdate(BaseModel):
+    id: int
+    name: str
+    date_positive: datetime.date
+    birthday: datetime.date
+    sex: str
+    barangay: str = None
+    contact_number: str = None
+    asymptomatic: bool = None
+    symptoms: list[Symptoms] = None
+    status: str = None
+
+    class Config:
+        orm_mode = True
+
+# class User:
+#     username: str
+#     email: str
+#     password: str

@@ -22,7 +22,7 @@ class Patient(Base):
     __tablename__ = "patient"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True)
+    name = Column(String, unique=True, index=True, nullable=False)
     date_positive = Column(Date, nullable=False)
     birthday = Column(Date, nullable=False)
     sex = Column(String, unique=False, index=True, nullable=False)
@@ -58,4 +58,15 @@ class PatientSymptoms(Base):
     patient = relationship("Patient", back_populates="symptoms")
     description = relationship("Symptoms", backref=backref("info", lazy="joined"))
 
+
+
+# class User(Base):
+#     __tablename__ = "user"
+
+#     id = Column(Integer, primary_key=True, index=True)
+#     username = Column(String, unique=True, index=True, nullable=False)
+#     email = Column(String, unique=True, index=True, nullable=False)
+#     password = Column(String, index=True, nullable=False)
+#     is_verfied = Column(Boolean, default=False)
+#     join_data = Column(DateTime, default=datetime.datetime.now)
 
