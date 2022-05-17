@@ -5,7 +5,7 @@ from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
-from .models import Symptoms, Patient, PatientSymptoms
+from .models import Symptoms, Patient, PatientSymptoms, SMSNotif
 from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -130,6 +130,44 @@ def create_patients(db: Session, patient: PatientRequest):
         db.rollback()
         raise HTTPException(status_code=401, detail="Some fields have constraints!")
     return db_patient
+
+
+
+def addSMSNotif(db:Session, access_token: str, subscriber_number: str):
+    db_sms = SMSNotif(
+        subscriber_number = subscriber_number,
+        access_token = access_token
+        )
+    db.add(db_sms)
+    db.commit()
+
+    return db_sms
+
+
+def getUsers(db:Session):
+    return db.query(SMSNotif).all()
+
+
+
+def update_user(db:Session, id: int, already_contacted: bool):
+    user = db.query(SMSNotif).filter(SMSNotif.id == id).first()
+
+    if already_contacted != None:
+        user.already_contacted = True
+        # user.already_contacted = already_contacted
+
+    db.commit()
+
+    return user
+
+
+def days_filter(db:Session):
+    patients = db.query(Patient).all()
+
+    for i in patients:
+        print(i.created_at)
+    # print(patients.created_at)
+    return patients
 
 
 def format_patient(db_patient: Patient):

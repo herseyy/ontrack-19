@@ -1,6 +1,9 @@
 """
 Main file
 """
+import requests
+import json
+
 from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -10,8 +13,8 @@ from fastapi.templating import Jinja2Templates
 
 
 # EMAIL
-from fastapi import BackgroundTasks
-from send_email import send_email_background, send_email_async
+# from fastapi import BackgroundTasks
+# from send_email import send_email_background, send_email_async
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
@@ -75,6 +78,24 @@ def populate_table():
  
 populate_table()
 
+
+def send_sms(contact_info, access_token, shortcode):
+    clientCorrelator = '1234'
+
+    message = "Thank you for contacting Tayabas Covid Tracker, you will receive a call from our health officer shortly."
+    url = "https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/"+shortcode+"/requests"
+
+    querystring = {"access_token": access_token}
+
+    payload = "{\"outboundSMSMessageRequest\": { \"clientCorrelator\": \""+clientCorrelator+"\", \"senderAddress\": \""+shortcode+"\", \"outboundSMSTextMessage\": {\"message\": \""+message+"\"}, \"address\": \""+contact_info+"\" } }"
+
+    headers = { 'Content-Type': "application/json", 'Host': "devapi.globelabs.com.ph" }
+
+    response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+
+    print(response.text)
+
+    return response.text
 
 # =======================================================================================
 # EDIT CODE BELOW HERE
@@ -167,3 +188,97 @@ async def submit(request: Request):
 async def submit(request: Request):
     return templates.TemplateResponse("results.html", {"request": request})
 
+
+@app.get("/day_filter")
+def day_filter(db:Session = Depends(get_db)):
+    users = crud.days_filter(db)
+
+    return users
+    
+
+
+@app.get("/filter", response_model=list[schemas.PatientResponse], response_model_exclude={"name", "contact_number", "symptoms"})
+def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
+    patients = crud.get_patients(db, p_filter)
+    return [crud.format_patient(p) for p in patients]
+
+
+
+@app.post("/sms_uri")
+def sms_redirect(request: Request):
+    print(request)
+
+
+@app.get("/redirect_uri")
+def redirect(access_token: str, subscriber_number: str, db:Session = Depends(get_db)):
+    print(access_token)
+    print(subscriber_number)
+    shortcode = "21669460"
+
+
+    send_sms(subscriber_number, access_token, shortcode)
+    
+    addSMSNotif = crud.addSMSNotif(db, access_token, subscriber_number)
+    # db_sms = models.SMSNotif(
+    #     subscriber_number = subscriber_number,
+    #     access_token = access_token
+    #     )
+
+    # db.add(db_sms)
+    # db.commit()
+    return ""
+
+
+
+@app.patch("/contacted/{user_id}")
+def already_contacted(user_id:int, contacted: bool, db:Session = Depends(get_db)):
+    db_user = crud.update_user(db=db, id=user_id, already_contacted = contacted)
+
+    if db_user is None:
+        raise HTTPException(404, detail="User not found!")
+
+    return db_user
+
+
+
+@app.post("/redirect_uri")
+def redirect2():
+    # addSMSNotif = crud.addSMSNotif(db = db, access_token = access_token, subscriber_number = subscriber_number)
+    # print(addSMSNotif)
+    return ""
+
+
+@app.get("/user_numbers")
+def getUserNumbers(db:Session = Depends(get_db)):
+    users = crud.getUsers(db=db)
+
+    return users
+
+
+
+@app.get("/patients", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
+def read(db:Session = Depends(get_db)):
+    patients = crud.get_patients(db)
+    return [crud.format_patient(p) for p in patients]
+
+
+
+
+
+"""
+
+curl -X POST
+"https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/9460/requests?access_token=qD9PzkdvoOVnmLTTojB2rrgowg_zh8TGz1zET7IfYDs" -H "Content-Type: application/json" -d
+{"outboundSMSMessageRequest": {"clientCorrelator": "123456",
+
+
+
+
+"senderAddress": "9460",
+"outboundSMSTextMessage": {"message": "Hello World"},
+"address": "9175247735"
+ }
+}
+
+
+"""

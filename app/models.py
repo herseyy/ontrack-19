@@ -59,6 +59,18 @@ class PatientSymptoms(Base):
     description = relationship("Symptoms", backref=backref("info", lazy="joined"))
 
 
+class SMSNotif(Base):
+
+    __tablename__ = "sms_notif"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    subscriber_number = Column(String, index=True)
+    access_token = Column(String, index=True)
+    already_contacted = Column(Boolean, default=False)
+
+
+
+
 
 # class User(Base):
 #     __tablename__ = "user"
