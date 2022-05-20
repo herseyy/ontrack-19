@@ -271,6 +271,13 @@ function fetch_post() {
     var bool_asymptomatic = false
     // console.log(false)
   }
+
+
+  // if (name == "") {
+  //   var name_error = document.getElementById('name_error');
+  //   name_error.innerHTML = "Enter Your Name";
+  //   return false;
+  // }
   
   var inp_obj = {
     "name" : name,
@@ -346,6 +353,8 @@ function fetch_post() {
     }).catch((error) => {
       console.error('Error:', error);
     });
+
+
 }
 
 // POPUP
@@ -368,6 +377,95 @@ function popupOpenClose(popup) {
 
 $(document).ready(function () {
   $("[data-js=open]").on("click", function() {
+
+    let name = document.getElementById('patient_name').value;
+    let input_date_positive = document.getElementById('date_positive').value;
+    let input_birthday = document.getElementById('patient_birthday').value;
+    let input_sex = document.getElementById('patient_sex').value;
+    let input_barangay = document.getElementById('myInput').value;
+    let input_contact_number = document.getElementById('patient_contact_number').value;
+    let input_asymptomatic = document.getElementById('patient_asymptomatic').value;
+    let input_symptoms = checkbox();
+    let input_status = document.getElementById('patient_status').value;
+
+    var name_error = document.getElementById('name_error');
+    var date_error = document.getElementById('date_error');
+    var bday_error = document.getElementById('bday_error');
+    var sex_error = document.getElementById('sex_error');
+    var brgy_error = document.getElementById('brgy_error');
+    var number_error = document.getElementById('number_error');
+    var symptomatic_error = document.getElementById('symptomatic_error');
+    var empty_list = []
+    var symptoms_error = document.getElementById('symptoms_error');
+    var status_error = document.getElementById('status_error');
+
+    if (name == "") {
+      name_error.innerHTML = "Please Enter Your Name";
+      return false;
+    } else {
+      name_error.innerHTML = "";
+    }
+
+    if (input_date_positive == "") {
+      date_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      date_error.innerHTML = "";
+    }
+
+    if (input_birthday == "") {
+      bday_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      bday_error.innerHTML = "";
+    }
+
+    if (input_sex == "") {
+      sex_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      sex_error.innerHTML = "";
+    }
+
+    if (input_barangay == "") {
+      brgy_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      brgy_error.innerHTML = "";
+    }
+
+    if (input_contact_number == "") {
+      number_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      number_error.innerHTML = "";
+    }
+
+    if (input_asymptomatic == "") {
+      symptomatic_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      symptomatic_error.innerHTML = "";
+    }
+
+    if (input_asymptomatic == "symptomatic") {
+      if (input_symptoms.length == 0) {
+        symptoms_error.innerHTML = "This field cannot be empty";
+        return false;
+      } else {
+      symptoms_error.innerHTML = "";
+      }
+    }
+
+    if (input_status == "") {
+      status_error.innerHTML = "This field cannot be empty";
+      return false;
+    } else {
+      status_error.innerHTML = "";
+    }
+
+
+
     $('.wrapper').blur();
     containerElement.setAttribute('class', 'wrapper blur');
     popupOpenClose($(".popup"));

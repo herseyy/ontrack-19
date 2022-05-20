@@ -78,7 +78,5 @@ class PatientResponseUpdate(BaseModel):
     class Config:
         orm_mode = True
 
-# class User:
-#     username: str
-#     email: str
-#     password: str
+class Contact(BaseModel):
+    contacted: Optional[int]

@@ -189,18 +189,18 @@ async def submit(request: Request):
     return templates.TemplateResponse("results.html", {"request": request})
 
 
-@app.get("/day_filter")
-def day_filter(db:Session = Depends(get_db)):
-    users = crud.days_filter(db)
+# @app.get("/day_filter")
+# def day_filter(db:Session = Depends(get_db)):
+#     users = crud.days_filter(db)
 
-    return users
+#     return users
     
 
 
-@app.get("/filter", response_model=list[schemas.PatientResponse], response_model_exclude={"name", "contact_number", "symptoms"})
-def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
-    patients = crud.get_patients(db, p_filter)
-    return [crud.format_patient(p) for p in patients]
+# @app.get("/filter", response_model=list[schemas.PatientResponse], response_model_exclude={"name", "contact_number", "symptoms"})
+# def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
+#     patients = crud.get_patients(db, p_filter)
+#     return [crud.format_patient(p) for p in patients]
 
 
 
@@ -215,18 +215,18 @@ def redirect(access_token: str, subscriber_number: str, db:Session = Depends(get
     print(subscriber_number)
     shortcode = "21669460"
 
-
-    send_sms(subscriber_number, access_token, shortcode)
+    # send_sms(subscriber_number, access_token, shortcode)
     
     addSMSNotif = crud.addSMSNotif(db, access_token, subscriber_number)
-    # db_sms = models.SMSNotif(
-    #     subscriber_number = subscriber_number,
-    #     access_token = access_token
-    #     )
-
-    # db.add(db_sms)
-    # db.commit()
     return ""
+
+
+@app.post("/redirect_uri")
+def redirect2():
+    # addSMSNotif = crud.addSMSNotif(db = db, access_token = access_token, subscriber_number = subscriber_number)
+    # print(addSMSNotif)
+    return ""
+
 
 
 
@@ -240,26 +240,15 @@ def already_contacted(user_id:int, contacted: bool, db:Session = Depends(get_db)
     return db_user
 
 
-
-@app.post("/redirect_uri")
-def redirect2():
-    # addSMSNotif = crud.addSMSNotif(db = db, access_token = access_token, subscriber_number = subscriber_number)
-    # print(addSMSNotif)
-    return ""
-
-
 @app.get("/user_numbers")
-def getUserNumbers(db:Session = Depends(get_db)):
-    users = crud.getUsers(db=db)
+def getUserNumbers(contacted_filter: schemas.Contact = Depends(), db:Session = Depends(get_db)):
+    users = crud.getUsers(db=db, contacted_filter=contacted_filter)
 
     return users
 
-
-
-@app.get("/patients", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
-def read(db:Session = Depends(get_db)):
-    patients = crud.get_patients(db)
-    return [crud.format_patient(p) for p in patients]
+@app.get("/users_no", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("users_to_contact.html", {"request": request})
 
 
 

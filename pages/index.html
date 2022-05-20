@@ -73,60 +73,79 @@
 				<div class="card-form-header text-center">
 					<h3>COVID-19 Form</h3>
 				</div>
+
 				<div class="card-input">
-					<label for="patient_name" class="card-input__label">Name</label>
-					<input type="text" id="patient_name" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
-					<span></span>
+					<input type="text" id="patient_name" class="floating-input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off" required>
+					<label class="floating-label">Name</label>
+					<span id="name_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="date_positive" class="card-input__label">Date Positive</label>
-					<input type="date" id="date_positive" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+					<input id="date_positive" class="floating-input_1" type="text" onclick="(this.type='date')" placeholder=" " required>
+					<label class="floating-label_1">Date Positive</label>
+					<span id="date_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="patient_birthday" class="card-input__label">Birthday</label>
-					<input type="date" id="patient_birthday" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+					<input id="patient_birthday" class="floating-input_1" type="text" onclick="(this.type='date')" placeholder=" " required>
+					<label class="floating-label_1">Birthday</label>
+					<span id="bday_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="patient_sex" class="card-input__label">Sex</label>
-					<select name="patient_sex" id="patient_sex" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+					<select name="patient_sex" id="patient_sex" class="floating-select" onclick="this.setAttribute('value', this.value);" value="" required>
 						<option value=""></option>
 						<option value="male">Male</option>
 						<option value="female">Female</option>
 					</select>
+					<label class="floating-label_1">Sex</label>
+					<span id="sex_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="myInput" class="card-input__label">Barangay</label>
-					<input type="text" id="myInput" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+					<input type="text" id="myInput" class="floating-input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off" required>
+					<label class="floating-label">Barangay</label>
+					<span id="brgy_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="patient_contact_number" class="card-input__label">Contact Number</label>
-					<input type="number" id="patient_contact_number" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName">
+					<input type="number" id="patient_contact_number" class="floating-input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+					<label class="floating-label">Contact Number</label>
+					<span id="number_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="patient_asymptomatic" class="card-input__label">Are you symptomatic?</label>
-					<select name="patient_asymptomatic" id="patient_asymptomatic" class="card-input__input" onchange="showDiv('hidden_div', this)" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+					<select name="patient_asymptomatic" id="patient_asymptomatic" class="floating-select" onchange="showDiv('hidden_div', this)" onclick="this.setAttribute('value', this.value);" value="">
 						<option value=""></option>
 						<option value="symptomatic">Symptomatic</option>
 						<option value="asymptomatic">Asymptomatic</option>
 					</select>
+					<label class="floating-label_1">Are you symptomatic?</label>
+					<span id="symptomatic_error" class="text-danger"></span>
 				</div>
-				<div id="hidden_div">
+
+				<div id="hidden_div" class="my-3">
 					<div class="form-row bg-light border border-bottom-0 mx-3">
-						<div class="col text-center py-1">Symptoms</div>
+						<div class="col text-center py-1 symptoms_list">Symptoms</div>
 					</div>
 					<div class="form-row border mx-3">
 						<div class="form-group col border-right my-3 ml-2" id="parent_div"></div>
 					</div>
+					<span id="symptoms_error" class="text-danger"></span>
 				</div>
+
 				<div class="card-input">
-					<label for="patient_status" class="card-input__label">Health Status</label>
-					<select name="patient_status" id="patient_status" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
+					<select name="patient_status" id="patient_status" class="floating-select" onclick="this.setAttribute('value', this.value);" value="">
+						<option value=""></option>
 						<option value="infected">Positive</option>
 						<option value="recovered">Recovered</option>
 						<option value="died">Deceased</option>
 					</select>
+					<label class="floating-label_1">Health Status</label>
+					<span id="status_error" class="text-danger"></span>
 				</div>
-				<button data-js="open" id="btn-check" class="btn btn-primary">
+
+				<button data-js="open" id="btn-check" class="btn btn-primary submit_btn">
 				Submit
 				</button>
 			</div>

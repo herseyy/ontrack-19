@@ -67,6 +67,7 @@ class SMSNotif(Base):
     subscriber_number = Column(String, index=True)
     access_token = Column(String, index=True)
     already_contacted = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.datetime.now)
 
 
 

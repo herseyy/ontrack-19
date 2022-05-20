@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
 from .models import Symptoms, Patient, PatientSymptoms, SMSNotif
-from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate
+from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate, Contact
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -144,8 +144,23 @@ def addSMSNotif(db:Session, access_token: str, subscriber_number: str):
     return db_sms
 
 
-def getUsers(db:Session):
-    return db.query(SMSNotif).all()
+# def getUsers(db:Session):
+#     return db.query(SMSNotif).all()
+
+
+
+def getUsers(db:Session, contacted_filter: Contact):
+    query = db.query(SMSNotif)
+    # return query.all()
+
+
+    if contacted_filter.contacted != None:
+        query = query.filter(SMSNotif.already_contacted == contacted_filter.contacted)
+        print(contacted_filter.contacted)
+        print(SMSNotif)
+        return query.all()
+
+    else: return query.all()
 
 
 
@@ -153,8 +168,8 @@ def update_user(db:Session, id: int, already_contacted: bool):
     user = db.query(SMSNotif).filter(SMSNotif.id == id).first()
 
     if already_contacted != None:
-        user.already_contacted = True
-        # user.already_contacted = already_contacted
+        # user.already_contacted = True
+        user.already_contacted = already_contacted
 
     db.commit()
 
