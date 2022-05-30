@@ -182,7 +182,7 @@ fetch(events_url)
         ul_p1.append(ul)
 
         arrow.style.display = "block";
-        console.log('asd ')
+        // console.log('asd ')
 
       } else{
         ul_p.append(lst)
@@ -193,14 +193,7 @@ fetch(events_url)
       }
 
     }
-    // if (events.date > date_today) {
-    //   console.log("lol")
-    // }
-
-    
-    // ul_p.append(lst)
   })
-  // console.log(event_list.length)
 
 
 })

@@ -253,11 +253,20 @@ def get_events(db:Session = Depends(get_db)):
     events = crud.get_events(db)
     return [crud.format_event(e) for e in events]
 
-
-
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
+
+
+@app.get("/form_event", response_class=HTMLResponse)
+async def form_event(request:Request):
+    return templates.TemplateResponse("event.html", {"request": request})
+
+@app.get("/more", response_class=HTMLResponse)
+async def more(request:Request):
+    return templates.TemplateResponse("more.html", {"request": request})
+
+
 
 """
 

@@ -31,7 +31,7 @@ https://www.tooplate.com/view/2119-gymso-fitness
   }
 
   :root {
-    --primary-color:        #f13a11;
+    --primary-color:        #1ee2e7;;
     --white-color:          #ffffff;
     --dark-color:           #171819;
     --about-bg-color:       #f9f9f9;
@@ -224,7 +224,8 @@ https://www.tooplate.com/view/2119-gymso-fitness
   }
 
   .custom-btn:hover {
-    color: var(--primary-color);
+    /*color: var(--primary-color);*/
+    color: #1ee2e7;
   }
 
   .custom-btn:focus {
@@ -319,6 +320,20 @@ https://www.tooplate.com/view/2119-gymso-fitness
   .membership-form a {
     color: var(--primary-color);
   }
+
+
+
+.sim, .sime {
+    padding-left: 70px;
+}
+
+.simd {
+    padding-left: 50px;
+}
+
+.sime {
+    color: var(--primary-color);
+}
 
 
   /*---------------------------------------
@@ -1068,7 +1083,7 @@ p.large {
 
 .our-team .picture img {
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 50%;
   transform: scale(1);
   transition: all 0.9s ease 0s;

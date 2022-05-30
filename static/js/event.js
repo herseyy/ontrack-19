@@ -4,7 +4,7 @@ function fetch_post() {
   // event.preventDefault();
 
   let dose = document.getElementById('dose').value;
-  let vaccine = document.getElementById('vaccine').value;
+  let vaccine_type = document.getElementById('vaccine').value;
   let date = document.getElementById('date').value;
   let time = document.getElementById('time').value;
   let location = document.getElementById('location').value;
@@ -13,7 +13,7 @@ function fetch_post() {
 
   var inp_obj = {
     "dose" : dose,
-    "vaccine" : vaccine,
+    "vaccine_type" : vaccine_type,
     "date" : date,
     "time" : time,
     "location" : location,
@@ -21,7 +21,7 @@ function fetch_post() {
     "age" : age
   }
 
-  console.log(inp_obj)
+  // console.log(inp_obj)
 
   fetch('http://127.0.0.1:8000/event_form', {
     method: 'POST',
@@ -32,7 +32,7 @@ function fetch_post() {
   })
     .then(res => res.json())
     .then(data => {
-      console.log('Success:', data);
+      // console.log('Success:', data);
 
       // let patient_symptoms = [];
 
@@ -40,13 +40,14 @@ function fetch_post() {
       //   console.log(i.description)
       //   patient_symptoms.push(" " + i.description)
       // };
+      console.log(data)
 
 
       let event_info = document.getElementById("inner_div");
 
       let popup_details = document.createElement("h2");
       let popup_dose = document.createElement("p");
-      let popup_vaccine = document.createElement("p");
+      let popup_vaccine_type = document.createElement("p");
       let popup_date = document.createElement("p");
       let popup_time = document.createElement("p");
       let popup_location = document.createElement("p");
@@ -55,7 +56,7 @@ function fetch_post() {
 
       popup_details.innerHTML = "Details";
       popup_dose.innerHTML = "Dose: " + data.dose;
-      popup_vaccine.innerHTML = "Vaccine: " + data.vaccine_type;
+      popup_vaccine_type.innerHTML = "Vaccine: " + data.vaccine_type;
       popup_date.innerHTML = "Date: " + data.date;
       popup_time.innerHTML = "Time: " + data.time;
       popup_location.innerHTML = "Location: " + data.location;
@@ -65,7 +66,7 @@ function fetch_post() {
 
       event_info.append(popup_details);
       event_info.append(popup_dose);
-      event_info.append(popup_vaccine);
+      event_info.append(popup_vaccine_type);
       event_info.append(popup_date);
       event_info.append(popup_time);
       event_info.append(popup_location);
@@ -91,7 +92,7 @@ function popupOpenClose(popup) {
     }
     containerElement.setAttribute('class', 'wrapper');
     $(popup).hide();
-    location.href = "file:///C:/Users/PC/hersey2.0/sample_fast_api_template/pages/event.html";
+    location.href = "http://127.0.0.1:8000/form_event";
   });
 }
 
@@ -99,7 +100,7 @@ $(document).ready(function () {
   $("[data-js=open]").on("click", function() {
 
     let dose = document.getElementById('dose').value;
-    let vaccine = document.getElementById('vaccine').value;
+    let vaccine_type = document.getElementById('vaccine').value;
     let date = document.getElementById('date').value;
     let time = document.getElementById('time').value;
     let location = document.getElementById('location').value;
@@ -107,7 +108,7 @@ $(document).ready(function () {
     let age = document.getElementById('age').value;
 
     var dose_error = document.getElementById('dose_error');
-    var vaccine_error = document.getElementById('vaccine_error');
+    var vaccine_type_error = document.getElementById('vaccine_error');
     var date_error = document.getElementById('date_error');
     var time_error = document.getElementById('time_error');
     var location_error = document.getElementById('location_error');
@@ -124,14 +125,14 @@ $(document).ready(function () {
       dose_error.innerHTML = "";
     }
 
-    if (vaccine == "") {
-      vaccine_error.innerHTML = "This field cannot be empty";
+    if (vaccine_type == "") {
+      vaccine_type_error.innerHTML = "This field cannot be empty";
       document.getElementById('app').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
     } else {
-      vaccine_error.innerHTML = "";
+      vaccine_type_error.innerHTML = "";
     }
 
     if (date == "") {
@@ -192,3 +193,7 @@ $(document).ready(function () {
     fetch_post();
   });
 });
+
+document.getElementById("btn").onclick = function () {
+    location.href = "http://127.0.0.1:8000/about";
+};

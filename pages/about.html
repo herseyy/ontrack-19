@@ -37,33 +37,38 @@
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/index">Home</a>
 					</li>
-					<li class="">
-						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/form">Form</a>
+					<li class="active">
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/about">About</a>
 					</li>
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/results">Cases</a>
 					</li>
-					<li class="active">
-						<a class="page-scroll nav-item nav-link" href="#">About Us</a>
-					</li>
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="#about">More</a>
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/more">More</a>
 					</li>
 				</ul>
             </div>
         </div>
     </nav>
 
+    <section class="picture_lang">
+    	
+    </section>
+
+
 	<!-- Cases Section -->
     <section class="total_cases text-center bg-light-gray" id="total_cases">
-    	<div class="bg-overlay">
-	      <h3 class="container section-subheading text-muted pt-3 pt-lg-0" id="date"></h3>
+    	<div class="bg-overlay mx-4">
+	      <h3 class="container section-subheading text-white pt-3 pt-lg-0" id="date"></h3>
 	      <div class="fluid-container row mx-auto px-2">
 	        <div class="col-12 col-lg-6 pt-4 pt-lg-0 my-3">
 	          <div class="row">
                   <div class="col-lg-12 text-center">
+                  	  <div class="timeline-image">
+                         <h4><i class="fa fa-signal fa-5x icon_covid" aria-hidden="true"></i></h4>
+                      </div>
                       <h2 class="section-heading">Total COVID-19 Cases</h2>
-                      <h3 class="section-subheading text-muted" id="date"></h3>
+                      <!-- <h3 class="section-subheading text-muted" id="date"></h3> -->
                   </div>
 	              </div>
 	              <div class="row text-center">
@@ -71,28 +76,31 @@
 	                      <span class="">
 	                        <h3 class="number" id="total_active"></h3>
 	                      </span>
-	                      <h5 class="service-heading">Active cases</h5>
-	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	                      <h5 class="service-heading label_act">Active cases</h5>
+<!-- 	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
 	                  </div>
 	                  <div class="col-4 col-md-4 mt-sm-4">
 	                      <span class="">
 	              <h3 class="number" id="total_recoveries"></h3>
 	                      </span>
-	                      <h5 class="service-heading">Recoveries</h5>
-	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	                      <h5 class="service-heading label_act">Recoveries</h5>
+	                      <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
 	                  </div>
 	                  <div class="col-4 col-md-4 mt-sm-4">
 	                      <span class="">
 	              <h3 class="number" id="total_deaths"></h3>
 	                      </span>
-	                      <h5 class="service-heading">Deaths</h5>
-	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	                      <h5 class="service-heading label_act">Deaths</h5>
+	                      <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
 	                  </div>
 	              </div>
 	        </div>
 	        <div class="col-12 col-lg-6 pt-1 pt-lg-0 my-3">
 	          <div class="row">
 	                  <div class="col-lg-12 text-center">
+		                  <div class="timeline-image">
+	                         <h4><i class="fa fa-bar-chart fa-5x icon_covid" aria-hidden="true"></i></h4>
+	                      </div>
 	                      <h2 class="section-heading">Daily COVID-19 Cases</h2>
 	                      <!-- <h3 class="section-subheading text-muted" id="date"></h3> -->
 	                  </div>
@@ -103,21 +111,21 @@
 	                        <h3 class="number" id="daily_active"></h3>
 	                      </span>
 	                      <h5 class="service-heading">Active cases</h5>
-	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	                      <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
 	                  </div>
 	                  <div class="col-4 mt-sm-4">
 	                      <span class="">
 	              <h3 class="number" id="daily_recoveries"></h3>
 	                      </span>
-	                      <h5 class="service-heading">Recoveries</h5>
-	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	                      <h5 class="service-heading label_act">Recoveries</h5>
+	                      <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
 	                  </div>
 	                  <div class="col-4 mt-sm-4">
 	                      <span class="">
 	              <h3 class="number" id="daily_deaths"></h3>
 	                      </span>
-	                      <h5 class="service-heading">Deaths</h5>
-	                      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	                      <h5 class="service-heading label_act">Deaths</h5>
+	                      <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
 	                  </div>
 	              </div>
 	        </div>
@@ -179,7 +187,7 @@
 			<button class="next-arrow-events" type="button"><i class="fa fa-chevron-right"></i></button>
 		</div>
 		<div class="text-center">
-			<a href="#events-block" class="learnMore btn custom-btn bg-color" data-aos="fade-up" data-aos-delay="300" data-toggle="modal" data-target="#membershipForm">Learn More about Vaccine</a>
+			<a href="http://127.0.0.1:8000/more" class="learnMore btn custom-btn bg-color" data-aos="fade-up" data-aos-delay="300" >Learn More about Vaccine</a>
 		</div>
 	</section>
 

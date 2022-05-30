@@ -6,6 +6,12 @@ https://www.tooplate.com/view/2119-gymso-fitness
 
 */
 
+
+.label_act {
+  color: #000;
+
+}
+
   @font-face {
       font-family: 'Plain';
       /*src: url('../fonts/Plain-Regular.woff2') format('woff2'),*/
@@ -31,7 +37,7 @@ https://www.tooplate.com/view/2119-gymso-fitness
   }
 
   :root {
-    --primary-color:        #f13a11;
+    --primary-color:        #1ee2e7;
     --white-color:          #ffffff;
     --dark-color:           #171819;
     --about-bg-color:       #f9f9f9;
@@ -454,23 +460,47 @@ https://www.tooplate.com/view/2119-gymso-fitness
 /*---------------------------------------
     CASES          
   -----------------------------------------*/
-.total_cases h2, .total_cases h3, .total_cases h5 {
+.total_cases h2, .total_cases h3 {
   position: relative;
   color: #ffffff;  
   text-align: center;
 }
 
+.total_cases h5{
+  color: var(--primary-color);
 
-.total_cases { 
+}
+
+.picture_lang {
   position: relative; 
   display: flex;
   align-items: center;
   justify-content: center;
   background-image: url('https://ega.ee/wp-content/uploads/2020/08/corona_1.jpg');
-  background-size: cover;
+  height: 20vh;
+  /*background-size: cover;*/
 }
 
-.total_cases::before {
+
+.total_cases { 
+  /*height: 80vh;*/
+  font-family: "Source Sans Pro", sans-serif;
+  /*font-size: 16px;*/
+  margin:0;
+  padding:0;
+  /*height: auto;*/
+  background: linear-gradient(#141e30, #243b55);
+  background-repeat: no-repeat;
+}
+
+.bg-overlay {
+  border: 1px solid black;
+  background: rgba(0,0,0,.6);
+  border-radius: 7px;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+}
+
+/*.total_cases::before {
   content: "";
   position: absolute;
   top: 0px;
@@ -479,27 +509,42 @@ https://www.tooplate.com/view/2119-gymso-fitness
   left: 0px;
   background-color: var(--dark-color);
   opacity: 0.7
-}
+}*/
 
 section h2.section-heading {
     margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 40px;
+    margin-bottom: 20px;
+    font-size: 33px;
+    /*font-weight: bold;*/
+}
+
+.number {
+  font-weight: bold;
+  font-size: 35px;
 }
 
 section h3.section-subheading {
-    margin-bottom: 10px;
-    text-transform: none;
+    /*margin-bottom: 100px;*/
+    margin-top: 40px;
+    margin-bottom: 40px;
+    /*text-transform: none;*/
     font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-    /*font-size: 16px;*/
-    font-style: italic;
-    font-weight: 400;
+    font-size: 30px;
+    text-transform: uppercase;
+
+    /*font-style: italic;*/
+    font-weight: bold;
+}
+
+
+.icon_covid {
+  color: var(--primary-color);
 }
 
 
 @media(min-width:768px) {
     .total_cases {
-        padding: 40px 0;
+        padding: 20px 0;
     }
 }
 

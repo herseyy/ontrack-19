@@ -10,7 +10,7 @@ body {
   margin:0;
   padding:0;
   height: auto;
-  background: linear-gradient(#141e30, #243b55);
+/*  background: linear-gradient(#141e30, #243b55);*/
   background-repeat: no-repeat;
   /*background: url(https://www.paho.org/sites/default/files/styles/flexslider_full/public/2020-03/blue-covid-banner.jpg?h=96546727&itok=xDLAoRJF)*/
 }
@@ -150,59 +150,3 @@ https://www.tooplate.com/view/2119-gymso-fitness
     margin-left: 10px;
     margin-right: 10px;
 }
-
-
-.asd {
-    font-size: 35px;
-    text-transform: uppercase;
-    position: right;
-}
-
-
-main {
-    /*border: 1px solid yellow;*/
-}
-
-/*   search box   */
-.searchContainer {
-  /*border: 1px solid green;*/
-  margin: 50px 20px 0px 20px;
-  padding: 2rem;
-  background: rgba(0,0,0,.6);
-  border-radius: 7px;
-  box-shadow: 0 15px 25px rgba(0,0,0,.6);
-  color: #fff;
-}
-
-.filtersContainer {
-  position: relative;
-  background: #ddd;
-  color: #333;
-  padding: 0.80rem;
-  margin-top: 30px;
-  align-items: center;
-  border-radius: 15px;
-}
-
-.searchBox {
-  /*background: #f1f1f1;*/
-  /*padding: 0px 2rem;*/
-  color: #fff;
-  border-radius: 7px;
-  display: block;
-  margin: 10px 0px 10px 0px;
-  /*border: 1px solid;*/
-
-}
-
-thead {
-  background: rgba(0,0,0,.6);
-  box-shadow: 0 15px 25px rgba(0,0,0,.6);
-  color: #fff;
-}
-
-tbody {
-    background: #f1f1f1;
-    color: #000;
-}
-
