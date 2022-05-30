@@ -188,19 +188,9 @@ async def submit(request: Request):
 async def submit(request: Request):
     return templates.TemplateResponse("results.html", {"request": request})
 
-
-# @app.get("/day_filter")
-# def day_filter(db:Session = Depends(get_db)):
-#     users = crud.days_filter(db)
-
-#     return users
-    
-
-
-# @app.get("/filter", response_model=list[schemas.PatientResponse], response_model_exclude={"name", "contact_number", "symptoms"})
-# def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
-#     patients = crud.get_patients(db, p_filter)
-#     return [crud.format_patient(p) for p in patients]
+@app.get("/index", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("front.html", {"request": request})
 
 
 
@@ -252,7 +242,22 @@ async def submit(request: Request):
 
 
 
+@app.post("/event_form", response_model=schemas.EventResponse)
+def event_form(event: schemas.EventRequest, db: Session = Depends(get_db)):
+    created_event = crud.create_event(db=db, event=event)
+    return crud.format_event(created_event)
 
+
+@app.get("/events", response_model=list[schemas.EventResponse])
+def get_events(db:Session = Depends(get_db)):
+    events = crud.get_events(db)
+    return [crud.format_event(e) for e in events]
+
+
+
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request})
 
 """
 

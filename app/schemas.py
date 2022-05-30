@@ -80,3 +80,26 @@ class PatientResponseUpdate(BaseModel):
 
 class Contact(BaseModel):
     contacted: Optional[int]
+
+
+class EventRequest(BaseModel):
+    dose: str
+    vaccine_type: str
+    date: datetime.date
+    time: datetime.time
+    location: str
+    slots: int
+    age: int
+
+class EventResponse(BaseModel):
+    id: int
+    dose: str
+    vaccine_type: str
+    date: datetime.date
+    time: datetime.time
+    location: str
+    slots: int
+    age: int
+
+    class Config:
+        orm_mode = True

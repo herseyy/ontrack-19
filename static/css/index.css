@@ -1,6 +1,71 @@
 
 @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700|Source+Sans+Pro:400,600,700&display=swap");
 
+
+/*
+
+Tooplate 2119 Gymso Fitness
+
+https://www.tooplate.com/view/2119-gymso-fitness
+
+*/
+
+  @font-face {
+      font-family: 'Plain';
+      /*src: url('../fonts/Plain-Regular.woff2') format('woff2'),*/
+          /*url('../fonts/Plain-Regular.woff') format('woff');*/
+      font-weight: normal;
+      font-style: normal;
+  }
+
+  @font-face {
+      font-family: 'Plain';
+      /*src: url('../fonts/Plain-Light.woff2') format('woff2'),*/
+          /*url('../fonts/Plain-Light.woff') format('woff');*/
+      font-weight: 300;
+      font-style: normal;
+  }
+
+  @font-face {
+      font-family: 'Plain';
+      /*src: url('../fonts/Plain-Bold.woff2') format('woff2'),*/
+          /*url('../fonts/Plain-Bold.woff') format('woff');*/
+      font-weight: bold;
+      font-style: normal;
+  }
+
+  :root {
+    --primary-color:        #f13a11;
+    --white-color:          #ffffff;
+    --dark-color:           #171819;
+    --about-bg-color:       #f9f9f9;
+
+    --gray-color:           #909090;
+    --link-color:           #404040;
+    --p-color:              #666262;
+
+    --base-font-family:     'Plain', sans-serif;
+    --font-weight-bold:     bold;
+    --font-weight-normal:   normal;
+    --font-weight-light:    300;
+    --font-weight-thin:     100;
+
+    --h1-font-size:         48px;
+    --h2-font-size:         36px;
+    --h3-font-size:         28px;
+    --h4-font-size:         24px;
+    --h5-font-size:         22px;
+    --h6-font-size:         22px;
+    --p-font-size:          18px;
+    --base-font-size:       16px;
+    --menu-font-size:       14px;
+
+    --border-radius-large:  100%;
+    --border-radius-small:  2px;
+  }
+
+
+
 html {
   height: auto;
 }
@@ -11,7 +76,10 @@ body {
   font-size: 16px;
   margin:0;
   padding:0;
+  height: auto;
   background: linear-gradient(#141e30, #243b55);
+  background-repeat: no-repeat;
+  /*background: url(https://www.paho.org/sites/default/files/styles/flexslider_full/public/2020-03/blue-covid-banner.jpg?h=96546727&itok=xDLAoRJF)*/
 }
 
 
@@ -91,8 +159,8 @@ body {
 
 /*  navbar   */
 .navbar-default {
-    border-color: transparent;
-    background-color: #000;
+    /*border-color: transparent;*/
+    background: var(--dark-color);
 }
 
 .navbar-default .navbar-brand {
@@ -127,11 +195,12 @@ body {
 }
 
 .navbar-default .nav li a {
-/*    text-transform: uppercase;*/
     font-family: "Verdana",sans-serif;
-    font-weight: 400;
     letter-spacing: 1px;
-/*    color: #fff;*/
+    text-transform: uppercase;
+    color: var(--white-color);
+    font-size: var(--menu-font-size);
+    font-weight: var(--font-weight-normal);
 }
 
 .navbar-default .navbar-nav {
@@ -149,29 +218,17 @@ body {
     outline: 0;
     color: #1ee2e7;
 }
-.navbar-default .navbar-nav .active .nav-link:hover {
-    color: #fff;
+.navbar-default .navbar-nav .active .nav-link {
+  color: #1ee2e7;
 }
 
-.navbar-default .navbar-nav .active{
-    border-radius: 5px;
-    color: #fff;
-    background: #1ee2e7;
-    /*background: rgba(0,0,0,.5);*/
-    /*background: #1ee2e7;*/
-    /*border: red solid 1px;*/
-}
-
-/*.navbar-default .navbar-nav>.active>a:hover,
-.navbar-default .navbar-nav>.active>a:focus {
-    color: #fff;
-    background-color: #17d0d5;
-}*/
 
 .navbar_margin {
     margin-left: 10px;
     margin-right: 10px;
 }
+
+
 
 
 .blur   {
@@ -235,6 +292,7 @@ body {
   border-radius: 10px;
   padding: 35px;
   padding-top: 30px;
+/*  overflow-y: scroll;*/
 
 
   /*position: absolute;*/

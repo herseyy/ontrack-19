@@ -5,14 +5,13 @@ from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
-from .models import Symptoms, Patient, PatientSymptoms, SMSNotif
-from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate, Contact
+from .models import Symptoms, Patient, PatientSymptoms, SMSNotif, VaccinationSched
+from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate, Contact, EventRequest, EventResponse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 def get_symptoms(db: Session):
     return db.query(Symptoms).all()
-
 
 
 
@@ -210,3 +209,44 @@ def format_patient(db_patient: Patient):
         symptoms=_symptoms
         )
 
+
+
+# create
+def create_event(db: Session, event: EventRequest):
+    
+    try:
+        db_event = VaccinationSched(
+            dose = event.dose,
+            vaccine_type = event.vaccine_type,
+            date = event.date,
+            time = event.time,
+            location = event.location,
+            slots = event.slots,
+            age = event.age
+            )
+
+        db.add(db_event)
+        db.commit()
+
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=401, detail="Some fields have constraints!")
+    return db_event
+
+
+def format_event(db_event: VaccinationSched):
+
+    return EventResponse(
+        id=db_event.id,
+        dose = db_event.dose,
+        vaccine_type = db_event.vaccine_type,
+        date = db_event.date,
+        time = db_event.time,
+        location = db_event.location,
+        slots = db_event.slots,
+        age = db_event.age
+        )
+
+def get_events(db: Session):
+    query = db.query(VaccinationSched)
+    return query.all()

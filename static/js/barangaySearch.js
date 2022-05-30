@@ -399,8 +399,30 @@ $(document).ready(function () {
     var symptoms_error = document.getElementById('symptoms_error');
     var status_error = document.getElementById('status_error');
 
+    // const patients_url = "http://127.0.0.1:8000/patients"
+    // console.log(patients_url)
+
+    // fetch(patients_url)
+    //   .then(res => {
+    //     return res.json()
+    //   })
+    //   .then(data => {
+    //     data.map(patient => {
+    //       console.log(patient.name)
+    //       console.log(name)
+    //       if (name == patient.name) {
+    //         console.log("asd")
+    //       }
+
+    //     })
+    //   })
+    //   .catch(error => console.log("ERROR"))
+
     if (name == "") {
       name_error.innerHTML = "Please Enter Your Name";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       name_error.innerHTML = "";
@@ -408,6 +430,9 @@ $(document).ready(function () {
 
     if (input_date_positive == "") {
       date_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       date_error.innerHTML = "";
@@ -415,6 +440,9 @@ $(document).ready(function () {
 
     if (input_birthday == "") {
       bday_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       bday_error.innerHTML = "";
@@ -422,6 +450,9 @@ $(document).ready(function () {
 
     if (input_sex == "") {
       sex_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       sex_error.innerHTML = "";
@@ -429,6 +460,9 @@ $(document).ready(function () {
 
     if (input_barangay == "") {
       brgy_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       brgy_error.innerHTML = "";
@@ -436,6 +470,9 @@ $(document).ready(function () {
 
     if (input_contact_number == "") {
       number_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       number_error.innerHTML = "";
@@ -443,6 +480,9 @@ $(document).ready(function () {
 
     if (input_asymptomatic == "") {
       symptomatic_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       symptomatic_error.innerHTML = "";
@@ -451,6 +491,9 @@ $(document).ready(function () {
     if (input_asymptomatic == "symptomatic") {
       if (input_symptoms.length == 0) {
         symptoms_error.innerHTML = "This field cannot be empty";
+        document.getElementById('app').scrollIntoView({
+          behavior: 'smooth'
+        });
         return false;
       } else {
       symptoms_error.innerHTML = "";
@@ -459,10 +502,15 @@ $(document).ready(function () {
 
     if (input_status == "") {
       status_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
       return false;
     } else {
       status_error.innerHTML = "";
     }
+
+
 
 
 

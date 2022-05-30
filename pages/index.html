@@ -41,16 +41,16 @@
 						<a href="#page-top"></a>
 					</li> -->
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="#about">Home</a>
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/index">Home</a>
 					</li>
 					<li class="active">
-						<a class="page-scroll nav-item nav-link" href="#about">Form</a>
+						<a class="page-scroll nav-item nav-link" href="#">Form</a>
 					</li>
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/results">Cases</a>
 					</li>
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="#cases">About</a>
+						<a class="page-scroll nav-item nav-link" href="#cases">About Us</a>
 					</li>
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="#about">More</a>
@@ -69,12 +69,12 @@
     
 	<div class="wrapper" id="app">
 		<div class="card-form form" method="POST">
-			<div class="card-form__inner">
+			<div class="card-form__inner anyClass">
 				<div class="card-form-header text-center">
 					<h3>COVID-19 Form</h3>
 				</div>
 
-				<div class="card-input">
+				<div class="card-input" id="input_patient_name">
 					<input type="text" id="patient_name" class="floating-input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off" required>
 					<label class="floating-label">Name</label>
 					<span id="name_error" class="text-danger"></span>
@@ -146,7 +146,7 @@
 				</div>
 
 				<button data-js="open" id="btn-check" class="btn btn-primary submit_btn">
-				Submit
+					Submit
 				</button>
 			</div>
 		</div>

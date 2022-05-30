@@ -4,7 +4,7 @@ Taken from: https://fastapi.tiangolo.com/tutorial/sql-databases/
 """
 import enum
 import datetime
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Enum, DateTime, Date
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Enum, DateTime, Date, Time
 from sqlalchemy.orm import relationship, backref
 
 from .database import Base
@@ -70,16 +70,16 @@ class SMSNotif(Base):
     created_at = Column(DateTime, default=datetime.datetime.now)
 
 
+class VaccinationSched(Base):
+    __tablename__ = "vaccination_schedule"
 
+    id = Column(Integer, primary_key=True, index=True)
+    dose = Column(String, index=True, nullable=False)
+    vaccine_type = Column(String, index=True, nullable=False)
+    date = Column(Date, nullable=False)
+    time = Column(Time, nullable=False)
+    location = Column(String, index=True, nullable=False)
+    slots = Column(String, index=True, nullable=False)
+    age = Column(String, index=True, nullable=False)
 
-
-# class User(Base):
-#     __tablename__ = "user"
-
-#     id = Column(Integer, primary_key=True, index=True)
-#     username = Column(String, unique=True, index=True, nullable=False)
-#     email = Column(String, unique=True, index=True, nullable=False)
-#     password = Column(String, index=True, nullable=False)
-#     is_verfied = Column(Boolean, default=False)
-#     join_data = Column(DateTime, default=datetime.datetime.now)
-
+    created_at = Column(DateTime, default=datetime.datetime.now)

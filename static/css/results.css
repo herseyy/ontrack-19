@@ -1,35 +1,89 @@
 html {
-    height: 100%;
+  min-height: 100%;
 }
 
-
-.asd {
-  border: 1px solid red
-}
 
 body {
-    height: 100%;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: #2781f0;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-repeat:no-repeat;
-    background: -webkit-linear-gradient(180deg,#303395,#2781f0);
-    background: -moz-linear-gradient(180deg,#303395,#2781f0);
-    background: -ms-linear-gradient(180deg,#303395,#2781f0);
-    background: -o-linear-gradient(180deg,#303395,#2781f0);
-    background: linear-gradient(180deg,#303395,#2781f0);
+   /*background-color: #000;*/
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16px;
+  margin:0;
+  padding:0;
+  height: auto;
+  background: linear-gradient(#141e30, #243b55);
+  background-repeat: no-repeat;
+  /*background: url(https://www.paho.org/sites/default/files/styles/flexslider_full/public/2020-03/blue-covid-banner.jpg?h=96546727&itok=xDLAoRJF)*/
 }
+
+/*
+
+Tooplate 2119 Gymso Fitness
+
+https://www.tooplate.com/view/2119-gymso-fitness
+
+*/
+
+  @font-face {
+      font-family: 'Plain';
+      /*src: url('../fonts/Plain-Regular.woff2') format('woff2'),*/
+          /*url('../fonts/Plain-Regular.woff') format('woff');*/
+      font-weight: normal;
+      font-style: normal;
+  }
+
+  @font-face {
+      font-family: 'Plain';
+      /*src: url('../fonts/Plain-Light.woff2') format('woff2'),*/
+          /*url('../fonts/Plain-Light.woff') format('woff');*/
+      font-weight: 300;
+      font-style: normal;
+  }
+
+  @font-face {
+      font-family: 'Plain';
+      /*src: url('../fonts/Plain-Bold.woff2') format('woff2'),*/
+          /*url('../fonts/Plain-Bold.woff') format('woff');*/
+      font-weight: bold;
+      font-style: normal;
+  }
+
+  :root {
+    --primary-color:        #f13a11;
+    --white-color:          #ffffff;
+    --dark-color:           #171819;
+    --about-bg-color:       #f9f9f9;
+
+    --gray-color:           #909090;
+    --link-color:           #404040;
+    --p-color:              #666262;
+
+    --base-font-family:     'Plain', sans-serif;
+    --font-weight-bold:     bold;
+    --font-weight-normal:   normal;
+    --font-weight-light:    300;
+    --font-weight-thin:     100;
+
+    --h1-font-size:         48px;
+    --h2-font-size:         36px;
+    --h3-font-size:         28px;
+    --h4-font-size:         24px;
+    --h5-font-size:         22px;
+    --h6-font-size:         22px;
+    --p-font-size:          18px;
+    --base-font-size:       16px;
+    --menu-font-size:       14px;
+
+    --border-radius-large:  100%;
+    --border-radius-small:  2px;
+  }
+
+
 
 
 /*  navbar   */
 .navbar-default {
-    border-color: transparent;
-    background-color: #222;
+    /*border-color: transparent;*/
+    background: var(--dark-color);
 }
 
 .navbar-default .navbar-brand {
@@ -64,11 +118,12 @@ body {
 }
 
 .navbar-default .nav li a {
-/*    text-transform: uppercase;*/
     font-family: "Verdana",sans-serif;
-    font-weight: 400;
     letter-spacing: 1px;
-/*    color: #fff;*/
+    text-transform: uppercase;
+    color: var(--white-color);
+    font-size: var(--menu-font-size);
+    font-weight: var(--font-weight-normal);
 }
 
 .navbar-default .navbar-nav {
@@ -86,22 +141,10 @@ body {
     outline: 0;
     color: #1ee2e7;
 }
-.navbar-default .navbar-nav .active .nav-link:hover {
-    color: #fff;
+.navbar-default .navbar-nav .active .nav-link {
+  color: #1ee2e7;
 }
 
-.navbar-default .navbar-nav .active{
-    border-radius: 5px;
-    color: #fff;
-    background: linear-gradient(180deg,#303395,#2781f0);
-    /*border: red solid 1px;*/
-}
-
-/*.navbar-default .navbar-nav>.active>a:hover,
-.navbar-default .navbar-nav>.active>a:focus {
-    color: #fff;
-    background-color: #17d0d5;
-}*/
 
 .navbar_margin {
     margin-left: 10px;
@@ -109,59 +152,41 @@ body {
 }
 
 
+
+
 main {
     /*border: 1px solid yellow;*/
 }
 
 /*   search box   */
+.searchContainer {
+  /*border: 1px solid green;*/
+  margin: 50px 20px 0 20px;
+  padding: 2rem;
+  background: rgba(0,0,0,.6);
+  border-radius: 7px;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  color: #fff;
+}
+
+.filtersContainer {
+  position: relative;
+  background: #ddd;
+  color: #333;
+  padding: 0.80rem;
+  margin-top: 30px;
+  align-items: center;
+  border-radius: 15px;
+}
+
 .searchBox {
-    background: #f1f1f1;
-    padding: 2rem;
-    border: solid 1px #c3c9d8;
-    border-radius: 7px;
-    display: block;
-    margin: 50px 0 38px 0;
-    /*width: 100%;*/
-    border: 1px solid green;  
+  /*background: #f1f1f1;*/
+  padding: 0px 2rem;
+  color: #fff;
+  border-radius: 7px;
+  display: block;
+  margin: 10px 0px 0px 0px;
+
 }
 
 
- .searchBox .filtersContainer {
-   position: relative;
-   background: #ddd;
-   color: #333;
-   padding: 0.80rem;
-   margin-top: 15px;
-   /*display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   grid-gap: 15px;*/
-   align-items: center;
-   border-radius: 15px;
-}
-
-
-/* .searchBox .filtersContainer::before {
-   content: '';
-   position: absolute;
-   border-width: 15px;
-   border-style: solid;
-   border-color: transparent;
-   top: 0;
-   right: 90px;
-   {{ border-right-color: #dddddd;}}
-   border-bottom-color: #ddd;
-   -webkit-transform: translateY(-100%);
-   transform: translateY(-100%);
-}*/
-/* .resultsContainer {
-   background: #fff;
-   padding: 2rem;
-   border-radius: 15px;
-   border: solid 1px #c3c9d8;
-   display: block;
-   margin: 20px auto;
-   width: 90%;
-}*/
-/* .form-control {
-   border-radius: 15px;
-}*/

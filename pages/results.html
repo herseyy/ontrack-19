@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="nav navbar-nav ml-auto">
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="">Home</a>
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/index">Home</a>
 					</li>
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/form">Form</a>
@@ -48,102 +48,101 @@
         </div>
     </nav>
 
-    <main class="container-fluid d-flex justify-content-center">
-		<div class="searchBox container-fluid mx-3">
+	<div class="searchContainer">
+		<div class="form">
+			
 			<h2>RESULTS</h2>
-			<div class="searchContainer form">
-				<div class="col-12">
-					<label for="myInput"> 
-						<i class="fas fa-calendar-alt"></i>
-						Barangay: 
-					</label>
-					<div class="input-group">
-						<div class='col-12 col-lg-9'>
-							<div class="row px-3">
-								<input placeholder="" type="text" id="myInput" class="form-control col-9 col-lg-11">
-								<button class="btn btn-dark col-3 col-lg-1" onclick="fetch_filter()">
-									<i class="far fa-search fa-md"></i>
-								</button>
-							</div>
-							<div id="brgylist"></div>
-						</div>
-						<div class='col-12 col-lg-3 dsa'>
-							<button class="btn btn-info col-12" onclick="toggleFilters()">Advanced search
+			<div class="col-12">
+				<label for="myInput"> 
+					<i class="fas fa-calendar-alt"></i>
+					Barangay: 
+				</label>
+				<div class="input-group">
+					<div class='col-12 col-lg-9'>
+						<div class="row px-3">
+							<input placeholder="" type="text" id="myInput" class="form-control col-9 col-lg-11">
+							<button class="btn btn-dark col-3 col-lg-1" onclick="fetch_filter()">
+								<i class="far fa-search fa-md"></i>
 							</button>
 						</div>
+						<div id="brgylist"></div>
 					</div>
-
-
-				</div>
-			</div>
-
-			<div class="filtersContainer mx-2" id="FiltersBox">
-				<div class="px-3 row">
-					
-					<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
-						<label for="date_positive"> 
-							<i class="fas fa-calendar-alt"></i>
-							Date Positive: 
-						</label>
-						<input id="date_positive" type="date" class="form-control">
-					</div>
-
-					<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
-						<label for="sex"> 
-							<i class="fas fa-file"></i>
-							Sex: 
-						</label>
-						<select id="sex" class="form-control">
-							<option value="">All</option>
-							<option value="male">Male</option>
-							<option value="female">Female</option>
-						</select>
-					</div>
-
-					<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
-						<label for="age"> 
-							<i class="fas fa-file"></i>
-							Age Range: 
-						</label>
-						<select id="age" class="form-control">
-							<option value="">All</option>
-							<option value="0,15"> 0-15 </option>
-							<option value="16,30"> 16-30 </option>
-							<option value="31,45"> 31-45 </option>
-							<option value="46,60"> 46-60 </option>
-							<option value="61,75"> 61-75 </option>
-							<option value="76,90"> 76-90 </option>
-							<option value="91,105"> 91-105 </option>
-						</select>
-					</div>
-
-					<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
-						<label for="asymptomatic"> 
-							<i class="fas fa-file"></i>
-							Filter: 
-						</label>
-						<select id="asymptomatic" class="form-control">
-							<option value="">All</option>
-							<option value="0"> Symptomatic </option>
-							<option value="1"> Asymptomatic </option>
-						</select>
-					</div>
-
-					<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
-						<label for="status"> 
-							<i class="fas fa-file"></i>
-							Status: 
-						</label>
-						<select id="status" class="form-control">
-							<option value="">All</option>
-							<option value="recovered"> Recovered </option>
-							<option value="infected"> Active </option>
-							<option value="died"> Deceased </option>
-						</select>
+					<div class='col-12 col-lg-3 dsa'>
+						<button class="btn btn-info col-12" onclick="toggleFilters()">Advanced search
+						</button>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="filtersContainer mx-2" id="FiltersBox">
+			<div class="px-3 row">
+				
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="date_positive"> 
+						<i class="fas fa-calendar-alt"></i>
+						Date Positive: 
+					</label>
+					<input id="date_positive" type="date" class="form-control">
+				</div>
 
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="sex"> 
+						<i class="fas fa-file"></i>
+						Sex: 
+					</label>
+					<select id="sex" class="form-control">
+						<option value="">All</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select>
+				</div>
+
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="age"> 
+						<i class="fas fa-file"></i>
+						Age Range: 
+					</label>
+					<select id="age" class="form-control">
+						<option value="">All</option>
+						<option value="0,15"> 0-15 </option>
+						<option value="16,30"> 16-30 </option>
+						<option value="31,45"> 31-45 </option>
+						<option value="46,60"> 46-60 </option>
+						<option value="61,75"> 61-75 </option>
+						<option value="76,90"> 76-90 </option>
+						<option value="91,105"> 91-105 </option>
+					</select>
+				</div>
+
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="asymptomatic"> 
+						<i class="fas fa-file"></i>
+						Filter: 
+					</label>
+					<select id="asymptomatic" class="form-control">
+						<option value="">All</option>
+						<option value="0"> Symptomatic </option>
+						<option value="1"> Asymptomatic </option>
+					</select>
+				</div>
+
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="status"> 
+						<i class="fas fa-file"></i>
+						Status: 
+					</label>
+					<select id="status" class="form-control">
+						<option value="">All</option>
+						<option value="recovered"> Recovered </option>
+						<option value="infected"> Active </option>
+						<option value="died"> Deceased </option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+    <main class="container-fluid d-flex justify-content-center">
+		<div class="searchBox container-fluid mx-3">
 			<div class="resultsContainer mx-2 mt-5">
 				<div class="asd" id="total_results"></div>
 				<div class="table-responsive-xl">
