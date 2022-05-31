@@ -50,6 +50,8 @@ class PatientRequest(BaseModel):
 class PatientFilter(BaseModel):
     barangay: str = None
     date_positive: Optional[datetime.date] = None
+    lowerDay: Optional[int] = None
+    upperDay: Optional[int] = None
     sex: str = None
     upperAge: Optional[int] = None 
     lowerAge: Optional[int] = None
@@ -59,8 +61,8 @@ class PatientFilter(BaseModel):
 
 class PatientUpdate(BaseModel):
     status: str = None
-    asymptomatic: Optional[bool] = None
-    symptoms: Optional[list[int]] = None
+    # asymptomatic: Optional[bool] = None
+    # symptoms: Optional[list[int]] = None
 
 
 class PatientResponseUpdate(BaseModel):

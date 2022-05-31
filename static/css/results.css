@@ -1,3 +1,31 @@
+.status {
+  padding: 5px 10px 5px 10px;
+  border-radius: 8px;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: white;
+}
+
+.infected {
+  border: solid 1px #f44336;
+  background-color: #f44336;
+
+}
+
+.died {
+  border: solid 1px #008CBA;
+  background-color: #008CBA;
+
+}
+
+.recovered {
+  border: solid 1px #4CAF50;
+  background-color: #4CAF50;
+}
+
+
+
+
 html {
   min-height: 100%;
 }
@@ -192,7 +220,6 @@ main {
   display: block;
   margin: 10px 0px 10px 0px;
   /*border: 1px solid;*/
-
 }
 
 thead {

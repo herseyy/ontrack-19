@@ -16,9 +16,14 @@ n =  new Date();
 y = n.getFullYear();
 m = String(n.getMonth() + 1).padStart(2, '0');
 d = String(n.getDate()).padStart(2, '0');
-today_date = m + "/" + d + "/" + y;
 date_today = y + "-" + m + "-" + d;
-document.getElementById("date").innerHTML = "COVID-19 cases as of " + convertDate(date_today);
+today_date = convertDate(date_today);
+
+console.log(today_date);
+let today_split = today_date.split(" ")
+today_format = today_split[1] + " " + today_split[0] + ", " + today_split[2]
+
+document.getElementById("date").innerHTML = "COVID-19 cases as of " + today_format;
 
 
 // ----------- NUMBER OF CASES
@@ -39,7 +44,7 @@ fetch(events_url)
 
   let ul_p = document.getElementById('parent_ul');
   let ul_p1 = document.getElementById('parent_ul1');
-  let ul_p2 = document.getElementById('parent_ul2');
+  // let ul_p2 = document.getElementById('parent_ul2');
   let arrow = document.getElementById('arrow');
 
 
@@ -48,7 +53,7 @@ fetch(events_url)
     // console.log(date_today)
 
     if (event.date >= date_today) {
-      console.log(event.date)
+      // console.log(event.date)
       event_list.push(event.id)
       let lst = document.createElement("li");
       let dv1 = document.createElement('div');
@@ -126,9 +131,12 @@ fetch(events_url)
       // dv1.append(dv2);
       // dv1.append(dv3);
 
-
-      stng1.innerHTML = event.dose;
+      stng1.innerHTML = 'Dose: ';
       lst_menu1.append(stng1);
+      lst_menu1.append(event.dose);
+
+      // stng1.innerHTML = event.dose;
+      // lst_menu1.append(stng1);
       stng2.innerHTML = 'Type of vaccine: ';
       lst_menu2.append(stng2);
       lst_menu2.append(event.vaccine_type);
@@ -167,30 +175,28 @@ fetch(events_url)
       lst.append(dv3)
       // lst.append(ul)
 
-      if (event_list.length > 8) {
-        ul_p2.append(lst)
-        ul_p2.append(ul)
+      // if (event_list.length > 8) {
+      //   ul_p2.append(lst)
+      //   ul_p2.append(ul)
 
-        arrow.style.display = "block";
-        // console.log('asd ')
+      //   arrow.style.display = "block";
+      //   // console.log('asd ')
 
-      }
+      // }
 
       if (event_list.length > 4) {
-        let parent_dv2 = document.createElement('div')
         ul_p1.append(lst)
         ul_p1.append(ul)
 
         arrow.style.display = "block";
-        // console.log('asd ')
-
       } else{
         ul_p.append(lst)
         ul_p.append(ul)
 
         arrow.style.display = "none";
-        parent_dv1.style.display = "none";
       }
+
+      // ul_p.append(lst)
 
     }
   })

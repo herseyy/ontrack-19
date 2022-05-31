@@ -37,20 +37,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="nav navbar-nav ml-auto">
-<!-- 					<li class="hidden active">
-						<a href="#page-top"></a>
-					</li> -->
+					<li class="">
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/index">Home</a>
+					</li>
 					<li class="">
 						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/form">Form</a>
 					</li>
 					<li class="active">
-						<a class="page-scroll nav-item nav-link" href="#">Schedule</a>
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/form_event">Schedule</a>
 					</li>
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/update">Update</a>
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/users_no">Contact</a>
 					</li>
 					<li class="">
-						<a class="page-scroll nav-item nav-link" href="contact">Contact</a>
+						<a class="page-scroll nav-item nav-link" href="http://127.0.0.1:8000/results_update">Update</a>
 					</li>
 				</ul>
             </div>
@@ -68,13 +68,12 @@
 		<div class="card-form form" method="POST">
 			<div class="card-form__inner anyClass">
 				<div class="card-form-header text-center">
-					<h3>COVID-19 Form</h3>
+					<h3>Vaccine Form</h3>
 				</div>
 
 				<div class="card-input">
 					<select name="dose" id="dose" class="floating-select" onclick="this.setAttribute('value', this.value);" value="" required>
 						<option value=""></option>
-						<option value="all">all</option>
 						<option value="1st">1st Dose</option>
 						<option value="2nd">2nd Dose</option>
 						<option value="1st&2nd">1st and 2nd Dose</option>
@@ -87,7 +86,6 @@
 				<div class="card-input">
 					<select name="vaccine" id="vaccine" class="floating-select" onclick="this.setAttribute('value', this.value);" value="" required>
 						<option value=""></option>
-						<option value="all">all</option>
 						<option value="pfizer">pfizer</option>
 						<option value="moderna">moderna</option>
 						<option value="sinovac">sinovac</option>
@@ -125,10 +123,10 @@
 				<div class="card-input">
 					<select name="age" id="age" class="floating-select" onclick="this.setAttribute('value', this.value);" value="" required>
 						<option value=""></option>
-						<option value="0-90">all</option>
-						<option value="60">senior citizen</option>
-						<option value="18">18 and above</option>
-						<option value="17">below 17</option>
+						<option value="1">all</option>
+						<option value="2">below 17</option>
+						<option value="3">18 and above</option>
+						<option value="4">senior citizen</option>
 					</select>
 					<label class="floating-label_1">Age</label>
 					<span id="age_error" class="text-danger"></span>

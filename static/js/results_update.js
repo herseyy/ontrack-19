@@ -33,24 +33,32 @@ function toggleFilters() {
 
 
 // BIRTHDAY TO AGE
-function getAge(dateString) {
+function getDays(dateString) {
     var today = new Date();
-    var birthDate = new Date(dateString);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    var positive_date = new Date(dateString);
+    var age = today.getFullYear() - positive_date.getFullYear();
+    var m = today.getMonth() - positive_date.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < positive_date.getDate())) {
         age--;
     }
 
-    // return age;
     if (age == 0) {
-      const diffTime = Math.abs(today - birthDate);
+      const diffTime = Math.abs(today - positive_date);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-      // console.log(diffDays + " days")
-      return diffDays
+      if (diffDays == 1) {
+        console.log(diffDays + " day")
+        return (diffDays + " day")
+      } else {
+        console.log(diffDays + " days")
+        return (diffDays + " days")
+      }
     }
+
     return age
 }
+
+// getAge("2022-05-30")
+
 
 // FETCH FILTER
 
@@ -59,54 +67,37 @@ function fetch_filter() {
   showFilters = false;
   document.getElementById("FiltersBox").style.display = "none";
 
+
   // event.preventDefault();
 
   let barangay = document.getElementById('myInput').value;
   let date_positive = document.getElementById('date_positive').value;
   let days = document.getElementById('days').value;
-  let sex = document.getElementById('sex').value;
-  let age_range = document.getElementById('age').value;
-  let asymptomatic = document.getElementById('asymptomatic').value;
   let status = document.getElementById('status').value;
 
-  var split = age_range.split(',')
+
   var split_day = days.split(',')
   console.log(split_day)
-  // console.log(split[0])
 
   var inp_obj = {}
 
   if (status != "") {
     inp_obj = Object.assign({"status": status}, inp_obj)
   }  
-  if (asymptomatic != "") {
-    inp_obj = Object.assign({"asymptomatic": asymptomatic}, inp_obj)
-  }
-  if (age_range != "") {
-    inp_obj = Object.assign({"upperAge": split[1]}, inp_obj)
-  }  
-  if (age_range != "") {
-    inp_obj = Object.assign({"lowerAge": split[0]}, inp_obj)
-  }
-  if (sex != "") {
-    inp_obj = Object.assign({"sex": sex}, inp_obj)
-  }
-  if (date_positive != "") {
-    inp_obj = Object.assign({"date_positive": date_positive}, inp_obj)
-  }
-
   if (days != "") {
     inp_obj = Object.assign({"upperDay": split_day[1]}, inp_obj)
   }  
   if (days != "") {
     inp_obj = Object.assign({"lowerDay": split_day[0]}, inp_obj)
   }
-
+  if (date_positive != "") {
+    inp_obj = Object.assign({"date_positive": date_positive}, inp_obj)
+  }
   if (barangay != "") {
     inp_obj = Object.assign({"barangay": capitalizeFirstLetter(barangay)}, inp_obj)
   }
 
-  // console.log(inp_obj)
+  console.log(inp_obj)
 
 
   let query = Object.keys(inp_obj)
@@ -115,13 +106,14 @@ function fetch_filter() {
 
   // console.log(query)
 
-  const filter_url = "http://127.0.0.1:8000/filter?" + query
 
-  console.log(filter_url)
+  const results_update_url = "http://127.0.0.1:8000/filter_update?" + query
+
+  console.log(results_update_url)
   
-  // total_results = ''
+  // // total_results = ''
 
-  fetch(filter_url)
+  fetch(results_update_url)
     .then(res => {
       return res.json()
     })
@@ -134,80 +126,77 @@ function fetch_filter() {
       total_results.innerHTML = '';
 
       data.map(patient => {
+        // console.log(patient)
+        // console.log(getAge(patient.date_positive))
 
         patient_date = convertDate(patient.date_positive)
         let date_split = patient_date.split(" ")
         date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
 
-        // console.log(patient)
+        day_quarantine = getDays(patient.date_positive)
 
-        
-
-        age = getAge(patient.birthday)
-        day_quarantine = getAge(patient.date_positive)
-        // console.log(day_quarantine)
-
-        if (patient.asymptomatic == true) {
-          asymptomatic = "Asymptomatic";
-        }
-        else {
-          asymptomatic = "Symptomatic";
-        }
+        // console.log(date_format)
 
         total.push(patient.id)
 
         let tr = document.createElement('tr')
         let th_id = document.createElement('th')
-        let th_date = document.createElement('th')
-        let th_day = document.createElement('th')
         let th_brgy = document.createElement('th')
-        let th_sex = document.createElement('th')
-        let th_age = document.createElement('th')
-        let th_symptomatic = document.createElement('th')
+        let th_date = document.createElement('th')
+        let th_days = document.createElement('th')
+        let th_number = document.createElement('th')
         let th_status = document.createElement('th')
-        let p = document.createElement('p')
+        let status_btn = document.createElement('button')
+        // let th_contacted = document.createElement('th')
 
         if (patient.status == "infected") {
-          p.className = "infected status align-middle my-auto mx-auto"
+          status_btn.innerHTML = capitalizeFirstLetter(patient.status);
+          status_btn.className = "infected status align-middle my-auto mx-auto"
         } else if (patient.status == "died") {
-          p.className = "died status align-middle my-auto mx-auto"
-          // console.log("died")
+          status_btn.innerHTML = ("Deceased");
+          status_btn.className = "died status align-middle my-auto mx-auto"
         } else {
-          // console.log("recovered")
-          p.className = "recovered status align-middle my-auto mx-auto"
+          status_btn.innerHTML = capitalizeFirstLetter(patient.status);
+          status_btn.className = "recovered status align-middle my-auto mx-auto"
         }
+
+        status_btn.id = patient.id;
+        status_btn.setAttribute('onclick','onClick('+  patient.id  +');');
+
+        // console.log(status_btn)
+
 
 
         tr.id = "row";
         th_id.innerHTML = patient.id;
-        th_date.innerHTML = date_format;
-        th_day.innerHTML = day_quarantine;
         th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
-        th_sex.innerHTML = capitalizeFirstLetter(patient.sex);
-        th_age.innerHTML = age;
-        th_symptomatic.innerHTML = asymptomatic;
-        p.innerHTML = capitalizeFirstLetter(patient.status);
-
+        th_date.innerHTML = date_format;
+        th_days.innerHTML = day_quarantine;
+        th_number.innerHTML = patient.contact_number;
+        // th_contacted.innerHTML = "asd"
+        // th_status.innerHTML = capitalizeFirstLetter(patient.status);
+        // status_btn.innerHTML = capitalizeFirstLetter(patient.status);
 
         th_id.className = 'align-middle text-center justify-content-center';
         th_date.className = "align-middle text-center justify-content-center";
+        th_days.className = "align-middle text-center justify-content-center";
+        th_number.className = "align-middle text-center justify-content-center";
         th_brgy.className = "align-middle text-center justify-content-center";
-        th_sex.className = "align-middle text-center justify-content-center";
-        th_age.className = "align-middle text-center justify-content-center";
-        th_symptomatic.className = "align-middle text-center justify-content-center";
         th_status.className = 'align-middle text-center justify-content-center';
+        // th_contacted.className = 'asd align-middle text-center justify-content-center';
+
 
         tr.append(th_id);
-        tr.append(th_date);
-        tr.append(th_day);
         tr.append(th_brgy);
-        tr.append(th_sex);
-        tr.append(th_age);
-        tr.append(th_symptomatic);
-        th_status.append(p)
+        tr.append(th_date);
+        tr.append(th_days);
+        tr.append(th_number);
+        th_status.append(status_btn)
         tr.append(th_status);
+        // tr.append(th_contacted);
 
         results.append(tr)
+
 
       })
       let span = document.createElement('span');
@@ -219,19 +208,10 @@ function fetch_filter() {
     .catch(error => console.log("ERROR"))
   
   // clear form
-  // document.getElementById('myInput').value = ""
-  // document.getElementById('date_positive').value = ""
-  // document.getElementById('sex').value = ""
-  // document.getElementById('age').value = ""
-  // document.getElementById('asymptomatic').value = ""
-  // document.getElementById('status').value = ""
 
   document.getElementById('myInput').value = 
-    document.getElementById('date_positive').value =
+    document.getElementById('date_positive').value = 
     document.getElementById('days').value = 
-    document.getElementById('sex').value = 
-    document.getElementById('age').value = 
-    document.getElementById('asymptomatic').value = 
     document.getElementById('status').value = ""
 }
 
@@ -447,3 +427,64 @@ autocomplete(document.getElementById("myInput"), barangayList);
  *    ...
  * </div>
  */
+
+ // const btn = document.getElementById('1');
+let index = 0;
+
+const colors = ['#4CAF50', '#f44336', "#008CBA"];
+
+function onClick(id) {
+
+  clicked_btn = document.getElementById(id)
+
+  clicked_btn.style.backgroundColor = colors[index];
+  clicked_btn.style.color = 'white';
+
+  index = index >= colors.length - 1 ? 0 : index + 1;
+  let status = ''
+
+// Recovered
+  if (clicked_btn.style.backgroundColor == "rgb(76, 175, 80)") {
+    clicked_btn.innerHTML = 'Recovered';
+    status = "recovered";
+    // console.log('green-light');
+  } 
+// Active 
+  else if (clicked_btn.style.backgroundColor == "rgb(244, 67, 54)") {
+    clicked_btn.innerHTML = 'Infected';
+    // console.log('red-light');
+    status = "infected";
+  } else {
+      clicked_btn.innerHTML = 'Deceased';
+      // console.log('blue-light');
+      status = "died";
+  }
+
+  // console.log(status)
+
+  let query = id;
+
+  // console.log(query)
+  const results_update_url = "http://127.0.0.1:8000/update/" + query
+  console.log(results_update_url)
+
+  let user_id = id;
+
+  var inp_obj = {
+    "status" : status
+  }
+
+  fetch(results_update_url, {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
+    },
+    body: JSON.stringify(inp_obj)
+  })
+  .then(res => res.json())
+  .then(data => {
+    // console.log(data)
+  })
+  .catch(error => console.log("ERROR")) 
+
+}

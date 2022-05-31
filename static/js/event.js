@@ -1,3 +1,7 @@
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 
 function fetch_post() {
 
@@ -41,7 +45,17 @@ function fetch_post() {
       //   patient_symptoms.push(" " + i.description)
       // };
       console.log(data)
+      let inp_age = ''
 
+      if (data.age == 1) {
+        inp_age = "All age"
+      } else if (data.age == 2) {
+        inp_age = "Below 17"
+      } else if (data.age == 3) {
+        inp_age = "Above 18"
+      } else {
+        inp_age = "Senior Citizen"
+      }
 
       let event_info = document.getElementById("inner_div");
 
@@ -56,12 +70,12 @@ function fetch_post() {
 
       popup_details.innerHTML = "Details";
       popup_dose.innerHTML = "Dose: " + data.dose;
-      popup_vaccine_type.innerHTML = "Vaccine: " + data.vaccine_type;
+      popup_vaccine_type.innerHTML = "Vaccine: " + capitalizeFirstLetter(data.vaccine_type);
       popup_date.innerHTML = "Date: " + data.date;
       popup_time.innerHTML = "Time: " + data.time;
-      popup_location.innerHTML = "Location: " + data.location;
-      popup_slots.innerHTML = "Slots " + data.slots;
-      popup_age.innerHTML = "Age: " + data.age;
+      popup_location.innerHTML = "Location: " + capitalizeFirstLetter(data.location);
+      popup_slots.innerHTML = "Slots: " + data.slots;
+      popup_age.innerHTML = "Age: " + inp_age;
 
 
       event_info.append(popup_details);

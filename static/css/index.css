@@ -111,6 +111,13 @@ body {
    cursor: pointer;
 }
 
+
+@media screen and (max-width: 480px) {
+  .popup button {
+     padding: 9px 15px;
+  }
+}
+
 .popup button:focus {
    outline: none;
 }

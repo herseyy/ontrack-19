@@ -117,7 +117,7 @@
 
                     <p data-aos="fade-up" data-aos-delay="200">To better inform the public, this is a website that makes the information more accessible and easier to find. Its goal is to give information about the status of COVID-19.</p>
 
-                    <a href="http://127.0.0.1:8000/results" class="font-weight-bold btn custom-btn bg-color mt-3" data-aos="fade-up" data-aos-delay="300" data-toggle="modal" data-target="#membershipForm">See Covid Cases in Tayabas</a>
+                    <a href="http://127.0.0.1:8000/results" class="font-weight-bold btn custom-btn bg-color mt-3">See Covid Cases in Tayabas</a>
                 </div>
 
                 <div class="mr-lg-auto mt-3 col-lg-4 col-md-6 col-12">
@@ -130,11 +130,11 @@
 
                                <strong class="sime mt-3 d-block">Globe</strong>
 
-                                <p class="sim">21669460</p>
+                                <p class="sim text-white">21669460</p>
 
                                 <strong class="sime mt-3 d-block">Other Networks</strong>
 
-                                <p class="sim">(02) 2564 9460</p>
+                                <p class="sim text-white">(02) 2564 9460</p>
                                </div>
                           </div>
                      </div>
@@ -434,15 +434,18 @@
                     <div class="ml-auto col-lg-5 col-md-6 col-12">
                         <h2 class="mb-4 pb-2" data-aos="fade-up" data-aos-delay="200">Feel free to ask anything</h2>
 
-                        <form onsubmit="sendEmail(); reset(); return false;" class="contact-form webform send-email" data-aos="fade-up" data-aos-delay="400" role="form">
-                            <input id="cf-name" type="text" class="form-control" name="cf-name" placeholder="Name">
+                        <form id="contactform" class="contact-form webform" action="https://formspree.io/f/xknyyyow" method="POST">
+                            <input id="cf-name" type="text" class="form-control" name="name" placeholder="Name (optional)">
 
-                            <input id="cf-email" type="email" class="form-control" name="cf-email" placeholder="Email">
+                            <input type="email" name="email" id="cf-email" class="form-control" placeholder="Email">
 
-                            <textarea id="cf-message" class="form-control" rows="5" name="cf-message" placeholder="Message"></textarea>
+                            <textarea id="cf-message" class="form-control" rows="5" name="message" placeholder="Message"></textarea>
 
                             <button type="submit" class="form-control" id="submit-button" name="submit">Send Message</button>
+
+                            <p class="alert alert-success hidden" role="alert" id="my-form-status"></p>
                         </form>
+
                     </div>
 
                     <div class="mx-auto mt-4 mt-lg-0 mt-md-0 col-lg-5 col-md-6 col-12">
@@ -464,60 +467,6 @@
           </div>
      </section>
 
-    <!-- Modal -->
-    <div class="modal fade" id="membershipForm" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-
-        <div class="modal-content">
-          <div class="modal-header">
-
-            <h2 class="modal-title" id="membershipFormLabel">Membership Form</h2>
-
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <form class="membership-form webform" role="form">
-                <input type="text" class="form-control" name="cf-name" placeholder="John Doe">
-
-                <input type="email" class="form-control" name="cf-email" placeholder="Johndoe@gmail.com">
-
-                <input type="tel" class="form-control" name="cf-phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-
-                <textarea class="form-control" rows="3" name="cf-message" placeholder="Additional Message"></textarea>
-
-                <button type="submit" class="form-control" id="submit-button" name="submit">Submit Button</button>
-
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="signup-agree">
-                    <label class="custom-control-label text-small text-muted" for="signup-agree">I agree to the <a href="#">Terms &amp;Conditions</a>
-                    </label>
-                </div>
-            </form>
-          </div>
-
-          <div class="modal-footer"></div>
-
-        </div>
-      </div>
-    </div>
-
-<!-- 	<script src="https://smtpjs.com/v3/smtp.js"></script>
-	<script>
-		function sendEmail(name, email, message) {
-		    Email.send({
-		        Host: "smtp.gmail.com",
-		        Username: "rubikslala11@gmail.com",
-		        Password: "wetchi54692713",
-		        To: "rubikslala11@gmail.com",
-		        From: document.getElementById('cf-email').value,
-		        Subject: `${name} sent you a message`,
-		        Body: `Name: ${name} <br/> Email: ${email} <br/> Message: ${message}`
-		    }).then(message => alert(message));
-		}
-	</script> -->
 </body>
 
 <!--  <script src="js/jquery.min.js"></script>

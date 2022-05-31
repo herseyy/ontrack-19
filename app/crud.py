@@ -7,19 +7,36 @@ from sqlalchemy.exc import IntegrityError
   
 from .models import Symptoms, Patient, PatientSymptoms, SMSNotif, VaccinationSched
 from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate, Contact, EventRequest, EventResponse
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
 def get_symptoms(db: Session):
     return db.query(Symptoms).all()
 
-
+def getDays(date_positive):
+    d0 = date_positive
+    d1 = date.today()
+    print(d0)
+    print(d1)
+    # delta = d1 - d0
+    # print(delta.days)
 
 
 def get_patients(db: Session, p_filter: PatientFilter = None):
     query = db.query(Patient)
 
     # print(query.all())
+    # less_day = ''
+    # greater_day = ''
+    # date = db.query(Patient.date_positive).all()
+    # for i in date:
+    #     dict_ = i._asdict()
+    #     val_list = list(dict_.values())
+    #     for item in val_list:
+    #         positive_date = item
+    #         if 
+    #         print(item)
+
     
     if p_filter == None:
         return query.all()
@@ -28,12 +45,19 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
         query = query.filter(Patient.barangay == p_filter.barangay)
     if p_filter.date_positive is not None:
         query = query.filter(Patient.date_positive == p_filter.date_positive)
+    if p_filter.lowerDay is not None and p_filter.upperDay is not None:
+        lower_day = datetime.now() - relativedelta(days=p_filter.upperDay)
+        upper_day = datetime.now() - relativedelta(days=p_filter.lowerDay)
+        print(lower_day)
+        print(upper_day)
+        query = query.filter(
+            and_((Patient.date_positive > lower_day), 
+            (Patient.date_positive <= upper_day)))
     if p_filter.sex is not None:
         query = query.filter(Patient.sex == p_filter.sex)
     if p_filter.lowerAge is not None and p_filter.upperAge is not None:
         lower_date = datetime.now() - relativedelta(years=p_filter.upperAge)
         upper_date = datetime.now() - relativedelta(years=p_filter.lowerAge)
-        
         query = query.filter(
             and_((Patient.birthday >= lower_date), 
             (Patient.birthday <= upper_date)))
@@ -84,8 +108,8 @@ def update_patient(db: Session, id: int, info: PatientUpdate):
 
     if info.status != None:
         patient.status = info.status
-    if info.asymptomatic != None:
-        patient.asymptomatic = info.asymptomatic
+    # if info.asymptomatic != None:
+    #     patient.asymptomatic = info.asymptomatic
     # if info.symptoms != None:
     #     patient.symptoms = info.symptoms
 

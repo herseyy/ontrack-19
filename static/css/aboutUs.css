@@ -161,7 +161,7 @@ https://www.tooplate.com/view/2119-gymso-fitness
 .left-right-arrows {
   position: absolute;
   /*top: 55%;*/
-  right: 10px;
+  right: 30px;
 }
 
 @media (max-width: 767px) {
@@ -494,6 +494,8 @@ https://www.tooplate.com/view/2119-gymso-fitness
 }
 
 .bg-overlay {
+  margin-bottom: 50px;
+  margin-top: 10px;
   border: 1px solid black;
   background: rgba(0,0,0,.6);
   border-radius: 7px;

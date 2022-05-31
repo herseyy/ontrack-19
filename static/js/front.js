@@ -1,11 +1,34 @@
-// ------------- TODAY 
-// n =  new Date();
-// y = n.getFullYear();
-// m = String(n.getMonth() + 1).padStart(2, '0');
-// d = String(n.getDate()).padStart(2, '0');
-// today_date = m + "/" + d + "/" + y;
-// date_today = y + "-" + m + "-" + d;
-// document.getElementById("date").innerHTML = "Covid 19 cases as of " + today_date;
+var form = document.getElementById("contactform");
+
+async function handleSubmit(event) {
+  event.preventDefault();
+  var status = document.getElementById("my-form-status");
+  var data = new FormData(event.target);
+  fetch(event.target.action, {
+    method: form.method,
+    body: data,
+    headers: {
+        'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      status.innerHTML = "Thanks for your submission!";
+      status.style.display = "block"
+      form.reset()
+    } else {
+      response.json().then(data => {
+        if (Object.hasOwn(data, 'errors')) {
+          status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+        } else {
+          status.innerHTML = "Oops! There was a problem submitting your form"
+        }
+      })
+    }
+  }).catch(error => {
+    status.innerHTML = "Oops! There was a problem submitting your form"
+  });
+}
+form.addEventListener("submit", handleSubmit)
 
 
 //  ------------- SMOOTH SCROLL
@@ -28,75 +51,6 @@ $('body').scrollspy({
 $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
-
-
-
-// ----------- NUMBER OF CASES
-// const patients_url = "http://127.0.0.1:8000/patients"
-
-// console.log(patients_url)
-
-// // total_results = ''
-
-// fetch(patients_url)
-// .then(res => {
-//   return res.json()
-// })
-// .then(data => {
-// 	let total_active = document.getElementById("total_active");
-// 	let total_recoveries = document.getElementById("total_recoveries");
-// 	let total_deaths = document.getElementById("total_deaths");
-
-// 	let daily_active = document.getElementById("daily_active");
-// 	let daily_recoveries = document.getElementById("daily_recoveries");
-// 	let daily_deaths = document.getElementById("daily_deaths");
-
-// 	let total_recoveries_list = [];
-// 	let total_active_list = [];
-// 	let total_death_list = [];
-
-// 	let daily_recoveries_list = [];
-// 	let daily_active_list = [];
-// 	let daily_death_list = [];
-
-//   data.map(patient => {
-
-//   	if (patient.date_positive == date_today) {
-//     	if (patient.status == "infected") {
-//     		daily_active_list.push(patient.status)
-// 	    }
-// 	    if (patient.status == "recovered") {
-// 	    	daily_recoveries_list.push(patient.status)
-// 	    }
-// 	    if (patient.status == "died") {
-// 	    	daily_death_list.push(patient.status)
-// 	    }
-//     }
-
-//     if (patient.status == "infected") {
-//     	total_active_list.push(patient.status)
-//     }
-//     if (patient.status == "recovered") {
-//     	total_recoveries_list.push(patient.status)
-//     }
-//     if (patient.status == "died") {
-//     	total_death_list.push(patient.status)
-//     }
-//   })
-
-//   total_active.innerHTML = total_active_list.length;
-//   total_recoveries.innerHTML = total_recoveries_list.length;
-//   total_deaths.innerHTML = total_death_list.length;
-
-//   daily_active.innerHTML = daily_active_list.length;
-//   daily_recoveries.innerHTML = daily_recoveries_list.length;
-//   daily_deaths.innerHTML = daily_death_list.length;
-
-// })
-// .catch(error => console.log("ERROR"))
-
-
-
 
 
 

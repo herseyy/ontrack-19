@@ -152,6 +152,11 @@ def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get
     patients = crud.get_patients(db, p_filter)
     return [crud.format_patient(p) for p in patients]
 
+@app.get("/filter_update", response_model=list[schemas.PatientResponse], response_model_exclude={"name", "symptoms"})
+def filter(p_filter: schemas.PatientFilter = Depends(), db:Session = Depends(get_db)):
+    patients = crud.get_patients(db, p_filter)
+    return [crud.format_patient(p) for p in patients]
+
 
 @app.delete("/patients/{patient_id}", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
 def delete(patient_id: int, db:Session = Depends(get_db)):
@@ -176,22 +181,6 @@ def delete(patient_id: int, db:Session = Depends(get_db)):
 def get_covid_form(patient: schemas.PatientRequest, db: Session = Depends(get_db)):
     created_patient = crud.create_patients(db=db, patient=patient)
     return crud.format_patient(created_patient)
-
-
-
-@app.get("/form", response_class=HTMLResponse)
-async def submit(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.get("/results", response_class=HTMLResponse)
-async def submit(request: Request):
-    return templates.TemplateResponse("results.html", {"request": request})
-
-@app.get("/index", response_class=HTMLResponse)
-async def submit(request: Request):
-    return templates.TemplateResponse("front.html", {"request": request})
-
 
 
 @app.post("/sms_uri")
@@ -226,8 +215,9 @@ def already_contacted(user_id:int, contacted: bool, db:Session = Depends(get_db)
 
     if db_user is None:
         raise HTTPException(404, detail="User not found!")
-
+    print(db_user.already_contacted)
     return db_user
+    # return "asd"
 
 
 @app.get("/user_numbers")
@@ -235,10 +225,6 @@ def getUserNumbers(contacted_filter: schemas.Contact = Depends(), db:Session = D
     users = crud.getUsers(db=db, contacted_filter=contacted_filter)
 
     return users
-
-@app.get("/users_no", response_class=HTMLResponse)
-async def submit(request: Request):
-    return templates.TemplateResponse("users_to_contact.html", {"request": request})
 
 
 
@@ -253,18 +239,61 @@ def get_events(db:Session = Depends(get_db)):
     events = crud.get_events(db)
     return [crud.format_event(e) for e in events]
 
+
+
+# PUCLIC
+@app.get("/index", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("front.html", {"request": request})
+
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
 
-
-@app.get("/form_event", response_class=HTMLResponse)
-async def form_event(request:Request):
-    return templates.TemplateResponse("event.html", {"request": request})
+@app.get("/results", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("results.html", {"request": request})
 
 @app.get("/more", response_class=HTMLResponse)
 async def more(request:Request):
     return templates.TemplateResponse("more.html", {"request": request})
+
+
+
+# PRIVATE
+@app.get("/form", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/form_event", response_class=HTMLResponse)
+async def form_event(request:Request):
+    return templates.TemplateResponse("event.html", {"request": request})
+    
+@app.get("/users_no", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("users_to_contact.html", {"request": request})
+
+@app.get("/results_update", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("results_update.html", {"request": request})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

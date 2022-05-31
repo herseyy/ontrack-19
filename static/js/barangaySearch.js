@@ -419,7 +419,7 @@ $(document).ready(function () {
     //   .catch(error => console.log("ERROR"))
 
     if (name == "") {
-      name_error.innerHTML = "Please Enter Your Name";
+      name_error.innerHTML = "This field cannot be empty";
       document.getElementById('app').scrollIntoView({
         behavior: 'smooth'
       });
