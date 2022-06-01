@@ -42,15 +42,27 @@ function getAge(dateString) {
         age--;
     }
 
+    // console.log(age)
+
     // return age;
     if (age == 0) {
       const diffTime = Math.abs(today - birthDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
       // console.log(diffDays + " days")
-      return diffDays
+      if (diffDays == 1) {
+        return (diffDays + ' day')
+      } else {
+        return (diffDays + " days")
+      }
     }
-    return age
+    else if (age == 1) {
+      return(age + ' year old')
+    } else {
+      return (age + ' years old')
+    }
 }
+
+// console.log(getAge("2022-05-12"))
 
 // FETCH FILTER
 
@@ -192,6 +204,7 @@ function fetch_filter() {
 
         th_id.className = 'align-middle text-center justify-content-center';
         th_date.className = "align-middle text-center justify-content-center";
+        th_day.className = "align-middle text-center justify-content-center";
         th_brgy.className = "align-middle text-center justify-content-center";
         th_sex.className = "align-middle text-center justify-content-center";
         th_age.className = "align-middle text-center justify-content-center";

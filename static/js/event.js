@@ -1,3 +1,38 @@
+// BIRTHDAY TO AGE
+function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function convertDate(date_str) {
+  temp_date = date_str.split("-");
+  return temp_date[2] + " " + months[Number(temp_date[1]) - 1] + " " + temp_date[0];
+}
+
+
+// ------------- TODAY 
+n =  new Date();
+y = n.getFullYear();
+m = String(n.getMonth() + 1).padStart(2, '0');
+d = String(n.getDate()).padStart(2, '0');
+date_today = y + "-" + m + "-" + d;
+today_date = convertDate(date_today);
+
+// console.log(today_date);
+let today_split = today_date.split(" ")
+today_format = today_split[1] + " " + today_split[0] + ", " + today_split[2]
+
+
+
+
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -153,7 +188,14 @@ $(document).ready(function () {
         behavior: 'smooth'
       });
       return false;
-    } else {
+    } else if (date < date_today) {
+      date_error.innerHTML = "You cannot enter a date in the past.";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
+      return false;
+    }
+    else {
       date_error.innerHTML = "";
     }
 
@@ -196,8 +238,6 @@ $(document).ready(function () {
     } else {
       age_error.innerHTML = "";
     }
-
-
 
     $('.wrapper').blur();
     containerElement.setAttribute('class', 'wrapper blur');

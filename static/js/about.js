@@ -210,12 +210,20 @@ fetch(events_url)
 
         arrow.style.display = "none";
       }
-
       // ul_p.append(lst)
-
     }
   })
+    let sched = document.getElementById('schedule')
+    let no_sched = document.getElementById('no_schedule')
 
+
+    if (event_list.length == 0) {
+      no_sched.innerHTML = 'No Schedule'
+      arrow.style.display = "none";
+    } else {
+      no_sched.innerHTML = ''
+    }
+    console.log(event_list.length)
 
 })
 .catch(error => console.log("ERROR"))

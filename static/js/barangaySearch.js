@@ -10,6 +10,29 @@ function getAge(dateString) {
     return age;
 }
 
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function convertDate(date_str) {
+  temp_date = date_str.split("-");
+  return temp_date[2] + " " + months[Number(temp_date[1]) - 1] + " " + temp_date[0];
+}
+
+
+// ------------- TODAY 
+n =  new Date();
+y = n.getFullYear();
+m = String(n.getMonth() + 1).padStart(2, '0');
+d = String(n.getDate()).padStart(2, '0');
+date_today = y + "-" + m + "-" + d;
+today_date = convertDate(date_today);
+
+// console.log(today_date);
+let today_split = today_date.split(" ")
+today_format = today_split[1] + " " + today_split[0] + ", " + today_split[2]
+
+
+
+
 // CAPITALIZE FIRST LETTER
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -411,8 +434,18 @@ $(document).ready(function () {
       name_error.innerHTML = "";
     }
 
+    // console.log(date_today)
+    // console.log(input_date_positive)
+
+
     if (input_date_positive == "") {
       date_error.innerHTML = "This field cannot be empty";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
+      return false;
+    } else if (input_date_positive > date_today) {
+      date_error.innerHTML = "You cannot enter a date in the future.";
       document.getElementById('app').scrollIntoView({
         behavior: 'smooth'
       });
@@ -427,9 +460,17 @@ $(document).ready(function () {
         behavior: 'smooth'
       });
       return false;
-    } else {
+    } else if (input_birthday > date_today) {
+      bday_error.innerHTML = "You cannot enter a date in the future.";
+      document.getElementById('app').scrollIntoView({
+        behavior: 'smooth'
+      });
+      return false;
+    }
+    else {
       bday_error.innerHTML = "";
     }
+
 
     if (input_sex == "") {
       sex_error.innerHTML = "This field cannot be empty";
