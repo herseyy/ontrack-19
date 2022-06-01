@@ -295,9 +295,9 @@ function fetch_post() {
   // const submit_form_url = "http://127.0.0.1:8000/submit_form"
   // const form_url = "http://127.0.0.1:8000/form"
   // const results_url = "http://127.0.0.1:8000/results"
-  const submit_form_url = "https://ontrac-19.herokuapp.com/submit_form"
-  const form_url = "https://ontrac-19.herokuapp.com/form"
-  const results_url = "https://ontrac-19.herokuapp.com/results"
+  const submit_form_url = "/submit_form"
+  const form_url = "/form"
+  const results_url = "/results"
 
   fetch(submit_form_url, {
     method: 'POST',

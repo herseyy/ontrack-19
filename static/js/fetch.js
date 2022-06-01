@@ -15,7 +15,7 @@
 
 
 // const symptom_url = "http://127.0.0.1:8000/symptoms"
-const symptom_url = "https://ontrac-19.herokuapp.com/symptoms"
+const symptom_url = "/symptoms"
 
 function getSymptoms() {
 	fetch(symptom_url).then(response => {

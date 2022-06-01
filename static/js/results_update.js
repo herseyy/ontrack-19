@@ -108,7 +108,7 @@ function fetch_filter() {
 
 
   // const results_update_url = "http://127.0.0.1:8000/filter_update?" + query
-  const results_update_url = "https://ontrac-19.herokuapp.com/filter_update?" + query
+  const results_update_url = "/filter_update?" + query
 
   console.log(results_update_url)
   
@@ -467,7 +467,7 @@ function onClick(id) {
 
   // console.log(query)
   // const results_update_url = "http://127.0.0.1:8000/update/" + query
-  const results_update_url = "https://ontrac-19.herokuapp.com/update/" + query
+  const results_update_url = "/update/" + query
   console.log(results_update_url)
 
   let user_id = id;

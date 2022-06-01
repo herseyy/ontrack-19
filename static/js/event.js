@@ -29,9 +29,9 @@ function fetch_post() {
   // const event_form_url = 'http://127.0.0.1:8000/event_form'
   // const form_event_url = "http://127.0.0.1:8000/form_event"
   // const about_url = "http://127.0.0.1:8000/about"
-  const event_form_url = 'https://ontrac-19.herokuapp.com/event_form'
-  const form_event_url = "https://ontrac-19.herokuapp.com/form_event"
-  const about_url = "https://ontrac-19.herokuapp.com/about"
+  const event_form_url = '/event_form'
+  const form_event_url = "/form_event"
+  const about_url = "/about"
 
   fetch(event_form, {
     method: 'POST',
