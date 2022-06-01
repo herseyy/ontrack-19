@@ -50,15 +50,8 @@ function fetch_post() {
 
 	// console.log(inp_obj)
 
-	// const submit_form_url = 'http://127.0.0.1:8000/submit_form'
-	// const form = "http://127.0.0.1:8000/form"
-	// const results_url = "http://127.0.0.1:8000/results"
-	const submit_form_url = '/submit_form'
-	const form_url = "/form"
-	const results_url = "/results"
 
-
-	fetch(submit_form_url, {
+	fetch('/submit_form', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -125,7 +118,7 @@ function popupOpenClose(popup) {
 		}
 		containerElement.setAttribute('class', 'wrapper');
 		$(popup).hide();
-		location.href = form_url;
+		location.href = "/form";
 	});
 }
 
@@ -140,5 +133,5 @@ $(document).ready(function () {
 });
 
 document.getElementById("btn").onclick = function () {
-    location.href = results_url;
+    location.href = "/results";
 };

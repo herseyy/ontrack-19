@@ -292,12 +292,7 @@ function fetch_post() {
   }
 
   // console.log(inp_obj)
-  // const submit_form_url = "http://127.0.0.1:8000/submit_form"
-  // const form_url = "http://127.0.0.1:8000/form"
-  // const results_url = "http://127.0.0.1:8000/results"
   const submit_form_url = "/submit_form"
-  const form_url = "/form"
-  const results_url = "/results"
 
   fetch(submit_form_url, {
     method: 'POST',
@@ -377,7 +372,7 @@ function popupOpenClose(popup) {
     }
     containerElement.setAttribute('class', 'wrapper');
     $(popup).hide();
-    location.href = form_url;
+    location.href = "/form";
   });
 }
 
@@ -405,24 +400,6 @@ $(document).ready(function () {
     var symptoms_error = document.getElementById('symptoms_error');
     var status_error = document.getElementById('status_error');
 
-    // const patients_url = "http://127.0.0.1:8000/patients"
-    // console.log(patients_url)
-
-    // fetch(patients_url)
-    //   .then(res => {
-    //     return res.json()
-    //   })
-    //   .then(data => {
-    //     data.map(patient => {
-    //       console.log(patient.name)
-    //       console.log(name)
-    //       if (name == patient.name) {
-    //         console.log("asd")
-    //       }
-
-    //     })
-    //   })
-    //   .catch(error => console.log("ERROR"))
 
     if (name == "") {
       name_error.innerHTML = "This field cannot be empty";
@@ -529,5 +506,5 @@ $(document).ready(function () {
 });
 
 document.getElementById("btn").onclick = function () {
-    location.href = results_url;
+    location.href = "/results";
 };

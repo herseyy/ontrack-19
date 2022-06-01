@@ -26,14 +26,8 @@ function fetch_post() {
   }
 
   // console.log(inp_obj)
-  // const event_form_url = 'http://127.0.0.1:8000/event_form'
-  // const form_event_url = "http://127.0.0.1:8000/form_event"
-  // const about_url = "http://127.0.0.1:8000/about"
-  const event_form_url = '/event_form'
-  const form_event_url = "/form_event"
-  const about_url = "/about"
 
-  fetch(event_form_url, {
+  fetch('/event_form', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -112,7 +106,7 @@ function popupOpenClose(popup) {
     }
     containerElement.setAttribute('class', 'wrapper');
     $(popup).hide();
-    location.href = form_event_url;
+    location.href = "/form_event";
   });
 }
 
@@ -215,5 +209,5 @@ $(document).ready(function () {
 });
 
 document.getElementById("btn").onclick = function () {
-    location.href = about_url;
+    location.href = "/about";
 };

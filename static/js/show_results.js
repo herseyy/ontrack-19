@@ -115,7 +115,7 @@ function fetch_filter() {
 
   // console.log(query)
 
-  // const filter_url = "http://127.0.0.1:8000/filter?" + query
+
   const filter_url = "/filter?" + query
 
   console.log(filter_url)

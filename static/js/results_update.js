@@ -107,7 +107,6 @@ function fetch_filter() {
   // console.log(query)
 
 
-  // const results_update_url = "http://127.0.0.1:8000/filter_update?" + query
   const results_update_url = "/filter_update?" + query
 
   console.log(results_update_url)
@@ -466,7 +465,6 @@ function onClick(id) {
   let query = id;
 
   // console.log(query)
-  // const results_update_url = "http://127.0.0.1:8000/update/" + query
   const results_update_url = "/update/" + query
   console.log(results_update_url)
 
