@@ -46,10 +46,10 @@ function getDays(dateString) {
       const diffTime = Math.abs(today - positive_date);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
       if (diffDays == 1) {
-        console.log(diffDays + " day")
+        // console.log(diffDays + " day")
         return (diffDays + " day")
       } else {
-        console.log(diffDays + " days")
+        // console.log(diffDays + " days")
         return (diffDays + " days")
       }
     }
@@ -77,7 +77,7 @@ function fetch_filter() {
 
 
   var split_day = days.split(',')
-  console.log(split_day)
+  // console.log(split_day)
 
   var inp_obj = {}
 
@@ -97,7 +97,7 @@ function fetch_filter() {
     inp_obj = Object.assign({"barangay": capitalizeFirstLetter(barangay)}, inp_obj)
   }
 
-  console.log(inp_obj)
+  // console.log(inp_obj)
 
 
   let query = Object.keys(inp_obj)
@@ -126,6 +126,7 @@ function fetch_filter() {
       total_results.innerHTML = '';
 
       data.map(patient => {
+
         // console.log(patient)
         // console.log(getAge(patient.date_positive))
 
@@ -186,6 +187,15 @@ function fetch_filter() {
         // th_contacted.className = 'asd align-middle text-center justify-content-center';
 
 
+        // tr.append(th_id);
+        // tr.append(th_brgy);
+        // tr.append(th_date);
+        // tr.append(th_days);
+        // tr.append(th_number);
+
+        // console.log(status_btn.innerHTML)
+
+
         tr.append(th_id);
         tr.append(th_brgy);
         tr.append(th_date);
@@ -193,6 +203,10 @@ function fetch_filter() {
         tr.append(th_number);
         th_status.append(status_btn)
         tr.append(th_status);
+
+
+        // th_status.append(status_btn)
+        // tr.append(th_status);
         // tr.append(th_contacted);
 
         results.append(tr)
