@@ -53,8 +53,6 @@ function fetch_post() {
         inp_age = "Below 17"
       } else if (data.age == 3) {
         inp_age = "Above 18"
-      } else {
-        inp_age = "Senior Citizen"
       }
 
       let event_info = document.getElementById("inner_div");

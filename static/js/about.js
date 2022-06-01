@@ -54,7 +54,7 @@ fetch(events_url)
     // console.log(date_today)
 
     if (event.date >= date_today) {
-      // console.log(event.date)
+      console.log(event.date)
       event_list.push(event.id)
       let lst = document.createElement("li");
       let dv1 = document.createElement('div');
@@ -154,6 +154,17 @@ fetch(events_url)
         lst_menu4.append(time[0] + " am")
       }
 
+      inp_age = ''
+      console.log(event.age)
+
+      if (event.age == 1) {
+        inp_age = "All age"
+      } else if (event.age == 2) {
+        inp_age = "Below 17"
+      } else if (event.age == 3) {
+        inp_age = "Above 18"
+      }
+
       stng5.innerHTML = 'Location: ';
       lst_menu5.append(stng5);
       lst_menu5.append(event.location);
@@ -162,7 +173,7 @@ fetch(events_url)
       lst_menu6.append(event.slots);
       stng7.innerHTML = 'Age: ';
       lst_menu7.append(stng7);
-      lst_menu7.append(event.age);
+      lst_menu7.append(inp_age);
 
       ul.append(lst_menu1);
       ul.append(lst_menu2);
@@ -190,7 +201,10 @@ fetch(events_url)
         ul_p1.append(ul)
 
         arrow.style.display = "block";
-      } else{
+      } else if (event_list == 0) {
+        arrow.style.display = "none";
+      }
+      else {
         ul_p.append(lst)
         ul_p.append(ul)
 

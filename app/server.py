@@ -103,9 +103,9 @@ def send_sms(contact_info, access_token, shortcode):
 # 2 - Load list of symptoms sa html page
 # 3 - Edit get_covid_form function
 # =======================================================================================
-@app.get("/")
-def index():
-    return {"hello": "world"}
+# @app.get("/")
+# def index():
+#     return {"hello": "world"}
 
 
 # Ang ginagawa lang neto, sinasabe na yung response format ay galing sa schema na Symptoms
@@ -242,13 +242,28 @@ def get_events(db:Session = Depends(get_db)):
 
 
 # PUCLIC
-@app.get("/index", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def submit(request: Request):
     return templates.TemplateResponse("front.html", {"request": request})
 
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
+
+
+@app.delete("/events_delete")
+def get_events(db:Session = Depends(get_db)):
+    events = models.VaccinationSched
+
+    #     patients = models.Patient
+    # # db.query(patients).filter(patients.id == patient_id).delete()
+    # db.query(patients).delete()
+
+    db.query(events).delete()
+
+    db.commit()
+
+    return ''
 
 @app.get("/results", response_class=HTMLResponse)
 async def submit(request: Request):
@@ -276,10 +291,6 @@ async def submit(request: Request):
 @app.get("/results_update", response_class=HTMLResponse)
 async def submit(request: Request):
     return templates.TemplateResponse("results_update.html", {"request": request})
-
-
-
-
 
 
 
