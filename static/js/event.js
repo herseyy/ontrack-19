@@ -33,7 +33,7 @@ function fetch_post() {
   const form_event_url = "/form_event"
   const about_url = "/about"
 
-  fetch(event_form, {
+  fetch(event_form_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

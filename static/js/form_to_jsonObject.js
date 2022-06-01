@@ -54,7 +54,7 @@ function fetch_post() {
 	// const form = "http://127.0.0.1:8000/form"
 	// const results_url = "http://127.0.0.1:8000/results"
 	const submit_form_url = '/submit_form'
-	const form = "/form"
+	const form_url = "/form"
 	const results_url = "/results"
 
 
