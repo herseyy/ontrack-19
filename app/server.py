@@ -239,18 +239,6 @@ def get_events(db:Session = Depends(get_db)):
     events = crud.get_events(db)
     return [crud.format_event(e) for e in events]
 
-
-
-# PUCLIC
-@app.get("/", response_class=HTMLResponse)
-async def submit(request: Request):
-    return templates.TemplateResponse("front.html", {"request": request})
-
-@app.get("/about", response_class=HTMLResponse)
-async def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request})
-
-
 @app.delete("/events_delete")
 def get_events(db:Session = Depends(get_db)):
     events = models.VaccinationSched
@@ -265,32 +253,44 @@ def get_events(db:Session = Depends(get_db)):
 
     return ''
 
+
+# PUCLIC
+@app.get("/", response_class=HTMLResponse)
+async def submit(request: Request):
+    return templates.TemplateResponse("public/front.html", {"request": request})
+
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    return templates.TemplateResponse("public/about.html", {"request": request})
+
+
+
 @app.get("/results", response_class=HTMLResponse)
 async def submit(request: Request):
-    return templates.TemplateResponse("results.html", {"request": request})
+    return templates.TemplateResponse("public/results.html", {"request": request})
 
 @app.get("/more", response_class=HTMLResponse)
 async def more(request:Request):
-    return templates.TemplateResponse("more.html", {"request": request})
+    return templates.TemplateResponse("public/more.html", {"request": request})
 
 
 
 # PRIVATE
 @app.get("/form", response_class=HTMLResponse)
 async def submit(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("private/index.html", {"request": request})
 
 @app.get("/form_event", response_class=HTMLResponse)
 async def form_event(request:Request):
-    return templates.TemplateResponse("event.html", {"request": request})
+    return templates.TemplateResponse("private/event.html", {"request": request})
     
 @app.get("/users_no", response_class=HTMLResponse)
 async def submit(request: Request):
-    return templates.TemplateResponse("users_to_contact.html", {"request": request})
+    return templates.TemplateResponse("private/users_to_contact.html", {"request": request})
 
 @app.get("/results_update", response_class=HTMLResponse)
 async def submit(request: Request):
-    return templates.TemplateResponse("results_update.html", {"request": request})
+    return templates.TemplateResponse("private/results_update.html", {"request": request})
 
 
 
