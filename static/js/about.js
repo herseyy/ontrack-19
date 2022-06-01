@@ -27,7 +27,8 @@ document.getElementById("date").innerHTML = "COVID-19 cases as of " + today_form
 
 
 // ----------- NUMBER OF CASES
-const events_url = "http://127.0.0.1:8000/events"
+// const events_url = "http://127.0.0.1:8000/events"
+const events_url = "https://ontrac-19.herokuapp.com/events"
 
 console.log(events_url)
 
@@ -225,7 +226,8 @@ function doSomething(id) {
 
 
 // ----------- NUMBER OF CASES
-const patients_url = "http://127.0.0.1:8000/patients"
+// const patients_url = "http://127.0.0.1:8000/patients"
+const patients_url = "https://ontrac-19.herokuapp.com/patients"
 
 console.log(patients_url)
 

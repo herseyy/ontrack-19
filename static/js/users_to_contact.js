@@ -37,7 +37,8 @@ function fetch_filter() {
   // console.log(query)
 
 
-  const user_url = "http://127.0.0.1:8000/user_numbers?" + query
+  // const user_url = "http://127.0.0.1:8000/user_numbers?" + query
+  const user_url = "https://ontrac-19.herokuapp.com/user_numbers?" + query
 
   console.log(user_url)
   
@@ -169,7 +170,8 @@ function onClick(id) {
   let query = id;
 
   // console.log(query)
-  const contact_update_url = "http://127.0.0.1:8000/contacted/" + query + '?' + "contacted=" + bool
+  // const contact_update_url = "http://127.0.0.1:8000/contacted/" + query + '?' + "contacted=" + bool
+  const contact_update_url = "https://ontrac-19.herokuapp.com/contacted/" + query + '?' + "contacted=" + bool
   console.log(contact_update_url)
 
   let user_id = id;

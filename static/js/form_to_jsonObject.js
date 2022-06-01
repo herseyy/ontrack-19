@@ -50,7 +50,15 @@ function fetch_post() {
 
 	// console.log(inp_obj)
 
-	fetch('http://127.0.0.1:8000/submit_form', {
+	// const submit_form_url = 'http://127.0.0.1:8000/submit_form'
+	// const form = "http://127.0.0.1:8000/form"
+	// const results_url = "http://127.0.0.1:8000/results"
+	const submit_form_url = 'https://ontrac-19.herokuapp.com/submit_form'
+	const form = "https://ontrac-19.herokuapp.com/form"
+	const results_url = "https://ontrac-19.herokuapp.com/results"
+
+
+	fetch(submit_form_url, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -117,7 +125,7 @@ function popupOpenClose(popup) {
 		}
 		containerElement.setAttribute('class', 'wrapper');
 		$(popup).hide();
-		location.href = "http://127.0.0.1:8000/form";
+		location.href = form_url;
 	});
 }
 
@@ -132,5 +140,5 @@ $(document).ready(function () {
 });
 
 document.getElementById("btn").onclick = function () {
-    location.href = "http://127.0.0.1:8000/results";
+    location.href = results_url;
 };

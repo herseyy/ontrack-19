@@ -26,8 +26,14 @@ function fetch_post() {
   }
 
   // console.log(inp_obj)
+  // const event_form_url = 'http://127.0.0.1:8000/event_form'
+  // const form_event_url = "http://127.0.0.1:8000/form_event"
+  // const about_url = "http://127.0.0.1:8000/about"
+  const event_form_url = 'https://ontrac-19.herokuapp.com/event_form'
+  const form_event_url = "https://ontrac-19.herokuapp.com/form_event"
+  const about_url = "https://ontrac-19.herokuapp.com/about"
 
-  fetch('http://127.0.0.1:8000/event_form', {
+  fetch(event_form, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -106,7 +112,7 @@ function popupOpenClose(popup) {
     }
     containerElement.setAttribute('class', 'wrapper');
     $(popup).hide();
-    location.href = "http://127.0.0.1:8000/form_event";
+    location.href = form_event_url;
   });
 }
 
@@ -209,5 +215,5 @@ $(document).ready(function () {
 });
 
 document.getElementById("btn").onclick = function () {
-    location.href = "http://127.0.0.1:8000/about";
+    location.href = about_url;
 };
