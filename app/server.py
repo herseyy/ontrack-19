@@ -1,10 +1,14 @@
 """
 Main file
 """
+# import secrets
+
 import requests
 import json
 
-from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form
+
+from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.responses import HTMLResponse
@@ -25,10 +29,20 @@ from .database import SessionLocal, engine
 
 from pydantic import BaseModel
 
+
+
+
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+from jose import JWTError, jwt
+from datetime import datetime, timedelta
+
+
 # Matic nagccreate na ng table
 models.Base.metadata.create_all(bind=engine)
 # Main app object
 app = FastAPI()
+# security = HTTPBasic()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 origins = [
@@ -51,6 +65,72 @@ app.add_middleware(
 
 
 templates = Jinja2Templates(directory="pages")
+
+
+
+# Dependency
+def gt_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+
+
+async def get_current_user(db: Session = Depends(gt_db),token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, crud.SECRET_KEY, algorithms=[crud.ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = username
+    except JWTError:
+        raise credentials_exception
+    user = crud.get_user(db, username=token_data)
+    if user is None:
+        raise credentials_exception
+    return user
+
+@app.post("/token", response_model=schemas.Token)
+async def login_for_access_token(db: Session = Depends(gt_db),form_data: OAuth2PasswordRequestForm = Depends()):
+    user = crud.authenticate_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = crud.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+@app.get("/users/me/")
+async def read_users_me(current_user: models.User = Depends(get_current_user)):
+    return current_user
+
+
+@app.post("/users/")
+def create_user(
+    user: schemas.UserCreate, db: Session = Depends(gt_db)
+):
+    return crud.create_user(db=db, user=user)
+
+
+
+
 
 
 # Wag mo muna tong pansinin, malilito ka lang
@@ -97,12 +177,25 @@ def send_sms(contact_info, access_token, shortcode):
 
     return response.text
 
-# =======================================================================================
-# EDIT CODE BELOW HERE
-# 1 - Use /symptoms api call para makuha ung list ng symptoms
-# 2 - Load list of symptoms sa html page
-# 3 - Edit get_covid_form function
-# =======================================================================================
+
+# def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
+#     correct_username = secrets.compare_digest(credentials.username, "username")
+#     correct_password = secrets.compare_digest(credentials.password, "password")
+#     if not (correct_username and correct_password):
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED,
+#             detail="Incorrect email or password",
+#             headers={"WWW-Authenticate": "Basic"},
+#         )
+#     return credentials.username
+
+
+# @app.get("/users/me")
+# def read_current_user(username: str = Depends(get_current_username)):
+#     return {"username": username}
+
+
+
 # @app.get("/")
 # def index():
 #     return {"hello": "world"}

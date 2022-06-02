@@ -1,4 +1,0 @@
-AuthName "Dialog prompt"
-AuthType Basic
-AuthUserFile \Users\PC\hersey2.0\sample_fast_api_template\pages\.htpass
-Require valid-user
