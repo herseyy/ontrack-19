@@ -11,6 +11,25 @@ function fetch_post() {
   }
 
   console.log(inp_obj)
+
+  const token_url = "/token"
+
+  fetch(token_url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(inp_obj)
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Success:', data);
+
+  }).catch((error) => {
+      console.error('Error:', error);
+  });
+
+
 }
 
 
