@@ -47,6 +47,7 @@ msgpack==1.0.3
 mutagen==1.45.1
 mysql==0.0.3
 mysqlclient==2.1.0
+passlib==1.7.4
 packaging==20.9
 pastel==0.2.1
 pexpect==4.8.0

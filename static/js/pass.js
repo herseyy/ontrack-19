@@ -6,8 +6,12 @@ function fetch_post() {
   let password = document.getElementById('password').value;
   
   var inp_obj = {
+    "grant_type": "",
     "username" : username,
-    "password" : password
+    "password" : password,
+    "scope": "",
+    "client_id": '',
+    "client_secret": ""
   }
 
   console.log(inp_obj)
