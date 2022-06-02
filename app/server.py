@@ -366,6 +366,10 @@ async def submit(request: Request):
 async def more(request:Request):
     return templates.TemplateResponse("public/more.html", {"request": request})
 
+@app.get("/pass", response_class=HTMLResponse)
+async def more(request:Request):
+    return templates.TemplateResponse("public/pass.html", {"request": request})
+
 
 
 # PRIVATE
