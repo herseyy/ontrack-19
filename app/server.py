@@ -77,10 +77,11 @@ def gt_db():
         db.close()
 
 def get_current_username(db: Session = Depends(gt_db),credentials: HTTPBasicCredentials = Depends(security)):
-    user = crud.authenticate_user(db, credentials.username, credentials.password)
-    # correct_username = secrets.compare_digest(credentials.username, "user")
-    # correct_password = secrets.compare_digest(credentials.password, "pass")
-    if not (user):
+    # user = crud.authenticate_user(db, credentials.username, credentials.password)
+    correct_username = secrets.compare_digest(credentials.username, "user")
+    correct_password = secrets.compare_digest(credentials.password, "pass")
+    if not (correct_username and correct_password):
+    # if not (user):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -91,35 +92,6 @@ def get_current_username(db: Session = Depends(gt_db),credentials: HTTPBasicCred
 @app.get("/users/me")
 def read_current_user(username: str = Depends(get_current_username)):
     return {"username": username}
-
-
-
-
-# @app.get("/loginn/")
-# def login(request: Request):
-#     return templates.TemplateResponse("public/login.html", {"request": request})
-
-
-# @app.post("/loginn/")
-# async def login(request: Request, db: Session = Depends(gt_db)):
-#     form = LoginForm(request)
-#     await form.load_data()
-#     if await form.is_valid():
-#         try:
-#             form.__dict__.update(msg="Login Successful :)")
-#             response = templates.TemplateResponse("public/login.html", form.__dict__)
-#             login_for_access_token(response=response, form_data=form, db=db)
-#             return response
-#         except HTTPException:
-#             form.__dict__.update(msg="")
-#             form.__dict__.get("errors").append("Incorrect Email or Password")
-#             return templates.TemplateResponse("public/login.html", form.__dict__)
-#     return templates.TemplateResponse("public/login.html", form.__dict__)
-
-
-
-
-
 
 
 
@@ -379,19 +351,19 @@ async def more(request:Request):
 
 # PRIVATE
 @app.get("/form", response_class=HTMLResponse)
-async def submit(request: Request):
+async def submit(request: Request, username: str = Depends(get_current_username)):
     return templates.TemplateResponse("private/index.html", {"request": request})
 
 @app.get("/form_event", response_class=HTMLResponse)
-async def form_event(request:Request):
+async def form_event(request:Request, username: str = Depends(get_current_username)):
     return templates.TemplateResponse("private/event.html", {"request": request})
     
 @app.get("/users_no", response_class=HTMLResponse)
-async def submit(request: Request):
+async def submit(request: Request, username: str = Depends(get_current_username)):
     return templates.TemplateResponse("private/users_to_contact.html", {"request": request})
 
 @app.get("/results_update", response_class=HTMLResponse)
-async def submit(request: Request):
+async def submit(request: Request, username: str = Depends(get_current_username)):
     return templates.TemplateResponse("private/results_update.html", {"request": request})
 
 
