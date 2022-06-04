@@ -28,20 +28,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
-
 def get_user(db, username: str):
     return db.query(User).filter(User.username== username).first()
-
-def create_user(db: Session, user: UserCreate):
-    db_user = User(username=user.username,hashed_password=get_password_hash(user.password))
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
 
 def authenticate_user(fake_db, username: str, password: str):
     user = get_user(fake_db, username)
@@ -49,21 +37,8 @@ def authenticate_user(fake_db, username: str, password: str):
         return False
     if not verify_password(password, user.hashed_password):
         return False
+    print(user.hashed_password)
     return user
-
-
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-
-
 
 
 
@@ -104,6 +79,8 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
         query = query.filter(Patient.barangay == p_filter.barangay)
     if p_filter.date_positive is not None:
         query = query.filter(Patient.date_positive == p_filter.date_positive)
+
+
     if p_filter.lowerDay is not None and p_filter.upperDay is not None:
         lower_day = datetime.now() - relativedelta(days=p_filter.upperDay)
         upper_day = datetime.now() - relativedelta(days=p_filter.lowerDay)
@@ -112,14 +89,23 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
         query = query.filter(
             and_((Patient.date_positive > lower_day), 
             (Patient.date_positive <= upper_day)))
+
+    # if p_filter.age is not None:
+    #     print('not none')
+
     if p_filter.sex is not None:
         query = query.filter(Patient.sex == p_filter.sex)
+
+
+
     if p_filter.lowerAge is not None and p_filter.upperAge is not None:
-        lower_date = datetime.now() - relativedelta(years=p_filter.upperAge)
-        upper_date = datetime.now() - relativedelta(years=p_filter.lowerAge)
+        # lower_date = datetime.now() - relativedelta(years=p_filter.upperAge)
+        # upper_date = datetime.now() - relativedelta(years=p_filter.lowerAge)
         query = query.filter(
-            and_((Patient.birthday >= lower_date), 
-            (Patient.birthday <= upper_date)))
+            and_((Patient.age >= p_filter.lowerAge), 
+            (Patient.age <= p_filter.upperAge)))
+
+
     if p_filter.asymptomatic is not None:
         query = query.filter(Patient.asymptomatic == p_filter.asymptomatic)    
     if p_filter.status is not None:
@@ -132,6 +118,7 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
 # Dagdagan mo na lang yung mga symptoms
 def populate_symptoms(db: Session):
     symptoms = [
+        "not specified",
         "Ubo (Cough)",
         "Sipon (Colds)",
         "Pagkawala ng Panlasa (Loss of Taste)",
@@ -186,7 +173,8 @@ def create_patients(db: Session, patient: PatientRequest):
         db_patient = Patient(
             name = patient.name,
             date_positive = patient.date_positive,
-            birthday = patient.birthday,
+            age = patient.age,
+            # birthday = patient.birthday,
             sex = patient.sex,
             barangay = patient.barangay,
             contact_number = patient.contact_number,
@@ -283,7 +271,8 @@ def format_patient(db_patient: Patient):
         id=db_patient.id,
         name=db_patient.name,
         date_positive=db_patient.date_positive,
-        birthday=db_patient.birthday,
+        age = db_patient.age,
+        # birthday=db_patient.birthday,
         sex=db_patient.sex,
         barangay=db_patient.barangay,
         contact_number=db_patient.contact_number,
@@ -292,6 +281,16 @@ def format_patient(db_patient: Patient):
         symptoms=_symptoms
         )
 
+
+
+# def format_contacts(db_contacts: SMSNotif):
+#     return Contact(
+#         id=db_contacts.id,
+#         already_contacted=db_contacts.already_contacted,
+#         created_at=db_contacts.created_at,
+#         access_token=db_contacts.access_token,
+#         subscriber_number=db_contacts.subscriber_number,
+#         )
 
 
 # create

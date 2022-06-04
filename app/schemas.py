@@ -24,7 +24,8 @@ class PatientResponse(BaseModel):
     id: int
     name: str
     date_positive: datetime.date
-    birthday: datetime.date
+    age: int
+    # birthday: datetime.date
     sex: str
     barangay: str = None
     contact_number: str = None
@@ -40,7 +41,8 @@ class PatientResponse(BaseModel):
 class PatientRequest(BaseModel): 
     name: str
     date_positive: datetime.date
-    birthday: datetime.date
+    age: int
+    # birthday: datetime.date
     sex: str
     barangay: str = None
     contact_number: str = None
@@ -48,6 +50,7 @@ class PatientRequest(BaseModel):
     symptoms: list[int]
     status: str = "infected"
 	
+    
 class PatientFilter(BaseModel):
     barangay: str = None
     date_positive: Optional[datetime.date] = None
@@ -70,7 +73,8 @@ class PatientResponseUpdate(BaseModel):
     id: int
     name: str
     date_positive: datetime.date
-    birthday: datetime.date
+    age: int
+    # birthday: datetime.date
     sex: str
     barangay: str = None
     contact_number: str = None
@@ -108,6 +112,30 @@ class EventResponse(BaseModel):
         orm_mode = True
 
 
+# class UsersNumberResponse(BaseModel):
+#     id: int
+#     already_contacted: bool
+#     created_at: datetime.datetime
+#     subscriber_number: int
+#     access_token: str
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+
+class UserOut(BaseModel):
+    id: int
+    username: str
+    created_at: datetime.datetime
+
+    class Config:
+        orm_mode = True
 
 
 class Token(BaseModel):
@@ -116,16 +144,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Union[str] = None
-
-
-class User(BaseModel):
-    username: str
-
-
-class UserInDB(User):
-    hashed_password: str
-
-
-class UserCreate(User):
-    password: str
+    id: Optional[str] = None

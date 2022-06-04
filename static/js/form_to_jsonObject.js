@@ -20,7 +20,8 @@ function fetch_post() {
 
 	let name = document.getElementById('patient_name').value;
 	let input_date_positive = document.getElementById('date_positive').value;
-	let input_birthday = document.getElementById('patient_birthday').value;
+	let input_age = document.getElementById('age').value;
+	// let input_birthday = document.getElementById('patient_birthday').value;
 	let input_sex = document.getElementById('patient_sex').value;
 	let input_barangay = document.getElementById('myInput').value;
 	let input_contact_number = document.getElementById('patient_contact_number').value;
@@ -39,7 +40,8 @@ function fetch_post() {
 	var inp_obj = {
 		"name" : name,
 		"date_positive" : input_date_positive,
-		"birthday" : input_birthday,
+		"age": input_age;
+		// "birthday" : input_birthday,
 		"sex" : input_sex,
 		"barangay" : input_barangay,
 		"contact_number" : input_contact_number,
@@ -70,7 +72,8 @@ function fetch_post() {
 			let popup_id = document.createElement("h2");
 			// let popup_name = document.createElement("p");
 			let popup_date = document.createElement("p");
-			let popup_birthday = document.createElement("p");
+			// let popup_birthday = document.createElement("p");
+			let popup_age = document.createElement("p");
 			let popup_sex = document.createElement("p");
 			let popup_brgy = document.createElement("p");
 			let popup_contact = document.createElement("p");
@@ -81,7 +84,8 @@ function fetch_post() {
 			popup_id.innerHTML = "Patient's ID: " + data.id;
 			// popup_name.innerHTML = "Patient Name: " + data.name;
 			popup_date.innerHTML = "Date Positive: " + data.date_positive;
-			popup_birthday.innerHTML = "Birthday: " + data.birthday;
+			popup_age.innerHTML = "Age: " + data.age + " years old";
+			// popup_birthday.innerHTML = "Birthday: " + data.birthday;
 			popup_sex.innerHTML = "Sex: " + data.sex;
 			popup_brgy.innerHTML = "Barangay: " + data.barangay;
 			popup_contact.innerHTML = "Contact Number: " + data.contact_number;
@@ -91,7 +95,8 @@ function fetch_post() {
 
 			patient_info.append(popup_id);
 			patient_info.append(popup_date);
-			patient_info.append(popup_birthday);
+			patient_info.append(popup_age);
+			// patient_info.append(popup_birthday);
 			patient_info.append(popup_sex);
 			patient_info.append(popup_brgy);
 			patient_info.append(popup_contact);

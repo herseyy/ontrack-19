@@ -83,7 +83,7 @@ function fetch_filter() {
 
   var split = age_range.split(',')
   var split_day = days.split(',')
-  console.log(split_day)
+  // console.log(split_day)
   // console.log(split[0])
 
   var inp_obj = {}
@@ -94,12 +94,14 @@ function fetch_filter() {
   if (asymptomatic != "") {
     inp_obj = Object.assign({"asymptomatic": asymptomatic}, inp_obj)
   }
+
   if (age_range != "") {
     inp_obj = Object.assign({"upperAge": split[1]}, inp_obj)
   }  
   if (age_range != "") {
     inp_obj = Object.assign({"lowerAge": split[0]}, inp_obj)
   }
+
   if (sex != "") {
     inp_obj = Object.assign({"sex": sex}, inp_obj)
   }
@@ -118,7 +120,7 @@ function fetch_filter() {
     inp_obj = Object.assign({"barangay": capitalizeFirstLetter(barangay)}, inp_obj)
   }
 
-  // console.log(inp_obj)
+  console.log(inp_obj)
 
 
   let query = Object.keys(inp_obj)
@@ -152,7 +154,7 @@ function fetch_filter() {
         let date_split = patient_date.split(" ")
         date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
 
-        // console.log(patient)
+        // console.log(patient.age)
 
         
 
@@ -197,7 +199,7 @@ function fetch_filter() {
         th_day.innerHTML = day_quarantine;
         th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
         th_sex.innerHTML = capitalizeFirstLetter(patient.sex);
-        th_age.innerHTML = age;
+        th_age.innerHTML = patient.age;
         th_symptomatic.innerHTML = asymptomatic;
         p.innerHTML = capitalizeFirstLetter(patient.status);
 

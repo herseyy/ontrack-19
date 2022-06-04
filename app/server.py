@@ -1,26 +1,28 @@
 """
 Main file
 """
-# import secrets
+import secrets
 
 import requests
 import json
 
 
 from fastapi import FastAPI, Request, Response, Depends, HTTPException, Form, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.security import HTTPBasic, HTTPBasicCredentials, OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+from .routers import user, auth
 
 
 # EMAIL
 # from fastapi import BackgroundTasks
 # from send_email import send_email_background, send_email_async
 
-from . import crud, models, schemas
+from . import crud, models, schemas, oauth2
 from .database import SessionLocal, engine
 
 # from .schemas import PatientRequest, PatientResponse
@@ -31,18 +33,12 @@ from pydantic import BaseModel
 
 
 
-
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-from jose import JWTError, jwt
-from datetime import datetime, timedelta
-
-
 # Matic nagccreate na ng table
 models.Base.metadata.create_all(bind=engine)
 # Main app object
 app = FastAPI()
-# security = HTTPBasic()
+security = HTTPBasic()
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 origins = [
@@ -63,9 +59,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(user.router)
+app.include_router(auth.router)
+
+
+
 
 templates = Jinja2Templates(directory="pages")
-
 
 
 # Dependency
@@ -76,57 +76,56 @@ def gt_db():
     finally:
         db.close()
 
-
-
-ACCESS_TOKEN_EXPIRE_MINUTES = 1
-
-
-
-async def get_current_user(db: Session = Depends(gt_db),token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, crud.SECRET_KEY, algorithms=[crud.ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_data = username
-    except JWTError:
-        raise credentials_exception
-    user = crud.get_user(db, username=token_data)
-    if user is None:
-        raise credentials_exception
-    return user
-
-@app.post("/token", response_model=schemas.Token)
-async def login_for_access_token(db: Session = Depends(gt_db),form_data: OAuth2PasswordRequestForm = Depends()):
-    user = crud.authenticate_user(db, form_data.username, form_data.password)
-    if not user:
+def get_current_username(db: Session = Depends(gt_db),credentials: HTTPBasicCredentials = Depends(security)):
+    user = crud.authenticate_user(db, credentials.username, credentials.password)
+    # correct_username = secrets.compare_digest(credentials.username, "user")
+    # correct_password = secrets.compare_digest(credentials.password, "pass")
+    if not (user):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Basic"},
         )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = crud.create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return credentials.username
+
+@app.get("/users/me")
+def read_current_user(username: str = Depends(get_current_username)):
+    return {"username": username}
 
 
-@app.get("/users/me/")
-async def read_users_me(current_user: models.User = Depends(get_current_user)):
-    return current_user
 
 
-@app.post("/users/")
-def create_user(
-    user: schemas.UserCreate, db: Session = Depends(gt_db)
-):
-    return crud.create_user(db=db, user=user)
+# @app.get("/loginn/")
+# def login(request: Request):
+#     return templates.TemplateResponse("public/login.html", {"request": request})
+
+
+# @app.post("/loginn/")
+# async def login(request: Request, db: Session = Depends(gt_db)):
+#     form = LoginForm(request)
+#     await form.load_data()
+#     if await form.is_valid():
+#         try:
+#             form.__dict__.update(msg="Login Successful :)")
+#             response = templates.TemplateResponse("public/login.html", form.__dict__)
+#             login_for_access_token(response=response, form_data=form, db=db)
+#             return response
+#         except HTTPException:
+#             form.__dict__.update(msg="")
+#             form.__dict__.get("errors").append("Incorrect Email or Password")
+#             return templates.TemplateResponse("public/login.html", form.__dict__)
+#     return templates.TemplateResponse("public/login.html", form.__dict__)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -178,21 +177,6 @@ def send_sms(contact_info, access_token, shortcode):
     return response.text
 
 
-# def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-#     correct_username = secrets.compare_digest(credentials.username, "username")
-#     correct_password = secrets.compare_digest(credentials.password, "password")
-#     if not (correct_username and correct_password):
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Incorrect email or password",
-#             headers={"WWW-Authenticate": "Basic"},
-#         )
-#     return credentials.username
-
-
-# @app.get("/users/me")
-# def read_current_user(username: str = Depends(get_current_username)):
-#     return {"username": username}
 
 
 
@@ -287,7 +271,7 @@ def redirect(access_token: str, subscriber_number: str, db:Session = Depends(get
     print(subscriber_number)
     shortcode = "21669460"
 
-    # send_sms(subscriber_number, access_token, shortcode)
+    send_sms(subscriber_number, access_token, shortcode)
     
     addSMSNotif = crud.addSMSNotif(db, access_token, subscriber_number)
     return ""
@@ -301,9 +285,9 @@ def redirect2():
 
 
 
-
 @app.patch("/contacted/{user_id}")
 def already_contacted(user_id:int, contacted: bool, db:Session = Depends(get_db)):
+    print(user)
     db_user = crud.update_user(db=db, id=user_id, already_contacted = contacted)
 
     if db_user is None:
@@ -318,7 +302,6 @@ def getUserNumbers(contacted_filter: schemas.Contact = Depends(), db:Session = D
     users = crud.getUsers(db=db, contacted_filter=contacted_filter)
 
     return users
-
 
 
 @app.post("/event_form", response_model=schemas.EventResponse)
@@ -347,16 +330,30 @@ def get_events(db:Session = Depends(get_db)):
     return ''
 
 
-# PUCLIC
+@app.delete("/user_delete")
+def get_events(db:Session = Depends(get_db)):
+    users = models.User
+
+    #     patients = models.Patient
+    # # db.query(patients).filter(patients.id == patient_id).delete()
+    # db.query(patients).delete()
+
+    db.query(users).delete()
+
+    db.commit()
+
+    return ''
+
+
+
+# PUBLIC
 @app.get("/", response_class=HTMLResponse)
 async def submit(request: Request):
     return templates.TemplateResponse("public/front.html", {"request": request})
 
-@app.get("/about", response_class=HTMLResponse)
+@app.get("/announcements", response_class=HTMLResponse)
 async def about(request: Request):
-    return templates.TemplateResponse("public/about.html", {"request": request})
-
-
+    return templates.TemplateResponse("public/announcement.html", {"request": request})
 
 @app.get("/results", response_class=HTMLResponse)
 async def submit(request: Request):
@@ -365,6 +362,14 @@ async def submit(request: Request):
 @app.get("/more", response_class=HTMLResponse)
 async def more(request:Request):
     return templates.TemplateResponse("public/more.html", {"request": request})
+
+@app.get("/about_us", response_class=HTMLResponse)
+async def more(request:Request):
+    return templates.TemplateResponse("public/aboutus.html", {"request": request})
+
+@app.get("/reference", response_class=HTMLResponse)
+async def more(request:Request):
+    return templates.TemplateResponse("public/reference.html", {"request": request})
 
 @app.get("/pass", response_class=HTMLResponse)
 async def more(request:Request):

@@ -279,7 +279,8 @@ function fetch_post() {
 
   let name = document.getElementById('patient_name').value;
   let input_date_positive = document.getElementById('date_positive').value;
-  let input_birthday = document.getElementById('patient_birthday').value;
+  // let input_birthday = document.getElementById('patient_birthday').value;
+  let input_age = document.getElementById('age').value;
   let input_sex = document.getElementById('patient_sex').value;
   let input_barangay = document.getElementById('myInput').value;
   let input_contact_number = document.getElementById('patient_contact_number').value;
@@ -305,7 +306,8 @@ function fetch_post() {
   var inp_obj = {
     "name" : name,
     "date_positive" : input_date_positive,
-    "birthday" : input_birthday,
+    "age": input_age,
+    // "birthday" : input_birthday,
     "sex" : input_sex,
     "barangay" : input_barangay,
     "contact_number" : input_contact_number,
@@ -346,7 +348,8 @@ function fetch_post() {
 
       let popup_id = document.createElement("h2");
       let popup_date = document.createElement("p");
-      let popup_birthday = document.createElement("p");
+      // let popup_birthday = document.createElement("p");
+      let popup_age = document.createElement("p");
       let popup_sex = document.createElement("p");
       let popup_brgy = document.createElement("p");
       let popup_contact = document.createElement("p");
@@ -356,7 +359,8 @@ function fetch_post() {
 
       popup_id.innerHTML = "Patient's ID: " + data.id;
       popup_date.innerHTML = "Date Positive: " + data.date_positive;
-      popup_birthday.innerHTML = "Birthday: " + data.birthday + " (Age: " + getAge(data.birthday) + ")";
+      // popup_age.innerHTML = "Age: " + data.birthday + " (Age: " + getAge(data.birthday) + ")";
+      popup_age.innerHTML = "Age: " + data.age + " years old";
       popup_sex.innerHTML = "Sex: " + capitalizeFirstLetter(data.sex);
       popup_brgy.innerHTML = "Barangay: " + data.barangay;
       popup_contact.innerHTML = "Contact Number: " + data.contact_number;
@@ -366,7 +370,8 @@ function fetch_post() {
 
       patient_info.append(popup_id);
       patient_info.append(popup_date);
-      patient_info.append(popup_birthday);
+      // patient_info.append(popup_birthday);
+      patient_info.append(popup_age);
       patient_info.append(popup_sex);
       patient_info.append(popup_brgy);
       patient_info.append(popup_contact);
@@ -404,7 +409,8 @@ $(document).ready(function () {
 
     let name = document.getElementById('patient_name').value;
     let input_date_positive = document.getElementById('date_positive').value;
-    let input_birthday = document.getElementById('patient_birthday').value;
+    // let input_birthday = document.getElementById('patient_birthday').value;
+    let input_age = document.getElementById('age').value;
     let input_sex = document.getElementById('patient_sex').value;
     let input_barangay = document.getElementById('myInput').value;
     let input_contact_number = document.getElementById('patient_contact_number').value;
@@ -414,7 +420,8 @@ $(document).ready(function () {
 
     var name_error = document.getElementById('name_error');
     var date_error = document.getElementById('date_error');
-    var bday_error = document.getElementById('bday_error');
+    // var bday_error = document.getElementById('bday_error');
+    var age_error = document.getElementById('age_error');
     var sex_error = document.getElementById('sex_error');
     var brgy_error = document.getElementById('brgy_error');
     var number_error = document.getElementById('number_error');
@@ -454,21 +461,31 @@ $(document).ready(function () {
       date_error.innerHTML = "";
     }
 
-    if (input_birthday == "") {
-      bday_error.innerHTML = "This field cannot be empty";
+    // if (input_birthday == "") {
+    //   bday_error.innerHTML = "This field cannot be empty";
+    //   document.getElementById('app').scrollIntoView({
+    //     behavior: 'smooth'
+    //   });
+    //   return false;
+    // } else if (input_birthday > date_today) {
+    //   bday_error.innerHTML = "You cannot enter a date in the future.";
+    //   document.getElementById('app').scrollIntoView({
+    //     behavior: 'smooth'
+    //   });
+    //   return false;
+    // }
+    // else {
+    //   bday_error.innerHTML = "";
+    // }
+
+    if (input_age == "") {
+      age_error.innerHTML = "This field cannot be empty";
       document.getElementById('app').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
-    } else if (input_birthday > date_today) {
-      bday_error.innerHTML = "You cannot enter a date in the future.";
-      document.getElementById('app').scrollIntoView({
-        behavior: 'smooth'
-      });
-      return false;
-    }
-    else {
-      bday_error.innerHTML = "";
+    } else {
+      sex_error.innerHTML = "";
     }
 
 
