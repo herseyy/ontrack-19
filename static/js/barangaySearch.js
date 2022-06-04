@@ -163,6 +163,7 @@ let autocomplete = (inp, arr) => {
 
 /*An array containing all the country names in the world:*/
 let barangayList = [
+  "Not Specified",
   "Alitao",
   "Alsam Ibaba",
   "Alsam Ilaya",
