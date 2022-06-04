@@ -192,11 +192,21 @@ function fetch_filter() {
           p.className = "recovered status align-middle my-auto mx-auto"
         }
 
+        patients_id_skip = patient.id + 2499 // start patient 2500
 
         tr.id = "row";
-        th_id.innerHTML = patient.id;
+        th_id.innerHTML = patients_id_skip;
         th_date.innerHTML = date_format;
-        th_day.innerHTML = day_quarantine;
+
+        if (patient.status != "infected") {
+          th_day.innerHTML = "N/A"
+        } else {
+          th_day.innerHTML = day_quarantine;
+        }
+
+
+
+
         th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
         th_sex.innerHTML = capitalizeFirstLetter(patient.sex);
         th_age.innerHTML = patient.age;

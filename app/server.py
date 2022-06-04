@@ -15,14 +15,12 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from .routers import user, auth
-
 
 # EMAIL
 # from fastapi import BackgroundTasks
 # from send_email import send_email_background, send_email_async
 
-from . import crud, models, schemas, oauth2
+from . import crud, models, schemas
 from .database import SessionLocal, engine
 
 # from .schemas import PatientRequest, PatientResponse
@@ -59,8 +57,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user.router)
-app.include_router(auth.router)
 
 
 
@@ -68,20 +64,11 @@ app.include_router(auth.router)
 templates = Jinja2Templates(directory="pages")
 
 
-# Dependency
-def gt_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
-def get_current_username(db: Session = Depends(gt_db),credentials: HTTPBasicCredentials = Depends(security)):
-    # user = crud.authenticate_user(db, credentials.username, credentials.password)
+def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     correct_username = secrets.compare_digest(credentials.username, "user")
     correct_password = secrets.compare_digest(credentials.password, "pass")
     if not (correct_username and correct_password):
-    # if not (user):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -92,10 +79,6 @@ def get_current_username(db: Session = Depends(gt_db),credentials: HTTPBasicCred
 @app.get("/users/me")
 def read_current_user(username: str = Depends(get_current_username)):
     return {"username": username}
-
-
-
-
 
 
 

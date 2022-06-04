@@ -358,7 +358,14 @@ function fetch_post() {
       let popup_symptoms = document.createElement("p");
       let popup_status = document.createElement("p");
 
-      popup_id.innerHTML = "Patient's ID: " + data.id;
+      patients_id_skip = data.id + 2499 // patient id starts at 2500
+
+
+      console.log(patients_id_skip)
+
+      popup_id.innerHTML = "Patient's ID: " + patients_id_skip;
+
+      // popup_id.innerHTML = "Patient's ID: " + data.id;
       popup_date.innerHTML = "Date Positive: " + data.date_positive;
       // popup_age.innerHTML = "Age: " + data.birthday + " (Age: " + getAge(data.birthday) + ")";
       popup_age.innerHTML = "Age: " + data.age + " years old";
@@ -377,7 +384,11 @@ function fetch_post() {
       patient_info.append(popup_brgy);
       patient_info.append(popup_contact);
       patient_info.append(popup_asymptomatic);
-      patient_info.append(popup_symptoms);
+
+      if (bool_asymptomatic == "Symptomatic") {
+        patient_info.append(popup_symptoms);
+      }
+      
       patient_info.append(popup_status);
 
     }).catch((error) => {

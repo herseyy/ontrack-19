@@ -6,40 +6,13 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
   
 from .models import Symptoms, Patient, PatientSymptoms, SMSNotif, VaccinationSched, User
-from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate, Contact, EventRequest, EventResponse, UserCreate
+from .schemas import PatientRequest, PatientResponse, PatientFilter, PatientUpdate, Contact, EventRequest, EventResponse
 from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 
 
-
-from jose import JWTError, jwt
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from passlib.context import CryptContext
 # from datetime import datetime, timedelta
 from typing import Optional
-
-SECRET_KEY = "fee403330f70976be4d849c751a59d9760b3c13a3b7a0ca43ae38e9192db6ca3"
-ALGORITHM = "HS256"
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-def get_user(db, username: str):
-    return db.query(User).filter(User.username== username).first()
-
-def authenticate_user(fake_db, username: str, password: str):
-    user = get_user(fake_db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    print(user.hashed_password)
-    return user
-
 
 
 

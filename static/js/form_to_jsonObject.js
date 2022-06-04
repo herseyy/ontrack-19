@@ -81,7 +81,9 @@ function fetch_post() {
 			let popup_symptoms = document.createElement("p");
 			let popup_status = document.createElement("p");
 
-			popup_id.innerHTML = "Patient's ID: " + data.id;
+			patients_id_skip = data.id + 2499
+
+			popup_id.innerHTML = "Patient's ID: " +patients_id_skip;
 			// popup_name.innerHTML = "Patient Name: " + data.name;
 			popup_date.innerHTML = "Date Positive: " + data.date_positive;
 			popup_age.innerHTML = "Age: " + data.age + " years old";

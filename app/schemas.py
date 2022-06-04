@@ -6,7 +6,6 @@ Ang ibig sabihin lang neto, eto ung format nung mga marereturn or makukuhang dat
 import datetime
 from typing import Optional
 from pydantic import BaseModel
-from typing import Union
 
 
 
@@ -118,30 +117,3 @@ class EventResponse(BaseModel):
 #     created_at: datetime.datetime
 #     subscriber_number: int
 #     access_token: str
-
-class UserCreate(BaseModel):
-    username: str
-    password: str
-
-
-class UserLogin(BaseModel):
-    username: str
-    password: str
-
-
-class UserOut(BaseModel):
-    id: int
-    username: str
-    created_at: datetime.datetime
-
-    class Config:
-        orm_mode = True
-
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(BaseModel):
-    id: Optional[str] = None
