@@ -132,7 +132,7 @@ function fetch_filter() {
 
   const filter_url = "/filter?" + query
 
-  console.log(filter_url)
+  // console.log(filter_url)
   
   // total_results = ''
 
@@ -149,28 +149,8 @@ function fetch_filter() {
       total_results.innerHTML = '';
 
       data.map(patient => {
-
-        patient_date = convertDate(patient.date_positive)
-        let date_split = patient_date.split(" ")
-        date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
-
-        // console.log(patient.age)
-
-        
-
-        // age = getAge(patient.birthday)
-        day_quarantine = getAge(patient.date_positive)
-        // console.log(day_quarantine)
-        // if (patient.asymptomatic == "") {
-
-        // }
         console.log(patient)
-        if (patient.asymptomatic == true) {
-          asymptomatic = "Asymptomatic";
-        }
-        else {
-          asymptomatic = "Symptomatic";
-        }
+
 
         total.push(patient.id)
 
@@ -185,72 +165,143 @@ function fetch_filter() {
         let th_status = document.createElement('th')
         let p = document.createElement('p')
 
-        if (patient.status == "infected") {
-          p.className = "infected status align-middle my-auto mx-auto"
-        } else if (patient.status == "died") {
-          p.className = "died status align-middle my-auto mx-auto"
-          // console.log("died")
+        date_format = ''
+        day_quarantine = ''
+        if (patient.date_positive == null) {
+          date_format = "No Data"
+          day_quarantine = "No Data"
         } else {
-          // console.log("recovered")
-          p.className = "recovered status align-middle my-auto mx-auto"
+          patient_date = convertDate(patient.date_positive)
+          let date_split = patient_date.split(" ")
+          date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
+          day_quarantine = getAge(patient.date_positive)
+        }
+
+        // console.log(patient.date_positive)
+        if (patient.asymptomatic == true) {
+          asymptomatic = "Asymptomatic";
+        }
+        else {
+          asymptomatic = "Symptomatic";
         }
 
         patients_id_skip = patient.id + 2499 // start patient 2500
 
         tr.id = "row";
-        th_id.innerHTML = patients_id_skip;
-        th_date.innerHTML = date_format;
 
+        day = ""
         if (patient.status != "infected") {
-          th_day.innerHTML = "N/A"
+          day = "N/A"
         } else {
-          th_day.innerHTML = day_quarantine;
+          day = day_quarantine;
         }
 
         final_age = '';
 
-        if (patient.age == 0) {
+        if (patient.age == null) {
+          final_age = "No Data"
+        } 
+        else if (patient.age == 0) {
           if (patient.months == 0) {
             if (patient.days == 1) {
               final_age = patient.days + " day old"
-            } else {
+            } 
+            else {
               final_age = patient.days + " days old"
             }
-          } else if (patient.months == 1) {
+          } 
+          else if (patient.months == 1) {
             final_age = patient.months + " month old"
-          } else {
+          } 
+          else {
             final_age = patient.months + " months old"
           }
-        } else if (patient.age == 1) {
+        } 
+        else if (patient.age == 1) {
           final_age = patient.age + " year old"
-        } else {
+        } 
+        else {
           final_age = patient.age + " years old"
         }
-        // console.log(patient.age)
-        // console.log(patient.months)
-        // console.log(patient.days)
 
-        th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
-        th_sex.innerHTML = capitalizeFirstLetter(patient.sex);
-        th_age.innerHTML = final_age;
+        // console.log(final_age)
 
-        if (patient.status != "infected") {
-          th_symptomatic.innerHTML = "N/A"
+        brgy = ''
+
+        if (patient.barangay == null || patient.barangay == "") {
+          brgy = "No Data"
         } else {
-          th_symptomatic.innerHTML = asymptomatic;
+          brgy = capitalizeFirstLetter(patient.barangay)
         }
 
-        // th_symptomatic.innerHTML = asymptomatic;
-        p.innerHTML = capitalizeFirstLetter(patient.status);
+        // console.log(brgy)
+        sex = ''
 
-        th_id.className = 'align-middle text-center justify-content-center';
-        th_date.className = "align-middle text-center justify-content-center";
-        th_day.className = "align-middle text-center justify-content-center";
-        th_brgy.className = "align-middle text-center justify-content-center";
-        th_sex.className = "align-middle text-center justify-content-center";
-        th_age.className = "align-middle text-center justify-content-center";
-        th_symptomatic.className = "align-middle text-center justify-content-center";
-        th_status.className = 'align-middle text-center justify-content-center';
+        if (patient.sex == null) {
+          sex = "No Data"
+        } else {
+          sex = capitalizeFirstLetter(patient.sex)
+        }
+
+        symp = ""
+
+        if (patient.status == "no_update") {
+          symp = "No Update"
+        } else if (patient.status != "infected") {
+          symp = "N/A";
+        } else {
+          symp = asymptomatic;
+        }
+
+        // console.log(patient.status)
+
+        status = ''
+        if (patient.status == "infected") {
+          p.className = "infected status align-middle my-auto mx-auto"
+          status = "Infected"
+        } 
+        else if (patient.status == "died") {
+          p.className = "died status align-middle my-auto mx-auto"
+          status = "Deceased"
+          // console.log("died")
+        } else if (patient.status == "no_update") {
+          p.className = "no_update status align-middle my-auto mx-auto"
+          status = "No Update"
+        } else {
+          // console.log("recovered")
+          p.className = "recovered status align-middle my-auto mx-auto"
+          status = "Recovered"
+        }
+
+
+        // if (patient.status == null) {
+        //   status = "No Data"
+        // } else if (patient.status == "no_update") {
+        //   status = "No Update"
+        // } else {
+        //   status = capitalizeFirstLetter(patient.status)
+        // }
+
+
+        th_id.innerHTML = patients_id_skip;
+        th_date.innerHTML = date_format;
+        th_day.innerHTML = day;
+        th_brgy.innerHTML = brgy;
+        th_sex.innerHTML = sex;
+        th_age.innerHTML = final_age;
+        th_symptomatic.innerHTML = symp;
+        p.innerHTML = status;
+
+        // th_symptomatic.innerHTML = asymptomatic;
+
+        th_id.className = 'th border-left align-middle text-center justify-content-center';
+        th_date.className = "th border-left align-middle text-center justify-content-center";
+        th_day.className = "th border-left align-middle text-center justify-content-center";
+        th_brgy.className = "th border-left align-middle text-center justify-content-center";
+        th_sex.className = "th border-left align-middle text-center justify-content-center";
+        th_age.className = "th border-left align-middle text-center justify-content-center";
+        th_symptomatic.className = "th border-left align-middle text-center justify-content-center";
+        th_status.className = 'th border-left align-middle text-center justify-content-center';
 
         tr.append(th_id);
         tr.append(th_date);
@@ -418,6 +469,7 @@ let autocomplete = (inp, arr) => {
 
 /*An array containing all the country names in the world:*/
 let barangayList = [
+  "No Data",
   "Alitao",
   "Alsam Ibaba",
   "Alsam Ilaya",

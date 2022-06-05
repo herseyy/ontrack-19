@@ -10,9 +10,9 @@ function getAge(dateString) {
     return age;
 }
 
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function convertDate(date_str) {
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   temp_date = date_str.split("-");
   return temp_date[2] + " " + months[Number(temp_date[1]) - 1] + " " + temp_date[0];
 }
@@ -60,7 +60,7 @@ function fetch_post() {
     "age" : age
   }
 
-  // console.log(inp_obj)
+  console.log(inp_obj)
 
   fetch('/event_form', {
     method: 'POST',
@@ -71,15 +71,8 @@ function fetch_post() {
   })
     .then(res => res.json())
     .then(data => {
-      // console.log('Success:', data);
-
-      // let patient_symptoms = [];
-
-      // for (var i of data.symptoms) {
-      //   console.log(i.description)
-      //   patient_symptoms.push(" " + i.description)
-      // };
       console.log(data)
+
       let inp_age = ''
 
       if (data.age == 1) {
@@ -89,6 +82,10 @@ function fetch_post() {
       } else if (data.age == 3) {
         inp_age = "Above 18"
       }
+
+      patient_date = convertDate(data.date)
+      let date_split = patient_date.split(" ")
+      date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
 
       let event_info = document.getElementById("inner_div");
 
@@ -104,7 +101,7 @@ function fetch_post() {
       popup_details.innerHTML = "Details";
       popup_dose.innerHTML = "Dose: " + data.dose;
       popup_vaccine_type.innerHTML = "Vaccine: " + capitalizeFirstLetter(data.vaccine_type);
-      popup_date.innerHTML = "Date: " + data.date;
+      popup_date.innerHTML = "Date: " + date_format;
       popup_time.innerHTML = "Time: " + data.time;
       popup_location.innerHTML = "Location: " + capitalizeFirstLetter(data.location);
       popup_slots.innerHTML = "Slots: " + data.slots;
@@ -245,7 +242,3 @@ $(document).ready(function () {
     fetch_post();
   });
 });
-
-document.getElementById("btn").onclick = function () {
-    location.href = "/about";
-};

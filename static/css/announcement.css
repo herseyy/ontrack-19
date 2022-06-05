@@ -471,6 +471,12 @@ https://www.tooplate.com/view/2119-gymso-fitness
 
 }
 
+@media screen and (max-width: 480px) {
+  .total_cases h5 {
+     font-size: 1rem;
+  }
+}
+
 .picture_lang {
   position: relative; 
   display: flex;

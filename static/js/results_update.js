@@ -6,7 +6,6 @@ function convertDate(date_str) {
 }
 
 
-
 // CAPITALIZE FIRST LETTER
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -127,29 +126,52 @@ function fetch_filter() {
 
       data.map(patient => {
 
-        // console.log(patient)
         // console.log(getAge(patient.date_positive))
 
-        patient_date = convertDate(patient.date_positive)
-        let date_split = patient_date.split(" ")
-        date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
-
-        day_quarantine = getDays(patient.date_positive)
-
-        // console.log(date_format)
 
         total.push(patient.id)
 
         let tr = document.createElement('tr')
         let th_id = document.createElement('th')
-        let th_brgy = document.createElement('th')
         let th_date = document.createElement('th')
         let th_days = document.createElement('th')
+        let th_brgy = document.createElement('th')
         let th_number = document.createElement('th')
         let th_status = document.createElement('th')
         let status_btn = document.createElement('button')
-        // let th_contacted = document.createElement('th')
+        tr.id = "row";
 
+        patients_id_skip = patient.id + 2499 // start patient 2500
+        // console.log(status_btn)
+
+        date_format = ''
+        day_quarantine = ''
+        if (patient.date_positive == null) {
+          date_format = "No Data"
+          day_quarantine = "No Data"
+        } else {
+          patient_date = convertDate(patient.date_positive)
+          let date_split = patient_date.split(" ")
+          date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
+          day_quarantine = getDays(patient.date_positive)
+        }
+
+        days = ""
+        if (patient.status != "infected") {
+          days = "N/A"
+        } else {
+          days = day_quarantine;
+        }
+
+
+        // th_days.innerHTML = day_quarantine;
+        brgy = ''
+
+        if (patient.barangay == null || patient.barangay == "") {
+          brgy = "No Data"
+        } else {
+          brgy = capitalizeFirstLetter(patient.barangay)
+        }
 
 
         if (patient.status == "infected") {
@@ -158,6 +180,9 @@ function fetch_filter() {
         } else if (patient.status == "died") {
           status_btn.innerHTML = ("Deceased");
           status_btn.className = "died status align-middle my-auto mx-auto"
+        } else if (patient.status == "no_update") {
+          status_btn.innerHTML = "No Update";
+          status_btn.className = "no_update status align-middle my-auto mx-auto"
         } else {
           status_btn.innerHTML = capitalizeFirstLetter(patient.status);
           status_btn.className = "recovered status align-middle my-auto mx-auto"
@@ -166,32 +191,26 @@ function fetch_filter() {
         status_btn.id = patient.id;
         status_btn.setAttribute('onclick','onClick('+  patient.id  +');');
 
-        // console.log(status_btn)
-
-
-        tr.id = "row";
-        th_id.innerHTML = patient.id;
-        th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
-        th_date.innerHTML = date_format;
-
-        // th_days.innerHTML = day_quarantine;
-        if (patient.status != "infected") {
-          th_days.innerHTML = "N/A"
+        numberr = ""
+        if (patient.contact_number == null) {
+          numberr = "No Data"
         } else {
-          th_days.innerHTML = day_quarantine;
+          numberr = patient.contact_number
         }
 
-        th_number.innerHTML = patient.contact_number;
-        // th_contacted.innerHTML = "asd"
-        // th_status.innerHTML = capitalizeFirstLetter(patient.status);
-        // status_btn.innerHTML = capitalizeFirstLetter(patient.status);
+        th_id.innerHTML = patients_id_skip;
+        th_date.innerHTML = date_format;
+        th_days.innerHTML = days;
+        th_brgy.innerHTML = brgy;
+        th_number.innerHTML = numberr;
 
-        th_id.className = 'align-middle text-center justify-content-center';
-        th_date.className = "align-middle text-center justify-content-center";
-        th_days.className = "align-middle text-center justify-content-center";
-        th_number.className = "align-middle text-center justify-content-center";
-        th_brgy.className = "align-middle text-center justify-content-center";
-        th_status.className = 'align-middle text-center justify-content-center';
+
+        th_id.className = 'th border-left align-middle text-center justify-content-center';
+        th_date.className = "th border-left align-middle text-center justify-content-center";
+        th_days.className = "th border-left align-middle text-center justify-content-center";
+        th_brgy.className = "th border-left align-middle text-center justify-content-center";
+        th_number.className = "th border-left align-middle text-center justify-content-center";
+        th_status.className = 'th border-left align-middle text-center justify-content-center';
         // th_contacted.className = 'asd align-middle text-center justify-content-center';
 
 
@@ -205,9 +224,9 @@ function fetch_filter() {
 
 
         tr.append(th_id);
-        tr.append(th_brgy);
         tr.append(th_date);
         tr.append(th_days);
+        tr.append(th_brgy);
         tr.append(th_number);
         th_status.append(status_btn)
         tr.append(th_status);
@@ -365,6 +384,7 @@ let autocomplete = (inp, arr) => {
 
 /*An array containing all the country names in the world:*/
 let barangayList = [
+  "No Data",
   "Alitao",
   "Alsam Ibaba",
   "Alsam Ilaya",
@@ -453,15 +473,12 @@ autocomplete(document.getElementById("myInput"), barangayList);
  // const btn = document.getElementById('1');
 let index = 0;
 
-const colors = ['#4CAF50', '#f44336', "#008CBA"];
+const colors = ['#4CAF50', '#f44336', "#008CBA", "#6c757d"];
 
 function onClick(id) {
-
   clicked_btn = document.getElementById(id)
-
   clicked_btn.style.backgroundColor = colors[index];
   clicked_btn.style.color = 'white';
-
   index = index >= colors.length - 1 ? 0 : index + 1;
   let status = ''
 
@@ -476,6 +493,9 @@ function onClick(id) {
     clicked_btn.innerHTML = 'Infected';
     // console.log('red-light');
     status = "infected";
+  } else if (clicked_btn.style.backgroundColor == "rgb(108, 117, 125)") {
+    clicked_btn.innerHTML = 'No Update';
+    status = "no_update";
   } else {
       clicked_btn.innerHTML = 'Deceased';
       // console.log('blue-light');

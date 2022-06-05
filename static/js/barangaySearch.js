@@ -10,12 +10,14 @@ function getAge(dateString) {
     return age;
 }
 
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function convertDate(date_str) {
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   temp_date = date_str.split("-");
+  month_number = temp_date[1]
   return temp_date[2] + " " + months[Number(temp_date[1]) - 1] + " " + temp_date[0];
 }
+
 
 
 // ------------- TODAY 
@@ -163,7 +165,7 @@ let autocomplete = (inp, arr) => {
 
 /*An array containing all the country names in the world:*/
 let barangayList = [
-  "Not Specified",
+  "No Data",
   "Alitao",
   "Alsam Ibaba",
   "Alsam Ilaya",
@@ -252,7 +254,7 @@ autocomplete(document.getElementById("myInput"), barangayList);
 document.getElementById('age').addEventListener('input', function() {
     // console.log(this.value);
     if (this.value != 0 || this.value == "") {
-      document.getElementById('months').value = '';
+      document.getElementById('months').value = null;
       document.getElementById('hidden_months').style.display = 'none';
     } else {
       document.getElementById('hidden_months').style.display = 'block';
@@ -262,7 +264,7 @@ document.getElementById('age').addEventListener('input', function() {
 document.getElementById('months').addEventListener('input', function() {
     console.log(this.value);
     if (this.value != 0 || this.value == "") {
-      document.getElementById('days').value = '';
+      document.getElementById('days').value = null;
       document.getElementById('hidden_days').style.display = 'none';
     } else {
       document.getElementById('hidden_days').style.display = 'block';
@@ -318,19 +320,26 @@ function fetch_post() {
     // console.log(false)
   }
 
+  days = ''
+  if (input_days == "") {
+    days = 0
+  } else {
+    days = input_days
+  }
 
-  // if (name == "") {
-  //   var name_error = document.getElementById('name_error');
-  //   name_error.innerHTML = "Enter Your Name";
-  //   return false;
-  // }
+  months = ''
+  if (input_months == "") {
+    months = 0
+  } else {
+    months = input_months
+  }
   
   var inp_obj = {
     "name" : name,
     "date_positive" : input_date_positive,
     "age": input_age,
-    "months": input_months,
-    "days": input_days,
+    "months": months,
+    "days": days,
     // "birthday" : input_birthday,
     "sex" : input_sex,
     "barangay" : input_barangay,

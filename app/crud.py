@@ -132,7 +132,6 @@ def update_patient(db: Session, id: int, info: PatientUpdate):
     # if info.symptoms != None:
     #     patient.symptoms = info.symptoms
 
-
     db.commit()
     # print(patient.status)
 

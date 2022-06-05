@@ -6,10 +6,18 @@
   color: white;
 }
 
+.th {
+  white-space: nowrap; 
+}
+
+.no_update {
+  border: solid 1px #6c757d;
+  background-color: #6c757d;
+}
+
 .infected {
   border: solid 1px #f44336;
   background-color: #f44336;
-
 }
 
 .died {

@@ -19,7 +19,7 @@ d = String(n.getDate()).padStart(2, '0');
 date_today = y + "-" + m + "-" + d;
 today_date = convertDate(date_today);
 
-console.log(today_date);
+// console.log(today_date);
 let today_split = today_date.split(" ")
 today_format = today_split[1] + " " + today_split[0] + ", " + today_split[2]
 
@@ -54,7 +54,7 @@ fetch(events_url)
     // console.log(date_today)
 
     if (event.date >= date_today) {
-      console.log(event.date)
+      // console.log(event.date)
       event_list.push(event.id)
       let lst = document.createElement("li");
       let dv1 = document.createElement('div');
@@ -118,7 +118,6 @@ fetch(events_url)
 
 
       let date = convertDate(event.date).split(' ');
-      let time = event.time.split(':');
 
       p1.innerHTML = date[1];
       spn1.innerHTML = date[0];
@@ -147,15 +146,30 @@ fetch(events_url)
       stng4.innerHTML = 'Time: ';
       lst_menu4.append(stng4);
 
+      let time = event.time.split(':');
+      // console.log(time)
+
+      time_ = ''
+
       if (time[0] > 12) {
-        let pm = time[0] - 12
-        lst_menu4.append(pm + " pm")
+        pm = time[0] - 12
+        console.log(pm)
+        time_ = pm + ":" + time[1] + " pm"
+        lst_menu4.append(time_)
+      } 
+      else if (time[0] == "00") {
+        time_ = 12 + ":" + time[1] + " am"
+        lst_menu4.append(time_)
+      } else if (time[0] == "12") {
+        time_ = 12 + ":" + time[1] + " pm"
+        lst_menu4.append(time_)
       } else {
-        lst_menu4.append(time[0] + " am")
+        time_ = time[0] + ":" + time[1] + " am"
+        lst_menu4.append(time_)
       }
 
       inp_age = ''
-      console.log(event.age)
+      // console.log(event.age)
 
       if (event.age == 1) {
         inp_age = "All age"
@@ -196,7 +210,7 @@ fetch(events_url)
 
       // }
 
-      if (event_list.length > 4) {
+      if (event_list.length > 6) {
         ul_p1.append(lst)
         ul_p1.append(ul)
 
@@ -223,7 +237,7 @@ fetch(events_url)
     } else {
       no_sched.innerHTML = ''
     }
-    console.log(event_list.length)
+    // console.log(event_list.length)
 
 })
 .catch(error => console.log("ERROR"))
