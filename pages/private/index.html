@@ -68,7 +68,7 @@
 		<div id="inner_div">
 		</div>
 		<button id="close" name="close">Close</button>
-		<button id="btn" name="submit">Go back</button>
+		<!-- <button id="btn" name="submit">Go back</button> -->
 	</div>
     
 	<div class="wrapper" id="app">
@@ -98,8 +98,20 @@
 
 				<div class="card-input">
 					<input type="number" id="age" class="floating-input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
-					<label class="floating-label">Age</label>
+					<label class="floating-label">Age (in years)</label>
 					<span id="age_error" class="text-danger"></span>
+				</div>
+
+				<div class="card-input" id="hidden_months">
+					<input type="number" id="months" class="floating-input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+					<label class="floating-label">Age (in months)</label>
+					<span id="months_error" class="text-danger"></span>
+				</div>
+
+				<div class="card-input" id="hidden_days">
+					<input type="number" id="days" class="floating-input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+					<label class="floating-label">Age (in days)</label>
+					<span id="days_error" class="text-danger"></span>
 				</div>
 
 				<div class="card-input">
@@ -135,13 +147,13 @@
 				</div>
 
 				<div id="hidden_div" class="my-3">
+					<span id="symptoms_error" class="text-danger"></span>
 					<div class="form-row bg-light border border-bottom-0 mx-3">
 						<div class="col text-center py-1 symptoms_list">Symptoms</div>
 					</div>
 					<div class="form-row border mx-3">
 						<div class="form-group col border-right my-3 ml-2" id="parent_div"></div>
 					</div>
-					<span id="symptoms_error" class="text-danger"></span>
 				</div>
 
 				<div class="card-input">

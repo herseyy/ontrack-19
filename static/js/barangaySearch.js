@@ -249,6 +249,25 @@ autocomplete(document.getElementById("myInput"), barangayList);
  * </div>
  */
 
+document.getElementById('age').addEventListener('input', function() {
+    // console.log(this.value);
+    if (this.value != 0 || this.value == "") {
+      document.getElementById('months').value = '';
+      document.getElementById('hidden_months').style.display = 'none';
+    } else {
+      document.getElementById('hidden_months').style.display = 'block';
+    }
+});
+
+document.getElementById('months').addEventListener('input', function() {
+    console.log(this.value);
+    if (this.value != 0 || this.value == "") {
+      document.getElementById('days').value = '';
+      document.getElementById('hidden_days').style.display = 'none';
+    } else {
+      document.getElementById('hidden_days').style.display = 'block';
+    }
+});
 
 // SYMPTOMATIC ASYMPTOMATIC
 function showDiv(patient_asymptomatic, option)
@@ -282,6 +301,8 @@ function fetch_post() {
   let input_date_positive = document.getElementById('date_positive').value;
   // let input_birthday = document.getElementById('patient_birthday').value;
   let input_age = document.getElementById('age').value;
+  let input_months = document.getElementById('months').value;
+  let input_days = document.getElementById('days').value;
   let input_sex = document.getElementById('patient_sex').value;
   let input_barangay = document.getElementById('myInput').value;
   let input_contact_number = document.getElementById('patient_contact_number').value;
@@ -308,6 +329,8 @@ function fetch_post() {
     "name" : name,
     "date_positive" : input_date_positive,
     "age": input_age,
+    "months": input_months,
+    "days": input_days,
     // "birthday" : input_birthday,
     "sex" : input_sex,
     "barangay" : input_barangay,
@@ -317,7 +340,7 @@ function fetch_post() {
     "status" : input_status
   }
 
-  // console.log(inp_obj)
+  console.log(inp_obj)
   const submit_form_url = "/submit_form"
 
   fetch(submit_form_url, {
@@ -335,6 +358,11 @@ function fetch_post() {
         console.log(i.description)
         patient_symptoms.push(" " + i.description)
       };
+
+
+      patient_date = convertDate(data.date_positive)
+      let date_split = patient_date.split(" ")
+      date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
 
 
       if (data.asymptomatic == true) {
@@ -360,21 +388,40 @@ function fetch_post() {
 
       patients_id_skip = data.id + 2499 // patient id starts at 2500
 
+      patient_age = ""
 
-      console.log(patients_id_skip)
+      if (data.age != 0) {
+        if (data.age == 1) {
+          patient_age = data.age + " year old"
+        } else {
+          patient_age = data.age + " years old"
+        }
+      } else {
+        if (data.months != 0) {
+          if (data.months == 1) {
+            patient_age = data.months + " month old"
+          } else {
+            patient_age = data.months + " months old"
+          }
+        } else {
 
-      popup_id.innerHTML = "Patient's ID: " + patients_id_skip;
+          patient_age = data.days + " days old"
+          console.log(data.days + " days old")
+        }
+      }
 
+
+      popup_id.innerHTML = "Patient's ID: " + "<strong>" + patients_id_skip + "</strong>";
       // popup_id.innerHTML = "Patient's ID: " + data.id;
-      popup_date.innerHTML = "Date Positive: " + data.date_positive;
+      popup_date.innerHTML = "Date Positive: " + "<strong>" + date_format + "</strong>";
       // popup_age.innerHTML = "Age: " + data.birthday + " (Age: " + getAge(data.birthday) + ")";
-      popup_age.innerHTML = "Age: " + data.age + " years old";
-      popup_sex.innerHTML = "Sex: " + capitalizeFirstLetter(data.sex);
-      popup_brgy.innerHTML = "Barangay: " + data.barangay;
-      popup_contact.innerHTML = "Contact Number: " + data.contact_number;
-      popup_asymptomatic.innerHTML = "Patient is " + bool_asymptomatic;
-      popup_symptoms.innerHTML = "Symptoms: " + patient_symptoms;
-      popup_status.innerHTML = "Status: " + capitalizeFirstLetter(data.status);
+      popup_age.innerHTML = "Age: " + "<strong>" + data.age + "</strong>";
+      popup_sex.innerHTML = "Sex: " + "<strong>" + capitalizeFirstLetter(data.sex) + "</strong>";
+      popup_brgy.innerHTML = "Barangay: " + "<strong>" + data.barangay + "</strong>";
+      popup_contact.innerHTML = "Contact Number: " + "<strong>" + data.contact_number + "</strong>";
+      popup_asymptomatic.innerHTML = "Patient is " + "<strong>" + bool_asymptomatic + "</strong>";
+      popup_symptoms.innerHTML = "Symptoms: " + "<strong>" + patient_symptoms + "</strong>";
+      popup_status.innerHTML = "Status: " + "<strong>" + capitalizeFirstLetter(data.status) + "</strong>";
 
       patient_info.append(popup_id);
       patient_info.append(popup_date);
@@ -423,6 +470,8 @@ $(document).ready(function () {
     let input_date_positive = document.getElementById('date_positive').value;
     // let input_birthday = document.getElementById('patient_birthday').value;
     let input_age = document.getElementById('age').value;
+    let input_months = document.getElementById('months').value;
+    let input_days = document.getElementById('days').value;
     let input_sex = document.getElementById('patient_sex').value;
     let input_barangay = document.getElementById('myInput').value;
     let input_contact_number = document.getElementById('patient_contact_number').value;
@@ -434,6 +483,8 @@ $(document).ready(function () {
     var date_error = document.getElementById('date_error');
     // var bday_error = document.getElementById('bday_error');
     var age_error = document.getElementById('age_error');
+    var months_error = document.getElementById('months_error');
+    var days_error = document.getElementById('days_error');
     var sex_error = document.getElementById('sex_error');
     var brgy_error = document.getElementById('brgy_error');
     var number_error = document.getElementById('number_error');
@@ -492,18 +543,48 @@ $(document).ready(function () {
 
     if (input_age == "") {
       age_error.innerHTML = "This field cannot be empty";
-      document.getElementById('app').scrollIntoView({
+      document.getElementById('input_patient_name').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
     } else {
-      sex_error.innerHTML = "";
+      age_error.innerHTML = "";
     }
 
+    if (input_age == 0) {
+      if (input_months == "") {
+        months_error.innerHTML = "This field cannot be empty";
+        console.log('error months')
+        document.getElementById('date_positive').scrollIntoView({
+          behavior: 'smooth'
+        });
+        return false;
+      } 
+      else {
+        months_error.innerHTML = "";
+      }
+
+      if (input_months == 0) {
+        if (input_days == "") {
+          days_error.innerHTML = "This field cannot be empty";
+          console.log('error days')
+          document.getElementById('age').scrollIntoView({
+            behavior: 'smooth'
+          });
+          return false;
+        } 
+        else if (input_days == 0) {
+          days_error.innerHTML = "This field cannot be equal to 0";
+        } 
+        else {
+          days_error.innerHTML = "";
+        }  
+      }
+    }
 
     if (input_sex == "") {
       sex_error.innerHTML = "This field cannot be empty";
-      document.getElementById('app').scrollIntoView({
+      document.getElementById('age').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
@@ -513,7 +594,7 @@ $(document).ready(function () {
 
     if (input_barangay == "") {
       brgy_error.innerHTML = "This field cannot be empty";
-      document.getElementById('app').scrollIntoView({
+      document.getElementById('patient_sex').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
@@ -523,7 +604,7 @@ $(document).ready(function () {
 
     if (input_contact_number == "") {
       number_error.innerHTML = "This field cannot be empty";
-      document.getElementById('app').scrollIntoView({
+      document.getElementById('patient_sex').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
@@ -533,7 +614,7 @@ $(document).ready(function () {
 
     if (input_asymptomatic == "") {
       symptomatic_error.innerHTML = "This field cannot be empty";
-      document.getElementById('app').scrollIntoView({
+      document.getElementById('myInput').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
@@ -544,7 +625,7 @@ $(document).ready(function () {
     if (input_asymptomatic == "symptomatic") {
       if (input_symptoms.length == 0) {
         symptoms_error.innerHTML = "This field cannot be empty";
-        document.getElementById('app').scrollIntoView({
+        document.getElementById('myInput').scrollIntoView({
           behavior: 'smooth'
         });
         return false;
@@ -555,17 +636,13 @@ $(document).ready(function () {
 
     if (input_status == "") {
       status_error.innerHTML = "This field cannot be empty";
-      document.getElementById('app').scrollIntoView({
+      document.getElementById('patient_status').scrollIntoView({
         behavior: 'smooth'
       });
       return false;
     } else {
       status_error.innerHTML = "";
     }
-
-
-
-
 
     $('.wrapper').blur();
     containerElement.setAttribute('class', 'wrapper blur');
@@ -575,6 +652,6 @@ $(document).ready(function () {
   });
 });
 
-document.getElementById("btn").onclick = function () {
-    location.href = "/results";
-};
+// document.getElementById("btn").onclick = function () {
+//     location.href = "/results";
+// };

@@ -12,6 +12,7 @@ from .database import Base
 
 class Status(enum.Enum):
     """Patient status."""
+    no_update = 'no_update'
     recovered = "recovered"
     died = "died"
     infected = "infected"
@@ -23,14 +24,14 @@ class Patient(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True, nullable=False)
-    date_positive = Column(Date, nullable=False)
+    date_positive = Column(Date, nullable=True)
     # birthday = Column(Date, nullable=False)
-    age = Column(Integer, index=True, nullable=False)
-    month = Column(Integer, index=True, nullable=True)
-    day = Column(Integer, index=True, nullable=True)
-    sex = Column(String, unique=False, index=True, nullable=False)
-    barangay = Column(String, unique=False, index=True, nullable=False)
-    contact_number = Column(String, unique=True, index=True, nullable=False)
+    age = Column(Integer, index=True, nullable=True)
+    months = Column(Integer, index=True, nullable=True)
+    days = Column(Integer, index=True, nullable=True)
+    sex = Column(String, unique=False, index=True, nullable=True)
+    barangay = Column(String, unique=False, index=True, nullable=True)
+    contact_number = Column(String, unique=True, index=True, nullable=True)
     asymptomatic = Column(Boolean, default=True, nullable=True)
     status = Column(Enum(Status), index=True, default=Status.infected)
     created_at = Column(DateTime, default=datetime.datetime.now)

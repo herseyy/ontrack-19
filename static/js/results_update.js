@@ -150,6 +150,8 @@ function fetch_filter() {
         let status_btn = document.createElement('button')
         // let th_contacted = document.createElement('th')
 
+
+
         if (patient.status == "infected") {
           status_btn.innerHTML = capitalizeFirstLetter(patient.status);
           status_btn.className = "infected status align-middle my-auto mx-auto"
@@ -167,12 +169,18 @@ function fetch_filter() {
         // console.log(status_btn)
 
 
-
         tr.id = "row";
         th_id.innerHTML = patient.id;
         th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
         th_date.innerHTML = date_format;
-        th_days.innerHTML = day_quarantine;
+
+        // th_days.innerHTML = day_quarantine;
+        if (patient.status != "infected") {
+          th_days.innerHTML = "N/A"
+        } else {
+          th_days.innerHTML = day_quarantine;
+        }
+
         th_number.innerHTML = patient.contact_number;
         // th_contacted.innerHTML = "asd"
         // th_status.innerHTML = capitalizeFirstLetter(patient.status);

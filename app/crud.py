@@ -91,7 +91,7 @@ def get_patients(db: Session, p_filter: PatientFilter = None):
 # Dagdagan mo na lang yung mga symptoms
 def populate_symptoms(db: Session):
     symptoms = [
-        "not specified",
+        "Not Specified",
         "Ubo (Cough)",
         "Sipon (Colds)",
         "Pagkawala ng Panlasa (Loss of Taste)",
@@ -147,6 +147,8 @@ def create_patients(db: Session, patient: PatientRequest):
             name = patient.name,
             date_positive = patient.date_positive,
             age = patient.age,
+            months = patient.months,
+            days = patient.days,
             # birthday = patient.birthday,
             sex = patient.sex,
             barangay = patient.barangay,
@@ -245,6 +247,8 @@ def format_patient(db_patient: Patient):
         name=db_patient.name,
         date_positive=db_patient.date_positive,
         age = db_patient.age,
+        months = db_patient.months,
+        days = db_patient.days,
         # birthday=db_patient.birthday,
         sex=db_patient.sex,
         barangay=db_patient.barangay,

@@ -21,11 +21,13 @@ class Symptoms(BaseModel):
 
 class PatientResponse(BaseModel):
     id: int
-    name: str
-    date_positive: datetime.date
-    age: int
+    name: str = None
+    date_positive: datetime.date = None
+    age: int = None
+    months: int = None
+    days: int = None
     # birthday: datetime.date
-    sex: str
+    sex: str = None
     barangay: str = None
     contact_number: str = None
     asymptomatic: bool = True
@@ -38,11 +40,13 @@ class PatientResponse(BaseModel):
 
 # userCreate
 class PatientRequest(BaseModel): 
-    name: str
-    date_positive: datetime.date
-    age: int
+    name: str = None
+    date_positive: datetime.date = None
+    age: int = None
+    months: int = None
+    days: int = None
     # birthday: datetime.date
-    sex: str
+    sex: str = None
     barangay: str = None
     contact_number: str = None
     asymptomatic: bool = True

@@ -158,10 +158,13 @@ function fetch_filter() {
 
         
 
-        age = getAge(patient.birthday)
+        // age = getAge(patient.birthday)
         day_quarantine = getAge(patient.date_positive)
         // console.log(day_quarantine)
+        // if (patient.asymptomatic == "") {
 
+        // }
+        console.log(patient)
         if (patient.asymptomatic == true) {
           asymptomatic = "Asymptomatic";
         }
@@ -204,15 +207,41 @@ function fetch_filter() {
           th_day.innerHTML = day_quarantine;
         }
 
+        final_age = '';
 
-
+        if (patient.age == 0) {
+          if (patient.months == 0) {
+            if (patient.days == 1) {
+              final_age = patient.days + " day old"
+            } else {
+              final_age = patient.days + " days old"
+            }
+          } else if (patient.months == 1) {
+            final_age = patient.months + " month old"
+          } else {
+            final_age = patient.months + " months old"
+          }
+        } else if (patient.age == 1) {
+          final_age = patient.age + " year old"
+        } else {
+          final_age = patient.age + " years old"
+        }
+        // console.log(patient.age)
+        // console.log(patient.months)
+        // console.log(patient.days)
 
         th_brgy.innerHTML = capitalizeFirstLetter(patient.barangay);
         th_sex.innerHTML = capitalizeFirstLetter(patient.sex);
-        th_age.innerHTML = patient.age;
-        th_symptomatic.innerHTML = asymptomatic;
-        p.innerHTML = capitalizeFirstLetter(patient.status);
+        th_age.innerHTML = final_age;
 
+        if (patient.status != "infected") {
+          th_symptomatic.innerHTML = "N/A"
+        } else {
+          th_symptomatic.innerHTML = asymptomatic;
+        }
+
+        // th_symptomatic.innerHTML = asymptomatic;
+        p.innerHTML = capitalizeFirstLetter(patient.status);
 
         th_id.className = 'align-middle text-center justify-content-center';
         th_date.className = "align-middle text-center justify-content-center";
