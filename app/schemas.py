@@ -1,6 +1,5 @@
 """
 Schema file
-
 Ang ibig sabihin lang neto, eto ung format nung mga marereturn or makukuhang data.
 """
 import datetime
@@ -52,7 +51,7 @@ class PatientRequest(BaseModel):
     asymptomatic: bool = True
     symptoms: list[int]
     status: str = "infected"
-	
+    
     
 class PatientFilter(BaseModel):
     barangay: str = None

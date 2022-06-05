@@ -366,19 +366,12 @@ async def submit(request: Request, username: str = Depends(get_current_username)
 
 
 """
-
 curl -X POST
 "https://devapi.globelabs.com.ph/smsmessaging/v1/outbound/9460/requests?access_token=qD9PzkdvoOVnmLTTojB2rrgowg_zh8TGz1zET7IfYDs" -H "Content-Type: application/json" -d
 {"outboundSMSMessageRequest": {"clientCorrelator": "123456",
-
-
-
-
 "senderAddress": "9460",
 "outboundSMSTextMessage": {"message": "Hello World"},
 "address": "9175247735"
  }
 }
-
-
 """
