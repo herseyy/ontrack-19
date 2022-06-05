@@ -320,7 +320,7 @@ async def more(request:Request):
 
 @app.get("/about_us", response_class=HTMLResponse)
 async def more(request:Request):
-    return templates.TemplateResponse("public/aboutus.html", {"request": request})
+    return templates.TemplateResponse("public/about.html", {"request": request})
 
 @app.get("/reference", response_class=HTMLResponse)
 async def more(request:Request):
