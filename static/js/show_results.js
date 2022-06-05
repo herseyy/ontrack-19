@@ -75,14 +75,14 @@ function fetch_filter() {
 
   let barangay = document.getElementById('myInput').value;
   let date_positive = document.getElementById('date_positive').value;
-  // let days = document.getElementById('days').value;
+  let days = document.getElementById('days').value;
   let sex = document.getElementById('sex').value;
   let age_range = document.getElementById('age').value;
   let asymptomatic = document.getElementById('asymptomatic').value;
   let status = document.getElementById('status').value;
 
   var split = age_range.split(',')
-  // var split_day = days.split(',')
+  var split_day = days.split(',')
   // console.log(split_day)
   // console.log(split[0])
 
@@ -109,12 +109,12 @@ function fetch_filter() {
     inp_obj = Object.assign({"date_positive": date_positive}, inp_obj)
   }
 
-  // if (days != "") {
-  //   inp_obj = Object.assign({"upperDay": split_day[1]}, inp_obj)
-  // }  
-  // if (days != "") {
-  //   inp_obj = Object.assign({"lowerDay": split_day[0]}, inp_obj)
-  // }
+  if (days != "") {
+    inp_obj = Object.assign({"upperDay": split_day[1]}, inp_obj)
+  }  
+  if (days != "") {
+    inp_obj = Object.assign({"lowerDay": split_day[0]}, inp_obj)
+  }
 
   if (barangay != "") {
     inp_obj = Object.assign({"barangay": capitalizeFirstLetter(barangay)}, inp_obj)
@@ -157,7 +157,7 @@ function fetch_filter() {
         let tr = document.createElement('tr')
         let th_id = document.createElement('th')
         let th_date = document.createElement('th')
-        // let th_day = document.createElement('th')
+        let th_day = document.createElement('th')
         let th_brgy = document.createElement('th')
         let th_sex = document.createElement('th')
         let th_age = document.createElement('th')
@@ -166,15 +166,15 @@ function fetch_filter() {
         let p = document.createElement('p')
 
         date_format = ''
-        // day_quarantine = ''
+        day_quarantine = ''
         if (patient.date_positive == null) {
           date_format = "No Data"
-          // day_quarantine = "No Data"
+          day_quarantine = "No Data"
         } else {
           patient_date = convertDate(patient.date_positive)
           let date_split = patient_date.split(" ")
           date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
-          // day_quarantine = getAge(patient.date_positive)
+          day_quarantine = getAge(patient.date_positive)
         }
 
         // console.log(patient.date_positive)
@@ -189,12 +189,12 @@ function fetch_filter() {
 
         tr.id = "row";
 
-        // day = ""
-        // if (patient.status != "infected") {
-        //   day = "N/A"
-        // } else {
-        //   day = day_quarantine;
-        // }
+        day = ""
+        if (patient.status != "infected") {
+          day = "N/A"
+        } else {
+          day = day_quarantine;
+        }
 
         final_age = '';
 
@@ -285,7 +285,7 @@ function fetch_filter() {
 
         th_id.innerHTML = patients_id_skip;
         th_date.innerHTML = date_format;
-        // th_day.innerHTML = day;
+        th_day.innerHTML = day;
         th_brgy.innerHTML = brgy;
         th_sex.innerHTML = sex;
         th_age.innerHTML = final_age;
@@ -305,7 +305,7 @@ function fetch_filter() {
 
         tr.append(th_id);
         tr.append(th_date);
-        // tr.append(th_day);
+        tr.append(th_day);
         tr.append(th_brgy);
         tr.append(th_sex);
         tr.append(th_age);
@@ -334,7 +334,7 @@ function fetch_filter() {
 
   document.getElementById('myInput').value = 
     document.getElementById('date_positive').value =
-    // document.getElementById('days').value = 
+    document.getElementById('days').value = 
     document.getElementById('sex').value = 
     document.getElementById('age').value = 
     document.getElementById('asymptomatic').value = 
