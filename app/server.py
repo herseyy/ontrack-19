@@ -162,7 +162,7 @@ def get_patients_by_id(patient_id:int, db:Session = Depends(get_db)):
 
 # update
 @app.patch("/update/{patient_id}")
-def update(patient_id:int, info: schemas.PatientUpdate, db:Session = Depends(get_db)):
+def update(patient_id:int, info: schemas.PatientUpdate, username: str = Depends(get_current_username), db:Session = Depends(get_db)):
     db_patient = crud.update_patient(db=db, id=patient_id, info=info)
     
     if db_patient is None:
@@ -209,8 +209,28 @@ def delete(patient_id: int, db:Session = Depends(get_db)):
     remaining_patients = crud.get_patients(db)
     return [crud.format_patient(p) for p in remaining_patients]
 
+
+@app.delete("/patientsall/{patient_id}", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
+def delete(patient_id: int, db:Session = Depends(get_db)):
+    db_patient = crud.get_patient_by_id(db=db, id=patient_id)
+
+    if db_patient is None:
+        raise HTTPException(404, detail="User not found!")
+
+    patients = models.Patient
+    # db.query(patients).filter(patients.id == patient_id).delete()
+    db.query(patients).delete()
+    symptoms = models.PatientSymptoms
+    # db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
+    db.query(symptoms).delete()
+
+    db.commit()
+
+    remaining_patients = crud.get_patients(db)
+    return [crud.format_patient(p) for p in remaining_patients]
+
 @app.post("/submit_form", response_model=schemas.PatientResponse, response_model_exclude={"name"})
-def get_covid_form(patient: schemas.PatientRequest, db: Session = Depends(get_db)):
+def get_covid_form(patient: schemas.PatientRequest, username: str = Depends(get_current_username), db: Session = Depends(get_db)):
     created_patient = crud.create_patients(db=db, patient=patient)
     return crud.format_patient(created_patient)
 
@@ -241,7 +261,7 @@ def redirect2():
 
 
 @app.patch("/contacted/{user_id}")
-def already_contacted(user_id:int, contacted: bool, db:Session = Depends(get_db)):
+def already_contacted(user_id:int, contacted: bool, username: str = Depends(get_current_username), db:Session = Depends(get_db)):
     print(user)
     db_user = crud.update_user(db=db, id=user_id, already_contacted = contacted)
 
@@ -260,7 +280,7 @@ def getUserNumbers(contacted_filter: schemas.Contact = Depends(), db:Session = D
 
 
 @app.post("/event_form", response_model=schemas.EventResponse)
-def event_form(event: schemas.EventRequest, db: Session = Depends(get_db)):
+def event_form(event: schemas.EventRequest, username: str = Depends(get_current_username), db: Session = Depends(get_db)):
     created_event = crud.create_event(db=db, event=event)
     return crud.format_event(created_event)
 
