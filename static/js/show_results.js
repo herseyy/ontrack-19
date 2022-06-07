@@ -169,12 +169,16 @@ function fetch_filter() {
         day_quarantine = ''
         if (patient.date_positive == null) {
           date_format = "No Data"
+          th_date.className = "nodata th border-left align-middle text-center justify-content-center";
           day_quarantine = "No Data"
+          th_day.className = "nodata th border-left align-middle text-center justify-content-center";
         } else {
           patient_date = convertDate(patient.date_positive)
           let date_split = patient_date.split(" ")
           date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
           day_quarantine = getAge(patient.date_positive)
+          th_date.className = "th border-left align-middle text-center justify-content-center";
+          th_day.className = "th border-left align-middle text-center justify-content-center";
         }
 
         // console.log(patient.date_positive)
@@ -200,8 +204,10 @@ function fetch_filter() {
 
         if (patient.age == null) {
           final_age = "No Data"
+          th_age.className = "nodata th border-left align-middle text-center justify-content-center";
         } 
         else if (patient.age == 0) {
+          th_age.className = "th border-left align-middle text-center justify-content-center";
           if (patient.months == 0) {
             if (patient.days == 1) {
               final_age = patient.days + " day old"
@@ -218,9 +224,11 @@ function fetch_filter() {
           }
         } 
         else if (patient.age == 1) {
+          th_age.className = "th border-left align-middle text-center justify-content-center";
           final_age = patient.age + " year old"
         } 
         else {
+          th_age.className = "th border-left align-middle text-center justify-content-center";
           final_age = patient.age + " years old"
         }
 
@@ -230,17 +238,24 @@ function fetch_filter() {
 
         if (patient.barangay == null || patient.barangay == "") {
           brgy = "No Data"
+          th_brgy.className = "nodata th border-left align-middle text-center justify-content-center";
         } else {
           brgy = capitalizeFirstLetter(patient.barangay)
+          th_brgy.className = "th border-left align-middle text-center justify-content-center";
         }
 
         // console.log(brgy)
         sex = ''
 
         if (patient.sex == null) {
+          th_sex.className = "nodata th border-left align-middle text-center justify-content-center";
           sex = "No Data"
+        } else if (patient.sex == "No Data") {
+          th_sex.className = "nodata th border-left align-middle text-center justify-content-center";
+          sex = capitalizeFirstLetter(patient.sex)
         } else {
           sex = capitalizeFirstLetter(patient.sex)
+          th_sex.className = "th border-left align-middle text-center justify-content-center";
         }
 
         symp = ""
@@ -295,11 +310,11 @@ function fetch_filter() {
         // th_symptomatic.innerHTML = asymptomatic;
 
         th_id.className = 'th border-left align-middle text-center justify-content-center';
-        th_date.className = "th border-left align-middle text-center justify-content-center";
-        th_day.className = "th border-left align-middle text-center justify-content-center";
-        th_brgy.className = "th border-left align-middle text-center justify-content-center";
-        th_sex.className = "th border-left align-middle text-center justify-content-center";
-        th_age.className = "th border-left align-middle text-center justify-content-center";
+        // th_date.className = "th border-left align-middle text-center justify-content-center";
+        // th_day.className = "th border-left align-middle text-center justify-content-center";
+        // th_brgy.className = "th border-left align-middle text-center justify-content-center";
+        // th_sex.className = "th border-left align-middle text-center justify-content-center";
+        // th_age.className = "th border-left align-middle text-center justify-content-center";
         th_symptomatic.className = "th border-left align-middle text-center justify-content-center";
         th_status.className = 'th border-left align-middle text-center justify-content-center';
 

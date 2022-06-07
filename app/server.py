@@ -98,8 +98,8 @@ templates = Jinja2Templates(directory="pages")
 #     return get_openapi(title = "FastAPI", version="0.1.0", routes=app.routes)
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, "user")
-    correct_password = secrets.compare_digest(credentials.password, "password")
+    correct_username = secrets.compare_digest(credentials.username, "secret")
+    correct_password = secrets.compare_digest(credentials.password, "secret")
     if not (correct_username and correct_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

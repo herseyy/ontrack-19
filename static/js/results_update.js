@@ -148,12 +148,16 @@ function fetch_filter() {
         day_quarantine = ''
         if (patient.date_positive == null) {
           date_format = "No Data"
+          th_date.className = "nodata th border-left align-middle text-center justify-content-center";
           day_quarantine = "No Data"
+          th_days.className = "nodata th border-left align-middle text-center justify-content-center";
         } else {
           patient_date = convertDate(patient.date_positive)
           let date_split = patient_date.split(" ")
           date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
+          th_date.className = "th border-left align-middle text-center justify-content-center";
           day_quarantine = getDays(patient.date_positive)
+          th_days.className = "th border-left align-middle text-center justify-content-center";
         }
 
         days = ""
@@ -169,8 +173,10 @@ function fetch_filter() {
 
         if (patient.barangay == null || patient.barangay == "") {
           brgy = "No Data"
+          th_brgy.className = "nodata th border-left align-middle text-center justify-content-center";
         } else {
           brgy = capitalizeFirstLetter(patient.barangay)
+          th_brgy.className = "th border-left align-middle text-center justify-content-center";
         }
 
 
@@ -194,8 +200,10 @@ function fetch_filter() {
         numberr = ""
         if (patient.contact_number == null) {
           numberr = "No Data"
+          th_number.className = "nodata th border-left align-middle text-center justify-content-center";
         } else {
           numberr = patient.contact_number
+          th_number.className = "th border-left align-middle text-center justify-content-center";
         }
 
         th_id.innerHTML = patients_id_skip;
@@ -206,10 +214,10 @@ function fetch_filter() {
 
 
         th_id.className = 'th border-left align-middle text-center justify-content-center';
-        th_date.className = "th border-left align-middle text-center justify-content-center";
-        th_days.className = "th border-left align-middle text-center justify-content-center";
-        th_brgy.className = "th border-left align-middle text-center justify-content-center";
-        th_number.className = "th border-left align-middle text-center justify-content-center";
+        // th_date.className = "th border-left align-middle text-center justify-content-center";
+        // th_days.className = "th border-left align-middle text-center justify-content-center";
+        // th_brgy.className = "th border-left align-middle text-center justify-content-center";
+        // th_number.className = "th border-left align-middle text-center justify-content-center";
         th_status.className = 'th border-left align-middle text-center justify-content-center';
         // th_contacted.className = 'asd align-middle text-center justify-content-center';
 
