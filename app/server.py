@@ -16,6 +16,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 
+from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
+from fastapi.openapi.utils import get_openapi
+
+
 # EMAIL
 # from fastapi import BackgroundTasks
 # from send_email import send_email_background, send_email_async
@@ -34,7 +38,14 @@ from pydantic import BaseModel
 # Matic nagccreate na ng table
 models.Base.metadata.create_all(bind=engine)
 # Main app object
-app = FastAPI()
+# app = FastAPI()
+app = FastAPI(
+    title="FastAPI",
+    version="0.1.0",
+    docs_url=None,
+    redoc_url=None,
+    openapi_url = None,
+)
 security = HTTPBasic()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -65,9 +76,30 @@ templates = Jinja2Templates(directory="pages")
 
 
 
+# def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
+#     correct_username = secrets.compare_digest(credentials.username, "user")
+#     correct_password = secrets.compare_digest(credentials.password, "pass")
+#     if not (correct_username and correct_password):
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED,
+#             detail="Incorrect email or password",
+#             headers={"WWW-Authenticate": "Basic"},
+#         )
+#     return credentials.username
+
+
+# @app.get("/docs")
+# async def get_documentation(username: str = Depends(get_current_username)):
+#     return get_swagger_ui_html(openapi_url="/openapi.json", title="docs")
+
+
+# @app.get("/openapi.json")
+# async def openapi(username: str = Depends(get_current_username)):
+#     return get_openapi(title = "FastAPI", version="0.1.0", routes=app.routes)
+
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     correct_username = secrets.compare_digest(credentials.username, "user")
-    correct_password = secrets.compare_digest(credentials.password, "pass")
+    correct_password = secrets.compare_digest(credentials.password, "password")
     if not (correct_username and correct_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -75,6 +107,21 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
             headers={"WWW-Authenticate": "Basic"},
         )
     return credentials.username
+
+
+@app.get("/docs", include_in_schema=False)
+async def get_swagger_documentation(username: str = Depends(get_current_username)):
+    return get_swagger_ui_html(openapi_url="/openapi.json", title="docs")
+
+
+@app.get("/redoc", include_in_schema=False)
+async def get_redoc_documentation(username: str = Depends(get_current_username)):
+    return get_redoc_html(openapi_url="/openapi.json", title="docs")
+
+
+@app.get("/openapi.json", include_in_schema=False)
+async def openapi(username: str = Depends(get_current_username)):
+    return get_openapi(title=app.title, version=app.version, routes=app.routes)
 
 @app.get("/users/me")
 def read_current_user(username: str = Depends(get_current_username)):
@@ -198,16 +245,17 @@ def delete(patient_id: int, db:Session = Depends(get_db)):
         raise HTTPException(404, detail="User not found!")
 
     patients = models.Patient
-    db.query(patients).filter(patients.id == patient_id).delete()
-    # db.query(patients).delete()
+    # db.query(patients).filter(patients.id == patient_id).delete()
+    db.query(patients).delete()
     symptoms = models.PatientSymptoms
-    db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
-    # db.query(symptoms).delete()
+    # db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
+    db.query(symptoms).delete()
 
     db.commit()
 
     remaining_patients = crud.get_patients(db)
-    return [crud.format_patient(p) for p in remaining_patients]
+    return ""
+    # return [crud.format_patient(p) for p in remaining_patients]
 
 
 @app.delete("/patientsall/{patient_id}", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})

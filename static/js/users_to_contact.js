@@ -78,21 +78,21 @@ function fetch_filter() {
         total.push(patient.id)
 
         let tr = document.createElement('tr')
-        let th_id = document.createElement('th')
+        // let th_id = document.createElement('th')
         let th_date = document.createElement('th')
         let th_contact_number = document.createElement('th')
         let th_contacted = document.createElement('th')
         let contacted_btn = document.createElement('button')
 
 
-        th_id.className = 'align-middle text-center justify-content-center'
+        // th_id.className = 'align-middle text-center justify-content-center'
         th_date.className = 'align-middle text-center justify-content-center'
         th_contact_number.className = 'align-middle text-center justify-content-center'
         th_contacted.className = 'align-middle text-center justify-content-center'
 
 
         tr.id = "row";
-        th_id.innerHTML = patient.id;
+        // th_id.innerHTML = patient.id;
         th_date.innerHTML = final_date;
         th_contact_number.innerHTML = patient.subscriber_number;
 
@@ -113,7 +113,7 @@ function fetch_filter() {
         contacted_btn.setAttribute('onclick','onClick('+  contacted_btn.id  +');');
 
 
-        tr.append(th_id);
+        // tr.append(th_id);
         tr.append(th_date);
         tr.append(th_contact_number);
         th_contacted.append(contacted_btn);
