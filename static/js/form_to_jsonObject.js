@@ -81,7 +81,7 @@ function fetch_post() {
 			let popup_symptoms = document.createElement("p");
 			let popup_status = document.createElement("p");
 
-			patients_id_skip = data.id + 2499
+			patients_id_skip = data.id + 2699
 
 			popup_id.innerHTML = "Patient's ID: " +patients_id_skip;
 			// popup_name.innerHTML = "Patient Name: " + data.name;
