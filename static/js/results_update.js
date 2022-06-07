@@ -163,6 +163,7 @@ function fetch_filter() {
         days = ""
         if (patient.status != "infected") {
           days = "N/A"
+          th_days.className = "black";
         } else {
           days = day_quarantine;
         }
