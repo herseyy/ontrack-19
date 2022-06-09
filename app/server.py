@@ -234,17 +234,17 @@ def delete(patient_id: int, db:Session = Depends(get_db)):
         raise HTTPException(404, detail="User not found!")
 
     patients = models.Patient
-    # db.query(patients).filter(patients.id == patient_id).delete()
-    db.query(patients).delete()
+    db.query(patients).filter(patients.id == patient_id).delete()
+    # db.query(patients).delete()
     symptoms = models.PatientSymptoms
-    # db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
-    db.query(symptoms).delete()
+    db.query(symptoms).filter(symptoms.patient_id == patient_id).delete()
+    # db.query(symptoms).delete()
 
     db.commit()
 
     remaining_patients = crud.get_patients(db)
-    return ""
-    # return [crud.format_patient(p) for p in remaining_patients]
+    # return ""
+    return [crud.format_patient(p) for p in remaining_patients]
 
 
 @app.delete("/patientsall/{patient_id}", response_model=list[schemas.PatientResponse], response_model_exclude={"name"})
