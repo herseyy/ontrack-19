@@ -86,9 +86,9 @@ function fetch_filter() {
 
 
         // th_id.className = 'align-middle text-center justify-content-center'
-        th_date.className = 'align-middle text-center justify-content-center'
-        th_contact_number.className = 'align-middle text-center justify-content-center'
-        th_contacted.className = 'align-middle text-center justify-content-center'
+        th_date.className = 'th align-middle text-center justify-content-center'
+        th_contact_number.className = 'th align-middle text-center justify-content-center'
+        th_contacted.className = 'th align-middle text-center justify-content-center'
 
 
         tr.id = "row";
@@ -155,6 +155,7 @@ function onClick(id) {
 // Already Contacted
   if (clicked_btn.style.backgroundColor == "rgb(76, 175, 80)") {
     clicked_btn.innerHTML = 'Done';
+    // console.log(clicked_btn)
     bool = true;
     console.log('green-light');
   } 

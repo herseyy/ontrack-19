@@ -179,19 +179,8 @@ def send_sms(contact_info, access_token, shortcode):
     return response.text
 
 
-
-
-
-# @app.get("/")
-# def index():
-#     return {"hello": "world"}
-
-
-# Ang ginagawa lang neto, sinasabe na yung response format ay galing sa schema na Symptoms
-# Tapos yung function ay tatangap ng db object galing dun sa get_db function sa taas
 @app.get("/symptoms", response_model=list[schemas.Symptoms])
 def get_symptoms(db: Session = Depends(get_db)):
-    # Pass db dun sa get_symptoms na function
     symptoms = crud.get_symptoms(db)
     return symptoms
 
@@ -310,7 +299,7 @@ def redirect2():
 
 @app.patch("/contacted/{user_id}")
 def already_contacted(user_id:int, contacted: bool, username: str = Depends(get_current_username), db:Session = Depends(get_db)):
-    print(user)
+    # print(user)
     db_user = crud.update_user(db=db, id=user_id, already_contacted = contacted)
 
     if db_user is None:
