@@ -395,7 +395,7 @@ function fetch_post() {
       let popup_symptoms = document.createElement("p");
       let popup_status = document.createElement("p");
 
-      patients_id_skip = data.id + 2699 // patient id starts at 2700
+      patients_id_skip = data.id + 2899 // patient id starts at 2700
 
       patient_age = ""
 

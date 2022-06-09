@@ -189,7 +189,7 @@ function fetch_filter() {
           asymptomatic = "Symptomatic";
         }
 
-        patients_id_skip = patient.id + 2699 // start patient 2700
+        patients_id_skip = patient.id + 2899 // start patient 2700
 
         tr.id = "row";
 

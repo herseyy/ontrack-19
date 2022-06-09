@@ -141,7 +141,7 @@ function fetch_filter() {
         let status_btn = document.createElement('button')
         tr.id = "row";
 
-        patients_id_skip = patient.id + 2699 // start patient 2700
+        patients_id_skip = patient.id + 2899 // start patient 2700
         // console.log(status_btn)
 
         date_format = ''
