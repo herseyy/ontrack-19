@@ -349,7 +349,7 @@ function fetch_post() {
     "status" : input_status
   }
 
-  console.log(inp_obj)
+  // console.log(inp_obj)
   const submit_form_url = "/submit_form"
 
   fetch(submit_form_url, {
@@ -367,8 +367,7 @@ function fetch_post() {
         console.log(i.description)
         patient_symptoms.push(" " + i.description)
       };
-
-
+      
       patient_date = convertDate(data.date_positive)
       let date_split = patient_date.split(" ")
       date_format = date_split[1] + " " + date_split[0] + ", " + date_split[2]
@@ -435,11 +434,11 @@ function fetch_post() {
       patient_info.append(popup_id);
       patient_info.append(popup_date);
       // patient_info.append(popup_birthday);
-      patient_info.append(popup_age);
-      patient_info.append(popup_sex);
       patient_info.append(popup_brgy);
-      patient_info.append(popup_contact);
+      patient_info.append(popup_sex);
+      patient_info.append(popup_age);
       patient_info.append(popup_asymptomatic);
+      patient_info.append(popup_contact);
 
       if (bool_asymptomatic == "Symptomatic") {
         patient_info.append(popup_symptoms);
@@ -453,6 +452,7 @@ function fetch_post() {
 
 
 }
+
 
 // POPUP
 var containerElement = document.getElementById('app');

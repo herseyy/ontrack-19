@@ -22,24 +22,24 @@
 }
 
 .no_update {
-  border: solid 1px #6c757d;
+  border: solid 2px #000;
   background-color: #6c757d;
 }
 
 .infected {
-  border: solid 1px #fff;
+  border: solid 2px #000;
   background-color: #f44336;
 
 }
 
 .died {
-  border: solid 1px #fff;
+  border: solid 2px #000;
   background-color: #000;
   color: #fff;
 }
 
 .recovered {
-  border: solid 1px #fff;
+  border: solid 2px #000;
   background-color: #4CAF50;
 }
 

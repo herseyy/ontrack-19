@@ -132,7 +132,7 @@ function fetch_filter() {
 
   const filter_url = "/filter?" + query
 
-  // console.log(filter_url)
+  console.log(filter_url)
   
   // total_results = ''
 
@@ -149,7 +149,7 @@ function fetch_filter() {
       total_results.innerHTML = '';
 
       data.map(patient => {
-        console.log(patient)
+        // console.log(patient)
 
 
         total.push(patient.id)

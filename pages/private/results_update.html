@@ -55,7 +55,71 @@
         </div>
     </nav>
 
-	<div class="searchContainer">
+    <div class="popup" id="popup_div">
+		<div id="inner_div" class="inner_div text-left">
+			<h2 id="patientId"></h2>
+			<div class="card-input">
+				<label class="floating-label_1 col-lg-4 col-6">Date Positive</label>
+				<input id="date_positive" class="floating-input_1 col-lg-7 col-5" type="text" onclick="(this.type='date')" placeholder=" " required>
+				<span id="date_error" class="text-danger"></span>
+			</div>
+			<div class="card-input">
+				<label class="floating-label col-lg-4 col-6">Age</label>
+				<input type="number" id="age" class="floating-input col-lg-7 col-5" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+				<span id="age_error" class="text-danger"></span>
+			</div>
+
+			<div class="card-input" id="hidden_months">
+				<label class="floating-label col-lg-4 col-6">Age (in months)</label>
+				<input type="number" id="months" class="floating-input col-lg-7 col-5" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+				<span id="months_error" class="text-danger"></span>
+			</div>
+
+			<div class="card-input" id="hidden_days">
+				<label class="floating-label col-lg-4 col-6">Age (in days)</label>
+				<input type="number" id="days" class="floating-input col-lg-7 col-5" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+				<span id="days_error" class="text-danger"></span>
+			</div>
+			<div class="card-input">
+				<label class="floating-label_1 col-lg-4 col-6">Sex</label>
+				<select name="patient_sex" id="patient_sex" class="floating-select col-lg-7 col-5" onclick="this.setAttribute('value', this.value);" value="" required>
+					<option value=""></option>
+					<option value="male">Male</option>
+					<option value="female">Female</option>
+				</select>
+				<span id="sex_error" class="text-danger"></span>
+			</div>
+
+			<div class="card-input">
+				<label class="floating-label col-lg-4 col-6">Barangay</label>
+				<input type="text" id="myInput" class="floating-input col-lg-7 col-5" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off" required>
+				<span id="brgy_error" class="text-danger"></span>
+			</div>
+
+			<div class="card-input">
+				<label class="floating-label col-lg-4 col-6">Contact Number</label>
+				<input type="number" id="patient_contact_number" class="floating-input col-lg-7 col-5" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" required>
+				<span id="number_error" class="text-danger"></span>
+			</div>
+
+			<div class="card-input">
+				<label class="floating-label_1 col-lg-4 col-6">Manifestation of Symptoms</label>
+				<select name="patient_asymptomatic" id="patient_asymptomatic" class="floating-select col-lg-7 col-5" onclick="this.setAttribute('value', this.value);" value="">
+					<option value=""></option>
+					<option value="symptomatic">Symptomatic</option>
+					<option value="asymptomatic">Asymptomatic</option>
+				</select>
+				<span id="symptomatic_error" class="text-danger"></span>
+			</div>
+		</div>
+		<button id="close" name="close">Close</button>
+		<button id="update" name="update">Update</button>
+		<!-- <button id="btn" name="submit">Go back</button> -->
+	</div>
+
+
+
+	<div class="searchContainer blur_pop" id="app">
 		<div class="form">
 			
 			<h2>RESULTS</h2>
@@ -84,7 +148,7 @@
 		<div class="filtersContainer mx-2" id="FiltersBox">
 			<div class="px-3 row">
 				
-				<div class="px-2 form-group col-12 col-lg-4 d-sm-inline-block">
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
 					<label for="date_positive"> 
 						<i class="fas fa-calendar-alt"></i>
 						Date Declared Positive: 
@@ -104,7 +168,49 @@
 					</select>
 				</div>
 
-				<div class="px-2 form-group col-12 col-lg-4 d-sm-inline-block">
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="sex"> 
+						<i class="fas fa-file"></i>
+						Sex: 
+					</label>
+					<select id="sex" class="form-control">
+						<option value="">All</option>
+						<option value="No Data">No Data</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select>
+				</div>
+
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="age"> 
+						<i class="fas fa-file"></i>
+						Age Range: 
+					</label>
+					<select id="age" class="form-control">
+						<option value="">All</option>
+						<option value="0,15"> 0-15 years old</option>
+						<option value="16,30"> 16-30 years old</option>
+						<option value="31,45"> 31-45 years old</option>
+						<option value="46,60"> 46-60 years old</option>
+						<option value="61,75"> 61-75 years old</option>
+						<option value="76,90"> 76-90 years old</option>
+						<option value="91,105"> 91-105 years old</option>
+					</select>
+				</div>
+
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
+					<label for="asymptomatic"> 
+						<i class="fas fa-file"></i>
+						Manifestation of Symptoms: 
+					</label>
+					<select id="asymptomatic" class="form-control">
+						<option value="">All</option>
+						<option value="0"> Symptomatic </option>
+						<option value="1"> Asymptomatic </option>
+					</select>
+				</div>
+
+				<div class="px-2 form-group col-12 col-lg-3 d-sm-inline-block">
 					<label for="status"> 
 						<i class="fas fa-file"></i>
 						Status: 
@@ -120,7 +226,7 @@
 			</div>
 		</div>
 	</div>
-    <main class="container-fluid d-flex justify-content-center">
+    <main class="blur_pop container-fluid d-flex justify-content-center" id="app1">
 		<div class="searchBox container-fluid mx-3">
 			<div class="resultsContainer mx-2">
 				<div class="asd text-right" id="total_results"></div>
@@ -128,12 +234,16 @@
 					<table class="table table-hover">
 						<thead class="text-center">
 							<tr>
-								<th class="th border-left align-middle text-center justify-content-center" data-column="id" data-order="desc"> Patient ID </th>
-								<th class="th border-left align-middle text-center justify-content-center" data-column="date_positive" data-order="desc"> Date Declared Positive </th>
-								<th class="th border-left align-middle text-center justify-content-center" data-column="date_positive" data-order="desc"> Days in Quarantine </th>
-								<th class="th border-left align-middle text-center justify-content-center" data-column="date_positive" data-order="desc"> Barangay </th>
-								<th class="th border-left align-middle text-center justify-content-center" data-column="status" data-order="desc"> Contact Number </th>
-								<th class="th border-left align-middle text-center justify-content-center" data-column="status" data-order="desc"> Health Status </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="id" data-order="desc"> Patient ID </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="date_positive" data-order="desc"> Date Declared Positive </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="date_positive" data-order="desc"> Days in Quarantine </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="date_positive" data-order="desc"> Barangay </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="sex" data-order="desc"> Sex </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="age" data-order="desc"> Age </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="symptomatic" data-order="desc"> Manifestation of Symptoms </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="status" data-order="desc"> Contact Number </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="status" data-order="desc"> Health Status </th>
+								<th class=" border-left align-middle text-center justify-content-center" data-column="status" data-order="desc"> ... </th>
 								<!-- <th class="align-middle text-center justify-content-center" data-column="status" data-order="desc"> Contacted </th> -->
 							</tr>
 						</thead>

@@ -197,7 +197,7 @@ def get_patients_by_id(patient_id:int, db:Session = Depends(get_db)):
 
 
 # update
-@app.patch("/update/{patient_id}")
+@app.patch("/update/{patient_id}", response_model=schemas.PatientResponseUpdate, response_model_exclude={"name"})
 def update(patient_id:int, info: schemas.PatientUpdate, username: str = Depends(get_current_username), db:Session = Depends(get_db)):
     db_patient = crud.update_patient(db=db, id=patient_id, info=info)
     

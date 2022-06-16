@@ -66,6 +66,15 @@ class PatientFilter(BaseModel):
 
 
 class PatientUpdate(BaseModel):
+    date_positive: datetime.date = None
+    age: int = None
+    months: int = None
+    days: int = None
+    # birthday: datetime.date
+    sex: str = None
+    barangay: str = None
+    contact_number: str = None
+    asymptomatic: bool = True
     status: str = None
     # asymptomatic: Optional[bool] = None
     # symptoms: Optional[list[int]] = None
@@ -73,15 +82,14 @@ class PatientUpdate(BaseModel):
 
 class PatientResponseUpdate(BaseModel):
     id: int
-    name: str
-    date_positive: datetime.date
-    age: int
+    name: str = None
+    date_positive: datetime.date = None
+    age: int = None
     # birthday: datetime.date
-    sex: str
+    sex: str = None
     barangay: str = None
     contact_number: str = None
     asymptomatic: bool = None
-    symptoms: list[Symptoms] = None
     status: str = None
 
     class Config:

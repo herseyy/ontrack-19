@@ -124,14 +124,29 @@ def update_patient(db: Session, id: int, info: PatientUpdate):
 
     patient = db.query(Patient).filter(Patient.id == id).first()
 
-
+    if info.date_positive != None:
+        patient.date_positive = info.date_positive
+    if info.age != None:
+        patient.age = info.age
+    if info.months != None:
+        patient.months = info.months
+    if info.days != None:
+        patient.days = info.days
+    if info.sex != None:
+        patient.sex = info.sex
+    if info.barangay != None:
+        patient.barangay = info.barangay
+    if info.contact_number != None:
+        patient.contact_number = info.contact_number
+    if info.asymptomatic != None:
+        patient.asymptomatic = info.asymptomatic
     if info.status != None:
         patient.status = info.status
+
     # if info.asymptomatic != None:
     #     patient.asymptomatic = info.asymptomatic
     # if info.symptoms != None:
     #     patient.symptoms = info.symptoms
-
     db.commit()
     # print(patient.status)
 

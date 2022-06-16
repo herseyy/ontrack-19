@@ -66,37 +66,56 @@ function fetch_filter() {
   showFilters = false;
   document.getElementById("FiltersBox").style.display = "none";
 
-
   // event.preventDefault();
 
   let barangay = document.getElementById('myInput').value;
   let date_positive = document.getElementById('date_positive').value;
   let days = document.getElementById('days').value;
+  let sex = document.getElementById('sex').value;
+  let age_range = document.getElementById('age').value;
+  let asymptomatic = document.getElementById('asymptomatic').value;
   let status = document.getElementById('status').value;
 
-
+  var split = age_range.split(',')
   var split_day = days.split(',')
   // console.log(split_day)
+  // console.log(split[0])
 
   var inp_obj = {}
 
   if (status != "") {
     inp_obj = Object.assign({"status": status}, inp_obj)
   }  
+  if (asymptomatic != "") {
+    inp_obj = Object.assign({"asymptomatic": asymptomatic}, inp_obj)
+  }
+
+  if (age_range != "") {
+    inp_obj = Object.assign({"upperAge": split[1]}, inp_obj)
+  }  
+  if (age_range != "") {
+    inp_obj = Object.assign({"lowerAge": split[0]}, inp_obj)
+  }
+
+  if (sex != "") {
+    inp_obj = Object.assign({"sex": sex}, inp_obj)
+  }
+  if (date_positive != "") {
+    inp_obj = Object.assign({"date_positive": date_positive}, inp_obj)
+  }
+
   if (days != "") {
     inp_obj = Object.assign({"upperDay": split_day[1]}, inp_obj)
   }  
   if (days != "") {
     inp_obj = Object.assign({"lowerDay": split_day[0]}, inp_obj)
   }
-  if (date_positive != "") {
-    inp_obj = Object.assign({"date_positive": date_positive}, inp_obj)
-  }
+
   if (barangay != "") {
     inp_obj = Object.assign({"barangay": capitalizeFirstLetter(barangay)}, inp_obj)
   }
 
-  // console.log(inp_obj)
+  console.log(inp_obj)
 
 
   let query = Object.keys(inp_obj)
@@ -105,10 +124,9 @@ function fetch_filter() {
 
   // console.log(query)
 
-
   const results_update_url = "/filter_update?" + query
 
-  console.log(results_update_url)
+  // console.log(results_update_url)
   
   // // total_results = ''
 
@@ -126,6 +144,13 @@ function fetch_filter() {
 
       data.map(patient => {
 
+        if (patient.asymptomatic == true) {
+          asymptomatic = "Asymptomatic";
+        }
+        else {
+          asymptomatic = "Symptomatic";
+        }
+
         // console.log(getAge(patient.date_positive))
 
 
@@ -136,13 +161,17 @@ function fetch_filter() {
         let th_date = document.createElement('th')
         let th_days = document.createElement('th')
         let th_brgy = document.createElement('th')
+        let th_sex = document.createElement('th')
+        let th_age = document.createElement('th')
+        let th_symptomatic = document.createElement('th')
         let th_number = document.createElement('th')
         let th_status = document.createElement('th')
         let status_btn = document.createElement('button')
+        let th_edit = document.createElement('th')
+        let edit_btn = document.createElement('button')
         tr.id = "row";
 
         patients_id_skip = patient.id + 2899 // start patient 2700
-        // console.log(status_btn)
 
         date_format = ''
         day_quarantine = ''
@@ -163,9 +192,41 @@ function fetch_filter() {
         days = ""
         if (patient.status != "infected") {
           days = "N/A"
-          th_days.className = "black";
+          th_days.className = "black th border-left align-middle text-center justify-content-center";
         } else {
           days = day_quarantine;
+        }
+
+        final_age = '';
+
+        if (patient.age == null) {
+          final_age = "No Data"
+          th_age.className = "nodata th border-left align-middle text-center justify-content-center";
+        } 
+        else if (patient.age == 0) {
+          th_age.className = "th border-left align-middle text-center justify-content-center";
+          if (patient.months == 0) {
+            if (patient.days == 1) {
+              final_age = patient.days + " day old"
+            } 
+            else {
+              final_age = patient.days + " days old"
+            }
+          } 
+          else if (patient.months == 1) {
+            final_age = patient.months + " month old"
+          } 
+          else {
+            final_age = patient.months + " months old"
+          }
+        } 
+        else if (patient.age == 1) {
+          th_age.className = "th border-left align-middle text-center justify-content-center";
+          final_age = patient.age + " year old"
+        } 
+        else {
+          th_age.className = "th border-left align-middle text-center justify-content-center";
+          final_age = patient.age + " years old"
         }
 
 
@@ -179,6 +240,34 @@ function fetch_filter() {
           brgy = capitalizeFirstLetter(patient.barangay)
           th_brgy.className = "th border-left align-middle text-center justify-content-center";
         }
+
+        sex = ''
+
+        if (patient.sex == null) {
+          th_sex.className = "nodata th border-left align-middle text-center justify-content-center";
+          sex = "No Data"
+        } else if (patient.sex == "No Data") {
+          th_sex.className = "nodata th border-left align-middle text-center justify-content-center";
+          sex = capitalizeFirstLetter(patient.sex)
+        } else {
+          sex = capitalizeFirstLetter(patient.sex)
+          th_sex.className = "th border-left align-middle text-center justify-content-center";
+        }
+
+        symp = ""
+
+        if (patient.status == "no_update") {
+          symp = "No Update"
+        } 
+        else if (patient.status != "infected") {
+          symp = "N/A";
+        } 
+        else {
+          symp = asymptomatic;
+        }
+
+        // console.log(patient.status)
+        // console.log(symp)
 
 
         if (patient.status == "infected") {
@@ -207,11 +296,25 @@ function fetch_filter() {
           th_number.className = "th border-left align-middle text-center justify-content-center";
         }
 
+        edit_btn.className = 'edit_btn align-middle my-auto'
+        edit_btn.id = patient.id;
+        edit_btn.setAttribute('onclick','edit('+  patient.id  +');');
+
+
+        let i = document.createElement('i')
+        i.className = "fa fa-pencil fa-1x my-auto pencil"
+ 
         th_id.innerHTML = patients_id_skip;
         th_date.innerHTML = date_format;
         th_days.innerHTML = days;
         th_brgy.innerHTML = brgy;
+        th_sex.innerHTML = sex;
+        th_age.innerHTML = final_age;
+        th_symptomatic.innerHTML = symp;
         th_number.innerHTML = numberr;
+        // edit_btn.innerHTML = ""
+        edit_btn.append(i)
+
 
 
         th_id.className = 'th border-left align-middle text-center justify-content-center';
@@ -219,7 +322,9 @@ function fetch_filter() {
         // th_days.className = "th border-left align-middle text-center justify-content-center";
         // th_brgy.className = "th border-left align-middle text-center justify-content-center";
         // th_number.className = "th border-left align-middle text-center justify-content-center";
+        th_symptomatic.className = "th border-left align-middle text-center justify-content-center";
         th_status.className = 'th border-left align-middle text-center justify-content-center';
+        th_edit.className = "th edit border-left align-middle text-center justify-content-center"
         // th_contacted.className = 'asd align-middle text-center justify-content-center';
 
 
@@ -236,10 +341,14 @@ function fetch_filter() {
         tr.append(th_date);
         tr.append(th_days);
         tr.append(th_brgy);
+        tr.append(th_sex);
+        tr.append(th_age);
+        tr.append(th_symptomatic);
         tr.append(th_number);
         th_status.append(status_btn)
         tr.append(th_status);
-
+        th_edit.append(edit_btn);
+        tr.append(th_edit);
 
         // th_status.append(status_btn)
         // tr.append(th_status);
@@ -482,7 +591,7 @@ autocomplete(document.getElementById("myInput"), barangayList);
  // const btn = document.getElementById('1');
 let index = 0;
 
-const colors = ['#4CAF50', '#f44336', "#008CBA", "#6c757d"];
+const colors = ['#4CAF50', '#f44336', "#000", "#6c757d"];
 
 function onClick(id) {
   clicked_btn = document.getElementById(id)
@@ -534,8 +643,151 @@ function onClick(id) {
   })
   .then(res => res.json())
   .then(data => {
-    // console.log(data)
+    console.log(data)
   })
   .catch(error => console.log("ERROR")) 
 
 }
+
+var containerElement = document.getElementById('app');
+var containerElement1 = document.getElementById('app1');
+
+
+function edit(id) {
+  console.log(id)
+  $('.blur_pop').blur();
+  containerElement.setAttribute('class', 'searchContainer blur_pop blur');
+  containerElement1.setAttribute('class', 'blur_pop container-fluid d-flex justify-content-center blur');
+  popupOpenClose(id)
+
+  const patient_by_id = "/patients/" + id
+
+  console.log(patient_by_id)
+
+
+  fetch(patient_by_id)
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      console.log(data)
+
+      let patient_info = document.getElementById("inner_div");
+
+      let popup_id = document.getElementById("patientId");
+
+      patients_id_skip = data.id + 2899
+      popup_id.innerHTML = "Patient " + patients_id_skip;
+
+      let popup_date = document.getElementById("date_positive")
+      popup_date.value = data.date_positive
+
+      let popup_age = document.getElementById("age")
+      popup_age.value = data.age
+      let popup_months = document.getElementById("months")
+      popup_months.value = data. months
+      let popup_days = document.getElementById("days")
+      popup_days.value = data.days
+      let popup_sex = document.getElementById("patient_sex")
+      // popup
+      let popup_brgy = document.getElementById("myInput")
+      popup_brgy.value = data.barangay
+      let popup_number = document.getElementById("patient_contact_number")
+      popup_number.value = data.contact_number
+      let popup_asymptomatic = document.getElementById("patient_asymptomatic")
+      // popup
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+
+
+
+
+// var containerElement = document.getElementById('app');
+// var containerElement1 = document.getElementById('app1');
+
+function popupOpenClose(id) {
+  /* Open popup */
+  $(".popup").show();
+
+  /* Close popup and remove errors if user clicks on cancel or close buttons */
+  $(".popup").find("button[name=close]").on("click", function() {
+    if ($(".formElementError").is(':visible')) {
+      $(".formElementError").remove();
+    }
+    containerElement.setAttribute('class', 'searchContainer blur_pop blur');
+    containerElement1.setAttribute('class', 'blur_pop container-fluid d-flex justify-content-center blur');
+    $(".popup").hide();
+    location.href = "/results_update";
+  });
+
+
+  $(".popup").find("button[name=update]").on("click", function() {
+    const patient_update_url = "/update/" + id
+    console.log(patient_update_url)
+
+    let new_date = document.getElementById("date_positive").value
+    let new_age = document.getElementById("age").value
+    let new_months = document.getElementById("months").value
+    let new_days = document.getElementById("days").value
+    let new_sex = document.getElementById("patient_sex").value
+    let new_brgy = document.getElementById("myInput").value
+    let new_number = document.getElementById("patient_contact_number").value
+    let new_asymptomatic = document.getElementById("patient_asymptomatic").value
+
+    var inp_obj = {}
+
+    if (new_asymptomatic != "") {
+      if (new_asymptomatic == "asymptomatic") {
+        // console.log(true)
+        var bool_asymptomatic = true
+      } else {
+        var bool_asymptomatic = false
+        // console.log(false)
+      }
+      inp_obj = Object.assign({"asymptomatic": bool_asymptomatic}, inp_obj)
+    }  
+    if (new_number != "") {
+      inp_obj = Object.assign({"contact_number": new_number}, inp_obj)
+    }
+    if (new_brgy != "") {
+      inp_obj = Object.assign({"barangay": new_brgy}, inp_obj)
+    }  
+    if (new_sex != "") {
+      inp_obj = Object.assign({"sex": new_sex}, inp_obj)
+    }
+    if (new_days != "") {
+      inp_obj = Object.assign({"days": new_days}, inp_obj)
+    }  
+    if (new_months != "") {
+      inp_obj = Object.assign({"months": new_months}, inp_obj)
+    }
+    if (new_age != "") {
+      inp_obj = Object.assign({"age": new_age}, inp_obj)
+    }  
+    if (new_date != "") {
+      inp_obj = Object.assign({"date_positive": new_date}, inp_obj)
+    }
+
+
+    console.log(inp_obj)
+
+    fetch(patient_update_url, {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify(inp_obj)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+    })
+    .catch(error => console.log("ERROR")) 
+    location.href = "/results_update";
+  });
+}
+
+

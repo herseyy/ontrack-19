@@ -1,3 +1,162 @@
+.card-input {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.card-input input, .card-input select {
+  width: 100%; 
+  padding: 2px 3px;
+  font-size: 16px;
+  color: #000;
+  border: 1px solid black;
+}
+
+.card-input input:last-child, .card-input select:last-child {
+   margin-right: 0;
+}
+
+.card-input select option {
+  background-color: #fff;
+  color: #000;
+}
+
+::-webkit-calendar-picker-indicator {
+}
+
+@media screen and (max-width: 480px) {
+  .card-input select option {
+    font-size: 10px;
+  }
+}
+
+.card-input label {
+  font-size: 16px;
+}
+
+
+/*.card-input input:focus , .card-input select:focus {
+  outline:none;
+  border-bottom:2px solid #03e9f4; 
+}*/
+
+.card-input .floating-input:focus ~ .floating-label,
+.card-input .floating-input:valid ~ .floating-label,
+.card-input .floating-input_1:focus ~ .floating-label_1, 
+.card-input .floating-input_1:not(:placeholder-shown) ~ .floating-label_1,
+.floating-select:focus ~ .floating-label_1 , 
+.floating-select:not([value=""]):valid ~ .floating-label_1 {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 14px;
+}
+
+
+
+#inner_div h2 {
+   font-family: 'Montserrat';
+   font-weight: 400;
+   font-size: 40px;
+   text-align: center;
+   color: #666;
+   margin: 0 0 18px 0;
+}
+
+.popup button {
+   font-family: 'Montserrat', sans-serif;
+}
+
+
+#inner_div p {
+   color: #666;
+   font-size: 13px;
+}
+
+.popup button {
+   background: #9ad3de;
+   border: 0;
+   border-radius: 4px;
+   padding: 18px 30px;
+   font-size: 18px;
+   color: #fff;
+   cursor: pointer;
+}
+
+
+@media screen and (max-width: 480px) {
+  .popup button {
+     padding: 9px 15px;
+  }
+  #inner_div h2 {
+    font-size: 25px;
+  }
+  .card-input label {
+    font-size: 11px;
+  }
+  .card-input input {
+    font-size: 13px;
+  }
+}
+
+.popup button:focus {
+   outline: none;
+}
+
+.popup button:hover {
+   background: #c0e4eb;
+}
+
+
+.popup {
+  background: rgba(100, 100, 100, 0.5);
+  position: fixed;
+  display: none;
+/*  z-index: 5000;*/
+  height: auto;
+  /*width: 100%;*/
+  left: 0;
+  top: 0;
+  max-width: 600px;
+  width: 70%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  padding: 25px 8px 25px 8px;
+  z-index: 5001;
+  text-align: center;
+  border: 5px solid #9ad3de;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+}
+
+.edit {
+  padding: 0 !important;
+  background-color: #dee2e6;
+}
+
+
+.pencil {
+  /*padding: 5px 5px 5px 5px;*/
+}
+
+
+.edit_btn {
+  padding: 15px 15px 15px 15px;
+  border: none;
+  /*border-radius: 3px;*/
+  width: -moz-fit-content;
+  width: fit-content;
+  color: black;
+  background-color: #dee2e6;
+}
+
+.edit_btn:focus {
+  border: none;
+  outline: none;
+}
+
 .nodata {
 /*  border: solid 1px #ffc107;
   background-color: #ffc107;*/
@@ -43,6 +202,14 @@
 .recovered {
   border: solid 1px #fff;
   background-color: #4CAF50;
+}
+
+.blur   {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
 }
 
 
